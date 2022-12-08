@@ -1,14 +1,13 @@
-`
-<div class="container">
+`<div class="container">
     <div class="justify-content-center row">
         <div class="col-10 col-md-8 bg-white shadow rounded overflow-hidden mt-2">
                 <!--profile name-->
                 <div class="row border-bottom">
                     <div class="col-10 p-2">
                         <div class="d-flex flex-row px-2">
-                            <img class="rounded-circle" src="${source-photo}" alt="profile image of ${author}" width="45">
+                            <img class="rounded-circle" src="${source-photo}" alt="profile image of ${username}" width="45"/>
                             <div class="d-flex flex-column flex-wrap ml-2">
-                                <span class="font-weight-bold">Thomson ben</span>
+                                <span class="font-weight-bold">${username}</span>
                                 <span class="text-black-50 time">40 minutes ago</span>
                             </div>
                         </div>
@@ -19,13 +18,13 @@
                 </div>
                 <!--post-->
                 <div class="p-2 px-3">
-                    <img class="img-fluid" src="https://i.imgur.com/aoKusnD.jpg">
+                    CAROUSEL 
                 </div>
                 <!--post-->
                 <!--description-->
                 <div class="p-2 px-3">
-                    <h6 class="font-14 mb-1">Descrizione</h6>
-                    <p class="mb-2">Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde fugit incidunt eum provident praesentium nulla impedit. Earum similique suscipit dolorum dolore possimus, numquam ab ipsum nemo tempore in? Iure, expedita.</p>
+                    <h6 class="font-14 mb-1">Description</h6>
+                    <p class="mb-2">${description}</p>
                 </div>
                 <!--description-->
                 <!--map-->
