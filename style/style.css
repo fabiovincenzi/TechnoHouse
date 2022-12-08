@@ -42,3 +42,7 @@
       max-height: 500px;
       overflow-y: auto;
   }
+  .profileImg{
+    width: 45px; 
+    height: 100%;
+  }
