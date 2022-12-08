@@ -12,7 +12,6 @@
     position:absolute;
   }
   body {
-    min-height: 75rem;
     padding-top: 4.5rem;
   }
   .bg-blur{
@@ -45,4 +44,7 @@
   .profileImg{
     width: 45px; 
     height: 100%;
+  }
+  .chatListLine{
+    text-decoration:none;
   }
