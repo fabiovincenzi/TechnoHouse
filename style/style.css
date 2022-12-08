@@ -37,3 +37,8 @@
     height: 1px;
     background: #eee;
     }
+
+    .scroll {
+      max-height: 500px;
+      overflow-y: auto;
+  }
