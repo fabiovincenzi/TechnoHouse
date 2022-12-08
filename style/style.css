@@ -19,3 +19,30 @@
     background: rgba(255,255,255,0.4);
   backdrop-filter: blur(5px);
   }
+
+ 
+  #chat2 .form-control {
+    border-color: transparent;
+    }
+    
+    #chat2 .form-control:focus {
+    border-color: transparent;
+    box-shadow: inset 0px 0px 0px 1px transparent;
+    }
+    
+    .divider:after,
+    .divider:before {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: #eee;
+    }
+
+    .scroll {
+      max-height: 500px;
+      overflow-y: auto;
+  }
+  .profileImg{
+    width: 45px; 
+    height: 100%;
+  }
