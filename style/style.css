@@ -11,7 +11,7 @@
     width:100%;
     position:absolute;
   }
-  body {
+  .body-padding {
     padding-top: 4.5rem;
   }
   .bg-blur{
