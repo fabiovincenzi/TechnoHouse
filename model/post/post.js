@@ -1,5 +1,7 @@
-import { Location } from './location'
+import { Location } from './location';
 import { User } from '../user/user';
+import {Image } from '../image/image';
+
 class Post{
     /// Constructor for creating the Post
     constructor(images,description, location, user){
