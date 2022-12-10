@@ -48,3 +48,10 @@
   .chatListLine{
     text-decoration:none;
   }
+  .imgCarousel{
+    height: 300px;
+  }
+  .ddd{
+    max-width: 50%;
+    object-fit: scale-down;
+  }
