@@ -11,13 +11,16 @@
 class Database{
     private $db;                                            // Attribute that rappresent the Database
     private $statement;
-    // ======================================================
+    // =========================== START USER'S PARAMETERS ===========================
     private $PARAM_ADD_USER = 'iiii';                       // Values for the add of a new User
-    private $PARAM_UPDATE_USER_BIOGRAPHY = 's';
-    private $PARAM_GET_USER_ID = 'i';                       // Value used to get the User from his ID
-    private $PARAM_GET_USER_EMAIL = 'si';
-    private $PARAM_DELETE_USER = 'i';
-    // ======================================================
+    private $PARAM_UPDATE_USER_BIOGRAPHY = 's';             // Value for the add of the User's biography
+    private $PARAM_GET_USER_ID = 'i';                       // Valu used to get the User by his ID
+    private $PARAM_GET_USER_EMAIL = 's';                    // Value used to get tbe User by his Emeail               
+    private $PARAM_DELETE_USER = 'i';                       // Value used to delete the USer by his Id
+    // =========================== END USER'S PARAMETERS ===========================
+    // =========================== START BUILDINGS'S PARAMETERS ===========================
+    private $PARAM_ADD_BUILDING = 'ddi';                    // Values used to add a new Building
+    // =========================== END BUILDINGS'S PARAMETERS ===========================
     /**
      * Summary of __construct
      * @param mixed server_name : Name of the server to connect
@@ -115,5 +118,66 @@ class Database{
         $statement->bind_param($this->PARAM_DELETE_USER, $user_id);
         return $statement->execute();
     }
+
+    /**
+     * Summary of getRegions : Get all the Regions inside the Db
+     * @return array    : All the regions saved inside the Database
+     */
+    public function getRegions()
+    {
+        $query = "SELECT *
+                  FROM Region";
+        $statement = $this->db->prepare($query);
+        $statement->execute();
+        $result = $statement->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    /**
+     * Summary of getProvincies : Get all the Provincies inside the Db
+     * @return array    : All the provincies saved inside the Database
+     */
+    public function getProvincies()
+    {
+        $query = "SELECT *
+                  FROM Provicne";
+        $statement = $this->db->prepare($query);
+        $statement->execute();
+        $result = $statement->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    /**
+     * Summary of getCities : Get all the Cities inside the Db
+     * @return array    : All the cities saved inside the Database
+     */
+    public function getCities()
+    {
+        $query = "SELECT *
+                  FROM City";
+        $statement = $this->db->prepare($query);
+        $statement->execute();
+        $result = $statement->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    /**
+     * Summary of addBuilding
+     * @param mixed $latitude
+     * @param mixed $longitude
+     * @param mixed $postcode
+     * @return bool
+     */
+    public function addBuilding($latitude, $longitude, $postcode)
+    {
+        $query = ("INSERT INTO Building
+                  (POINT(latitude,longitude), City_postCode)
+                  VALUES(?,?,?)");
+        $statement = $this->db->prepare($query);
+        $statement->bind_param($this->PARAM_ADD_BUILDING, $latitude, $longitude, $postcode);
+        return $statement->execute();
+    }
+
+
 }
 ?>
