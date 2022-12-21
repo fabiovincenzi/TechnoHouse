@@ -1,13 +1,13 @@
 <?php
 require_once 'bootstrap.php';
 
-$result["false"] = logineseguito;
+$result["logged"] = false;
 
-if(isset($_POST["username"]) && isset($_POST["password"])){
-    $login_result = $dbh->checkLogin($_POST["username"], $_POST["password"]);
+if(isset($_POST["email"]) && isset($_POST["password"])){
+    $login_result = $dbh->checkLogin($_POST["email"], $_POST["password"]);
     if(count($login_result)==0){
         //Login fallito
-        $result["errorelogin"] = "Username e/o password errati";
+        $result["loginError"] = "Username e/o password errati";
     }
     else{
         registerLoggedUser($login_result[0]);
@@ -15,16 +15,12 @@ if(isset($_POST["username"]) && isset($_POST["password"])){
 }
 
 if(isUserLoggedIn()){
-    $result["logineseguito"] = true;
-    $result["feeduser"] = $dbh->getFeedByUser($_SESSION["iduser"]);
+    $result["logged"] = true;
+    $result["userFeed"] = $dbh->getFeedByUser($_SESSION["idUser"]);
     
 }
 
 header('Content-Type: application/json');
 echo json_encode($result);
-
-
-
-
 
 ?>
