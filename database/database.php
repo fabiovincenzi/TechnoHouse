@@ -10,18 +10,6 @@
  */
 class Database{
     private $db;                                            // Attribute that rappresent the Database
-    private $statement;
-    // =========================== START USER'S PARAMETERS ===========================
-    private $PARAM_ADD_USER = 'iiii';                       // Values for the add of a new User
-    private $PARAM_UPDATE_USER_BIOGRAPHY = 's';             // Value for the add of the User's biography
-    private $PARAM_GET_USER_ID = 'i';                       // Valu used to get the User by his ID
-    private $PARAM_GET_USER_EMAIL = 's';                    // Value used to get tbe User by his Emeail               
-    private $PARAM_DELETE_USER = 'i';                       // Value used to delete the USer by his Id
-    // =========================== END USER'S PARAMETERS ===========================
-    // =========================== START BUILDINGS'S PARAMETERS ===========================
-    private $PARAM_ADD_BUILDING = 'ddi';                    // Values used to add a new Building
-    private $PARAM_GET_BUILDING = 'i';                      // Value used to get a specific Building from its id
-    // =========================== END BUILDINGS'S PARAMETERS ===========================
     /**
      * Summary of __construct
      * @param mixed server_name : Name of the server to connect
@@ -48,11 +36,12 @@ class Database{
      */
     public function addUser($name, $surname, $birthdate, $email, $password)
     {
+        $PARAM_ADD_USER = 'iiii';                       // Values for the add of a new User
         $query = "INSERT INTO User
                   (name,surname,email,phoneNumber,birthdate,password,biography)
                    VALUES (?, ?, ?, ?, ?, ?, ?)";
         $statement = $this->db->prepare($query);
-        $statement->bind_param($this->PARAM_ADD_USER, $name, $surname, $birthdate, $email, $password);
+        $statement->bind_param($PARAM_ADD_USER, $name, $surname, $birthdate, $email, $password);
         return $statement->execute();
     }
 
@@ -64,9 +53,10 @@ class Database{
      */
     public function updateBiography($user_id, $biography)
     {
+        $PARAM_UPDATE_USER_BIOGRAPHY = 's';             // Value for the add of the User's biography
         $query = "UPDATE User SET biography = ? WHERE idUser = ?";
         $statement = $this->db->prepare($query);
-        $statement->bind_param($this->PARAM_UPDATE_USER_BIOGRAPHY, $biography, $user_id);
+        $statement->bind_param($PARAM_UPDATE_USER_BIOGRAPHY, $biography, $user_id);
         return $statement->execute();
     }
 
@@ -77,11 +67,12 @@ class Database{
      */
     public function getUserByID($user_id)
     {
+        $PARAM_GET_USER_ID = 'i';                       // Valu used to get the User by his ID
         $query = "SELECT *
                   FROM User
                   WHERE idUser = ?";
         $statement = $this->db->prepare($query);
-        $statement->bind_param($this->PARAM_GET_USER_ID, $user_id);
+        $statement->bind_param($PARAM_GET_USER_ID, $user_id);
         $statement->execute();
         $result = $statement->get_result();
 
@@ -95,11 +86,12 @@ class Database{
      */
     public function getUserByEmail($email)
     {
+        $PARAM_GET_USER_EMAIL = 's';                    // Value used to get tbe User by his Emeail               
         $query = "SELECT *
                   FROM User
                   WHERE email like ?";
         $statement = $this->db->prepare($query);
-        $statement->bind_param($this->PARAM_GET_USER_EMAIL, $email);
+        $statement->bind_param($PARAM_GET_USER_EMAIL, $email);
         $statement->execute();
         $result = $statement->get_result();
         return $result->fetch_all(MYSQLI_ASSOC);
@@ -112,11 +104,12 @@ class Database{
      */
     public function deleteUser($user_id)
     {
+        $PARAM_DELETE_USER = 'i';                       // Value used to delete the USer by his Id
         // Delete all the posts from the specific user
         // Remove all the User that saved that post
         $query = "DELETE FROM User WHERE idUser = ?";
         $statement = $this->db->prepare($query);
-        $statement->bind_param($this->PARAM_DELETE_USER, $user_id);
+        $statement->bind_param($PARAM_DELETE_USER, $user_id);
         return $statement->execute();
     }
 
@@ -171,11 +164,12 @@ class Database{
      */
     public function addBuilding($latitude, $longitude, $postcode)
     {
+        $PARAM_ADD_BUILDING = 'ddi';                    // Values used to add a new Building
         $query = ("INSERT INTO Building
                   (POINT(latitude,longitude), City_postCode)
                   VALUES(?,?,?)");
         $statement = $this->db->prepare($query);
-        $statement->bind_param($this->PARAM_ADD_BUILDING, $latitude, $longitude, $postcode);
+        $statement->bind_param($PARAM_ADD_BUILDING, $latitude, $longitude, $postcode);
         return $statement->execute();
     }
     
@@ -186,21 +180,77 @@ class Database{
      */
     public function getBuilding($building_id)
     {
+        $PARAM_GET_BUILDING = 'i';                      // Value used to get a specific Building from its id
         $query = "SELECT *
                   FROM Building
                   WHERE idBuilding = ?";
         $statement = $this->db->prepare($query);
-        $statement->bind_param($this->PARAM_GET_BUILDING, $building_id);
+        $statement->bind_param($PARAM_GET_BUILDING, $building_id);
         $statement->execute();
         $result = $statement->get_result();
         return $result->fetch_all(MYSQLI_ASSOC);    
     }
 
+    /**
+     * Summary of deleteBuilding, delete a specific Building 
+     * @param mixed $building_id
+     * @return bool, result of query
+     */
     public function deleteBuilding($building_id)
     {
-
+        $PARAM_DELETE_BUILDING = 'i';                   // Value used to delete a specific Building from its id
+        $query = "DELETE FROM Building WHERE idBuilding = ?";
+        $statement = $this->db->prepare($query);
+        $statement->bind_param($PARAM_DELETE_BUILDING, $building_id);
+        return $statement->execute();
     }
 
+    /**
+     * Summary of addPost Adding a new post inside the database
+     * @param mixed $title
+     * @param mixed $description
+     * @param mixed $price
+     * @param mixed $user_id
+     * @param mixed $building_id
+     * @return void
+     */
+    public function  addPost($title, $description, $price, $user_id, $building_id)
+    {
+        $PARAM_ADD_POST = 'ssdii';
+        $query = ("INSERT INTO Post
+                (POINT(title,description,price,User_idUser,Building_idBuilding)
+                VALUES(?,?,?,?,?)");
+        $statement = $this->db->prepare($query);
+        $statement->bind_param($PARAM_ADD_POST, $title, $description, $price, $user_id, $building_id);
+    }
 
+    /**
+     * Summary of getUsersPosts get all the post from a specific user
+     * @param mixed $user_id
+     * @return array
+     */
+    public function getUsersPosts($user_id)
+    {
+        $PARAM_GET_USER_POSTS = 'i';
+        $query = "SELECT *
+                  FROM Post
+                  WHERE User_idUser = ?";
+        $statement = $this->db->prepare($query);
+        $statement->bind_param($PARAM_GET_USER_POSTS, $user_id);
+        $statement->execute();
+        $result = $statement->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    public function updatePost($title, $description, $price, $post_id)
+    {
+        $PARAM_UPDATE_POST = 'ssdi';
+        $query = "UPDATE Post
+                  SET title = ?, description = ?, price = ?
+                  WHERE idPost = ?";
+        $statement = $this->db->prepare($query);
+        $statement->bind_param($PARAM_UPDATE_POST, $title, $description, $price, $post_id);
+        return $statement->execute();
+    }
 }
 ?>
