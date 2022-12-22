@@ -358,7 +358,30 @@ class Database{
         $statement = $this->db->prepare($query);
         $statement->bind_param($PARAM_DELETE_QUESTION, $question_id);
         return $statement->execute();
+    }
 
+    public function addAnswer($user_id, $question_id, $answer)
+    {
+        $PARAM_ADD_ANSWER = 'iis';
+        $query = "INSERT INTO Answer
+                     (User_idUser, Question_idQuestion,answer)
+                     VALUES(?,?,?)";
+        $statement = $this->db->prepare($query);
+        $statement->bind_param($PARAM_ADD_ANSWER, $user_id, $question_id, $answer);
+        return $statement->execute();
+    }
+
+    public function getAnswerOf($question_id)
+    {
+        $PREPARE_GET_ANSWER = 'i';
+        $query = "SELECT *
+                  FROM Answer 
+                  WHERE Question_idQuestion = ?";
+        $statement = $this->db->prepare($query);
+        $statement->bind_param($PREPARE_GET_ANSWER, $question_id);
+        $statement->execute();
+        $result = $statement->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC);
     }
 }
 ?>
