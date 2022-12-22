@@ -261,6 +261,10 @@ class Database{
         return $statement->execute();
     }
 
+    /**
+     * Summary of getTags
+     * @return array : All the tags inside the Database
+     */
     public function getTags()
     {
         $query = "SELECT *
@@ -271,6 +275,12 @@ class Database{
         return $result->fetch_all(MYSQLI_ASSOC);        
     }
 
+    /**
+     * Summary of savePost, save a new post for the User "user_id"
+     * @param mixed $post_id
+     * @param mixed $user_id
+     * @return bool : state of the query 
+     */
     public function savePost($post_id, $user_id)
     {
         $PARAM_ADD_SAVE = 'ii';
@@ -279,6 +289,40 @@ class Database{
                   VALUES(?,?)";
         $statement = $this->db->prepare($query);
         $statement->bind_param($PARAM_ADD_SAVE, $post_id, $user_id);
+        return $statement->execute();
+    }
+
+    /**
+     * Summary of getAllSaved
+     * @param mixed $user_id
+     * @return array : All saved posts from a specific User
+     */
+    public function getAllSaved($user_id)
+    {
+        $PARAM_GET_SAVED = 'i';
+        $query = "SELECT *
+                  FROM SavedPosts
+                  WHERE User_idUser = ?";
+        $statement = $this->db->prepare($query);
+        $statement->bind_param($PARAM_GET_SAVED, $user_id);
+        $statement->execute();
+        $result = $statement->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    /**
+     * Summary of removeFromSaved : Remove a saved post from the User's list
+     * @param mixed $post_id
+     * @param mixed $user_id
+     * @return bool : State of the remove
+     */
+    public function removeFromSaved($post_id, $user_id)
+    {
+        $PARAM_DELETE_SAVED = 'ii';
+        $query = "DELETE FROM SavedPosts
+                  WHERE Post_idPost = ? AND User_idUser = ?";
+        $statement = $this->db->prepare($query);
+        $statement->bind_param($PARAM_DELETE_SAVED, $post_id, $user_id);
         return $statement->execute();
     }
 }
