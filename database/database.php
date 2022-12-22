@@ -20,6 +20,7 @@ class Database{
     // =========================== END USER'S PARAMETERS ===========================
     // =========================== START BUILDINGS'S PARAMETERS ===========================
     private $PARAM_ADD_BUILDING = 'ddi';                    // Values used to add a new Building
+    private $PARAM_GET_BUILDING = 'i';                      // Value used to get a specific Building from its id
     // =========================== END BUILDINGS'S PARAMETERS ===========================
     /**
      * Summary of __construct
@@ -176,6 +177,28 @@ class Database{
         $statement = $this->db->prepare($query);
         $statement->bind_param($this->PARAM_ADD_BUILDING, $latitude, $longitude, $postcode);
         return $statement->execute();
+    }
+    
+    /**
+     * Summary of getBuilding Get a specific Building from the Database
+     * @param mixed $building_id the Building's Id
+     * @return array, contains the specific building
+     */
+    public function getBuilding($building_id)
+    {
+        $query = "SELECT *
+                  FROM Building
+                  WHERE idBuilding = ?";
+        $statement = $this->db->prepare($query);
+        $statement->bind_param($this->PARAM_GET_BUILDING, $building_id);
+        $statement->execute();
+        $result = $statement->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC);    
+    }
+
+    public function deleteBuilding($building_id)
+    {
+
     }
 
 
