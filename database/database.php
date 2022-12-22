@@ -270,5 +270,16 @@ class Database{
         $result = $statement->get_result();
         return $result->fetch_all(MYSQLI_ASSOC);        
     }
+
+    public function savePost($post_id, $user_id)
+    {
+        $PARAM_ADD_SAVE = 'ii';
+        $query = "INSERT INTO SavedPosts
+                  (Post_idPost,User_idUser)
+                  VALUES(?,?)";
+        $statement = $this->db->prepare($query);
+        $statement->bind_param($PARAM_ADD_SAVE, $post_id, $user_id);
+        return $statement->execute();
+    }
 }
 ?>
