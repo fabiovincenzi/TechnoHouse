@@ -242,6 +242,14 @@ class Database{
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
+    /**
+     * Summary of updatePost update a specific Post
+     * @param mixed $title
+     * @param mixed $description
+     * @param mixed $price
+     * @param mixed $post_id
+     * @return bool : state of the query
+     */
     public function updatePost($title, $description, $price, $post_id)
     {
         $PARAM_UPDATE_POST = 'ssdi';
@@ -251,6 +259,16 @@ class Database{
         $statement = $this->db->prepare($query);
         $statement->bind_param($PARAM_UPDATE_POST, $title, $description, $price, $post_id);
         return $statement->execute();
+    }
+
+    public function getTags()
+    {
+        $query = "SELECT *
+                  FROM Tag";
+        $statement = $this->db->prepare($query);
+        $statement->execute();
+        $result = $statement->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC);        
     }
 }
 ?>
