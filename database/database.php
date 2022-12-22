@@ -325,5 +325,29 @@ class Database{
         $statement->bind_param($PARAM_DELETE_SAVED, $post_id, $user_id);
         return $statement->execute();
     }
+
+    public function addQuestion($user_id, $post_id, $question)
+    {
+        $PARAM_ADD_QUESTION = 'iis';
+        $query = "INSERT INTO Question
+                  (User_idUsER,Post_idPost,question)
+                  VALUES(?,?,?)";
+        $statement = $this->db->prepare($query);
+        $statement->bind_param($PARAM_ADD_QUESTION, $user_id, $post_id, $question);
+        return $statement->execute();
+    }
+
+    public function getPostsQuestions($post_id)
+    {
+        $PARAM_GET_QUESTIONS = 'i';
+        $query = "SELECT *
+                  FROM Question
+                  WHERE Post_idPost = ?";
+        $statement = $this->db->prepare($query);
+        $statement->bind_param($PARAM_GET_QUESTIONS, $post_id);
+        $statement->execute();
+        $result = $statement->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
 }
 ?>
