@@ -393,5 +393,91 @@ class Database{
         $statement->bind_param($PARAM_DELETE_ANSWER, $answer_id);
         return $statement->execute();
     }
+
+    public function addImage()
+    {
+
+    }
+
+    public function getPostsImages()
+    {
+
+    }
+
+    public function removeImage()
+    {
+
+    }
+
+    public function addFollower($source_user, $target_user)
+    {
+        // user1 start following user. User has a new follower 
+        $PARAM_ADD_FOLLOWER = 'ii';
+        $query = "INSERT INTO Follower
+                  (User_idUser,User_idUser1)
+                  VALUES(?,?)";
+        $statement = $this->db->prepare($query);
+        $statement->bind_param($PARAM_ADD_FOLLOWER, $source_user, $target_user);
+        return $statement->execute();
+    }
+
+    public function getFollowers($user_id)
+    {
+        $PARAM_GET_FOLLOWERS = 'i';
+        $query = "SELECT *
+                  FROM Follower
+                  WHERE User_idUser = ?";
+        $statement = $this->db->prepare($query);
+        $statement->bind_param($PARAM_GET_FOLLOWERS, $user_id);
+        $statement->execute();
+        $result = $statement->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    public function removeFollower($source_user, $target_user)
+    {
+        $PARAM_REMOVE_FOLLOWER = 'ii';
+        $query = "DELETE FROM Follower
+                  WHERE User_idUser = ? AND User_idUser1 = ?";
+        $statement = $this->db->prepare($query);
+        $statement->bind_param($PARAM_REMOVE_FOLLOWER, $source_user, $target_user);
+        return $statement->execute();
+    }
+
+    public function addFollowing($source_id, $target_id)
+    {
+
+        $PARAM_ADD_FOLLOWING = 'ii';
+        $query = "INSER INTO Following 
+                  (User_idUser, User_idUser1)
+                  VALUES(?,?)";
+        $statement = $this->db->prepare($query);
+        $statement->bind_param($PARAM_ADD_FOLLOWING, $source_id, $target_id);
+        return $statement->execute();
+    }
+
+    public function getFollowing($user_id)
+    {
+        $PARAM_GET_FOLLOWING = 'i';
+        $query = "SELECT *
+                  FROM Following
+                  WHERE User_idUser = ?";
+        $statement = $this->db->prepare($query);
+        $statement->bind_param($PARAM_GET_FOLLOWING, $user_id);
+        $statement->execute();
+        $result = $statement->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    public function removeFollowing($source_id, $target_id)
+    {
+        $PARAM_REMOVE_FOLLOWING = 'ii';
+        $query = "DELETE FROM Following
+                  WHERE User_idUser = ? AND User_idUser1 = ?";
+        $statement = $this->db->prepare($query);
+        $statement->bind_param($PARAM_REMOVE_FOLLOWING, $source_user, $target_user);
+        return $statement->execute();
+    }
+
 }
 ?>
