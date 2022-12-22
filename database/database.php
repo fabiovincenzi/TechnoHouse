@@ -349,5 +349,16 @@ class Database{
         $result = $statement->get_result();
         return $result->fetch_all(MYSQLI_ASSOC);
     }
+
+    public function deleteQuestion($question_id)
+    {
+        $PARAM_DELETE_QUESTION = 'i';
+        $query = "DELETE FROM Question
+                  WHERE idQuestion = ?";
+        $statement = $this->db->prepare($query);
+        $statement->bind_param($PARAM_DELETE_QUESTION, $question_id);
+        return $statement->execute();
+
+    }
 }
 ?>
