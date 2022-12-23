@@ -7,12 +7,18 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous"/>
     <link href="style/style.css" rel="stylesheet"/>
     
-    <title>Document</title>
+    <title>
+        <?php
+        echo $viewBag["title"];
+        ?>
+    </title>
 </head>
 <body>
     <div class="container">
         <div class="justify-content-center row">
             <div class="col-10 col-md-10 bg-white shadow rounded overflow-hidden mt-2">
+
+
                 <!--profile name-->
                 <div class="d-flex flex-row px-2 border-bottom">
                     <img class="rounded-circle" src="https://i.imgur.com/aoKusnD.jpg" alt="image profile of :"width="45">
@@ -127,31 +133,34 @@
     <nav class="navbar fixed-bottom navbar-expand bg-light justify-content-center">
     <ul class="navbar-nav">
         <li class="nav-item">
-            <a class="nav-link" href="home.php">
+            <a class="nav-link" href="./home.php">
                 <img class="px-2" src="./icons/house.svg" alt="home page"/>
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="./search.php">
                 <img class="px-2" src="./icons/search.svg" alt="search page"/>
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="./notification.php">
                 <img class="px-2" src="./icons/bell.svg" alt="notification page"/>
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="./profile.php">
                 <img class="px-2" src="./icons/person-circle.svg" alt="profile page"/>
             </a>
         </li>
     </ul>
 </nav>
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-
+<?php if(isset($viewBag["script"])):
+        foreach($viewBag["script"] as $script):?>
+    <script src="<?php echo $script; ?>"></script>
+    <?php
+        endforeach;
+    endif;
+    ?>
 </body>
 </html>
 
