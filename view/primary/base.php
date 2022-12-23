@@ -45,6 +45,11 @@
                 <img class="px-2" src="./icons/person-circle.svg" alt="profile page"/>
             </a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link" href="./controller_addpost.php">
+                <img class="px-2" src="./icons/person-circle.svg" alt="add a new post"/>
+            </a>
+        </li>
     </ul>
 </nav>
 <?php if(isset($viewBag["script"])):
