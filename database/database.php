@@ -478,6 +478,5 @@ class Database{
         $statement->bind_param($PARAM_REMOVE_FOLLOWING, $source_user, $target_user);
         return $statement->execute();
     }
-
 }
 ?>
