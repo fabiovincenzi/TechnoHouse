@@ -10,7 +10,7 @@ if(isUserLoggedIn()){
     require './view/primary/base.php';
 }
 else{
-    require './controller_login.php';
+    header("location: controller_login.php");
 }
 
 ?>  

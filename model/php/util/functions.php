@@ -5,8 +5,8 @@ function isUserLoggedIn(){
 }
 
 function registerLoggedUser($user){
-    $_SESSION["idUser"] = $user["idUser"];
-    $_SESSION["email"] = $user["email"];
+    $_SESSION["idUser"] = $user["email"];
+    $_SESSION["email"] = $user["password"];
 }
 
 function selectChat($chat){

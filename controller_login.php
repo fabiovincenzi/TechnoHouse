@@ -3,15 +3,16 @@
 require_once './model/php/bootstrap.php';
 //Utente si sta loggando
 if(isset($_POST["email"]) && isset($_POST["password"])){
-    var_dump($_POST);
-    $login_result = $dbh->checkLogin($_POST["username"], $_POST["password"]);
-
-        registerLoggedUser($login_result[0]);
-        $viewBag["title"] = "Login";
-        $viewBag["page"] = "./view/primary/feed.php";
-        require_once './view/primary/base.php';
-
-    
+    $login_result = $dbh->checkLogin($_POST["email"], $_POST["password"]);
+    if(count($login_result)==0){
+      $viewBag["errorMSG"] = "Error : Check username or password";
+    }
+    else{
+        //$login_result[0] = array("password"=>"mario", "email"=>"dioporcodio");
+        //registerLoggedUser($login_result[0]);
+        //echo "IO SONO QUI";
+        header("location: index.php");
+    }    
 }else{
     //Base Template
     $viewBag["title"] = "Login";
