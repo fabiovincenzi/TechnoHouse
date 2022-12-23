@@ -10,6 +10,6 @@ if (isset($_SESSION["id"])) {
     require './view/primary/base.php';
 }else{
     //redirect to the login
-    require './view/primary/login.php';
+    require 'login.php';
 }
 ?>  
