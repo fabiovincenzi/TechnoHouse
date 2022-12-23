@@ -26,7 +26,7 @@
     <nav class="navbar fixed-bottom navbar-expand bg-light justify-content-center">
     <ul class="navbar-nav">
         <li class="nav-item">
-            <a class="nav-link" href="./controller/home/controller_home.php">
+            <a class="nav-link" href="./index.php">
                 <img class="px-2" src="./icons/house.svg" alt="home page"/>
             </a>
         </li>
@@ -36,12 +36,12 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="./controller/notification/controller_notification.php">
+            <a class="nav-link" href="./controller_notification.php">
                 <img class="px-2" src="./icons/bell.svg" alt="notification page"/>
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="./controller/profile/controller_profile.php">
+            <a class="nav-link" href="./controller_profile.php">
                 <img class="px-2" src="./icons/person-circle.svg" alt="profile page"/>
             </a>
         </li>
