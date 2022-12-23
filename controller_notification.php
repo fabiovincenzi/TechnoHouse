@@ -10,9 +10,7 @@ if(isUserLoggedIn()){
     require './view/primary/base.php';
 }
 else{
-    $viewBag["titolo"] = "Blog TW - Login";
-    $viewBag["page"] = "./view/primary/login.php";
-    require_once './view/primary/base_login.php';
+    require './controller_login.php';
 }
 
 ?>  

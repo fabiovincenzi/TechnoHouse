@@ -9,15 +9,15 @@
               <p><?php echo $templateParams["ErrorMSG"]; ?></p>
             <?php endif; ?>
             <h3 class="mb-5">Sign in</h3>
-            <form action="login" method="POST">
+            <form action="#" method="POST">
             <div class="form-outline mb-4">
-              <label for="usr-email">email</label>
-              <input type="email" id="usr-email" placeholder="Email" class="form-control form-control-lg" />
+              <label for="email">email</label>
+              <input type="email" id="email" placeholder="Email" class="form-control form-control-lg" />
             </div>
 
             <div class="form-outline mb-4">
-              <label for="usr-password">Password</label>
-              <input type="password" id="usr-password" placeholder="Password" class="form-control form-control-lg" />
+              <label for="password">Password</label>
+              <input type="password" id="password" placeholder="Password" class="form-control form-control-lg" />
             </div>
 
             <!-- Checkbox -->
@@ -25,7 +25,7 @@
               <input class="form-check-input" type="checkbox" value="" id="form1Example3" />
               <label class="form-check-label" for="form1Example3"> Remember password </label>
             </div>
-              <button class="btn btn-primary btn-lg btn-block w-100" type="submit">Login</button>
+              <button class="btn btn-primary btn-lg btn-block w-100" id="submit-form" type="submit">Login</button>
               <span>Or </span><a href="./controller_signup.php">Sign up</a>
             </form>
           </div>

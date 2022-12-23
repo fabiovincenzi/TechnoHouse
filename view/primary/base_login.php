@@ -16,7 +16,8 @@
         }
     ?>
 </main>
-<?php if(isset($viewBag["script"])):
+<?php
+if (isset($viewBag["script"])):
         foreach($viewBag["script"] as $script):?>
             <script src="<?php echo $script; ?>"></script>
 <?php

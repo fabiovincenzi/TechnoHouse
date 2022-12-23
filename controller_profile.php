@@ -9,10 +9,8 @@ if(isUserLoggedIn()){
     );
     require './view/primary/base.php';
 }
-else{
-    $viewBag["titolo"] = "Blog TW - Login";
-    $viewBag["page"] = "./view/primary/login.php";    
-    require './view/primary/base_login.php';
+else{    
+    require './controller_login.php';
 }
 
 ?>  

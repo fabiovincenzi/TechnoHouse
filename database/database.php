@@ -25,6 +25,12 @@ class Database{
             die("Connection failed : ".$this->db->connect_error);
         }
     }
+
+    public function checkLogin($username, $password)
+    {
+        return array();
+    }
+
     /**
      * Summary of addUser
      * @param mixed $name           : User's name
