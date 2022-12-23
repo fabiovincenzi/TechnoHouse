@@ -1,6 +1,6 @@
 <?php
-if (isset($_SESSION["id"])) {
-    require_once './model/php/bootstrap.php';
+require_once './model/php/bootstrap.php';
+if (isUserLoggedIn()) {
     //Base Template
     $viewBag["title"] = "Add post";
     $viewBag["page"] = "./view/primary/add_post.php";
