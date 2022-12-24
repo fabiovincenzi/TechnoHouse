@@ -1,6 +1,6 @@
 <?php
-require_once 'bootstrap.php';
-$posts = $dbh->getPosts(2);
+require_once $_SERVER['DOCUMENT_ROOT'].'/TechnoHouse/model/php/bootstrap.php';
+$posts = $dbh->getUsersFeed(1);
 
 /*
 for($i = 0; $i < count($posts); $i++){
