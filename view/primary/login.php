@@ -24,7 +24,7 @@
               <input class="form-check-input" type="checkbox" value="" id="form1Example3" />
               <label class="form-check-label" for="form1Example3"> Remember password </label>
             </div>
-              <input class="btn btn-primary btn-lg btn-block w-100" name="submit" type="submit" value="Invia"/>
+              <input id="submit-form" class="btn btn-primary btn-lg btn-block w-100" name="submit" type="submit" value="Invia"/>
               <span>Or </span><a href="./controller_signup.php">Sign up</a>
             </form>
           </div>
