@@ -1,6 +1,6 @@
 <?php
-require_once './model/php/bootstrap.php';
 
+require_once './model/php/bootstrap.php';
 //Base Template
 $viewBag["title"] = "Blog TW - Home";
 $viewBag["page"] = "./view/primary/feed.php";

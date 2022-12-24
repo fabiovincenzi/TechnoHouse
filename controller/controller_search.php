@@ -1,5 +1,6 @@
 <?php
-require_once './model/php/bootstrap.php';
+$_SERVER['DOCUMENT_ROOT'].'/TechnoHouse/model/php/bootstrap.php';
+require_once 'bootstrap.php';
 //Base Template
 $viewBag["title"] = "Search";
 $viewBag["page"] = "./view/primary/search.php";
