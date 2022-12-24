@@ -1,7 +1,5 @@
-<div class="container">
         <div class="justify-content-center row">
             <div class="col-10 col-md-10 bg-white shadow rounded overflow-hidden mt-2">
-
 
                 <!--profile name-->
                 <div class="d-flex flex-row px-2 border-bottom">
@@ -111,6 +109,5 @@
                 <!--post-->
             </div>
         </div>
-    </div>
     
     

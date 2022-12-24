@@ -34,12 +34,13 @@ class Database{
      */
     public function checkLogin($username, $password)
     {
+        $PARAM_CHECK_LOGIN = 'ss';
         $query = "SELECT idUser, name, surname 
-                  FROM user 
-                  WHERE email = ? 
-                  AND password = ?";
+                  FROM User 
+                  WHERE email like ? 
+                  AND password like ?";
         $stmt = $this->db->prepare($query);
-        $stmt->bind_param('ss',$username, $password);
+        $stmt->bind_param($PARAM_CHECK_LOGIN,$username, $password);
         $stmt->execute();
         $result = $stmt->get_result();
 
