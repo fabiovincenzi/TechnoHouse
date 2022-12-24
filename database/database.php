@@ -275,10 +275,10 @@ class Database{
         $PARAM_GET_USER_POSTS = 'i';
         $query = "SELECT *
                   FROM post
-                  WHERE User_idUser IN(
+                  WHERE post.User_idUser IN(
                     SELECT User_idUser1
                     FROM following, post
-                    WHERE User_idUser = ?
+                    WHERE following.User_idUser = ?
                   )";
         $statement = $this->db->prepare($query);
         $statement->bind_param($PARAM_GET_USER_POSTS, $user_id);
