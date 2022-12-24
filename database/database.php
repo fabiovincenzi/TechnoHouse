@@ -26,9 +26,18 @@ class Database{
         }
     }
 
+     /**
+     * Summary of updateBiography : Checks if the credentials are correct
+     * @param mixed $username      : User's email
+     * @param mixed $password    : User's password 
+     * @return 
+     */
     public function checkLogin($username, $password)
     {
-        $query = "SELECT idUser, name, surname FROM user WHERE email = ? AND password = ?";
+        $query = "SELECT idUser, name, surname 
+                  FROM user 
+                  WHERE email = ? 
+                  AND password = ?";
         $stmt = $this->db->prepare($query);
         $stmt->bind_param('ss',$username, $password);
         $stmt->execute();
@@ -247,6 +256,29 @@ class Database{
         $query = "SELECT *
                   FROM Post
                   WHERE User_idUser = ?";
+        $statement = $this->db->prepare($query);
+        $statement->bind_param($PARAM_GET_USER_POSTS, $user_id);
+        $statement->execute();
+        $result = $statement->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    /**
+     * Summary of getUsersFeed get all the posts to be shown in the feed of a specific user (posts of the users that you follow)
+     * @param mixed $user_id
+     * @return array
+     */
+    public function getUsersFeed($user_id)
+    {
+        
+        $PARAM_GET_USER_POSTS = 'i';
+        $query = "SELECT *
+                  FROM post
+                  WHERE User_idUser IN(
+                    SELECT User_idUser1
+                    FROM following, post
+                    WHERE User_idUser = ?
+                  )";
         $statement = $this->db->prepare($query);
         $statement->bind_param($PARAM_GET_USER_POSTS, $user_id);
         $statement->execute();
