@@ -44,11 +44,11 @@ function login(email, password){
     formData.append('password', password);
     axios.post('model/php/api/api-login.php', formData).then(response => {
         console.log(response);
-        if (response.data["status"]) {
+        if (response.data["logged"]) {
             //visualizzaArticoli(response.data["articoliautore"]);
             //Caricare il feed
         } else {
-            document.querySelector("form > p").innerText = response.data["errorMSG"];
+            document.querySelector("p").innerText = response.data["errorMSG"];
         }
     });
 }
@@ -59,9 +59,9 @@ function visualizeLoginForm(){
     // Gestisco tentativo di login
     document.querySelector("form").addEventListener("submit", function (event) {
         event.preventDefault();
-        const username = document.querySelector("#email").value;
+        const email = document.querySelector("#email").value;
         const password = document.querySelector("#password").value;
-        login(username + " " + password);
+        login(email, password);
     });
 }
 const main = document.querySelector("main");
