@@ -1,6 +1,6 @@
 <?php
-require_once 'bootstrap.php';
-var_dump($_GET);
+require_once `{$_SERVER['DOCUMENT_ROOT']}/model/php/bootstrap.php`;
+var_dump($_POST);
 $result["logged"] = false;
 
 if(isset($_POST["email"]) && isset($_POST["password"])){
