@@ -1,5 +1,5 @@
 <?php
-require_once `{$_SERVER['DOCUMENT_ROOT']}/model/php/bootstrap.php`;
+require_once $_SERVER['DOCUMENT_ROOT'].'/TechnoHouse/model/php/bootstrap.php';
 var_dump($_POST);
 $result["logged"] = false;
 
