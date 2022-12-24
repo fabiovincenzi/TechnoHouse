@@ -307,6 +307,25 @@ class Database{
     }
 
     /**
+     * Summary of getTagsByPost
+     * @return array : All the tags of a post
+     */
+    public function getTagsByPost($post_id)
+    {
+        $PARAM_GET_TAGS_BY_POST = 'i';
+        $query = "SELECT *
+                  FROM tag
+                  WHERE idTag IN(SELECT Tag_idTag
+                  FROM post_has_tag
+                  WHERE Post_idPost = ?)";
+        $statement = $this->db->prepare($query);
+        $statement->bind_param($PARAM_GET_TAGS_BY_POST, $post_id);
+        $statement->execute();
+        $result = $statement->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC);        
+    }
+
+    /**
      * Summary of getTags
      * @return array : All the tags inside the Database
      */
@@ -493,7 +512,7 @@ class Database{
     {
 
         $PARAM_ADD_FOLLOWING = 'ii';
-        $query = "INSER INTO Following 
+        $query = "INSERT INTO Following 
                   (User_idUser, User_idUser1)
                   VALUES(?,?)";
         $statement = $this->db->prepare($query);
