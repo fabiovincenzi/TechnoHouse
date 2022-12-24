@@ -1,6 +1,6 @@
 <?php
 require_once 'bootstrap.php';
-
+var_dump($_GET);
 $result["logged"] = false;
 
 if(isset($_POST["email"]) && isset($_POST["password"])){
