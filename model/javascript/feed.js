@@ -114,7 +114,7 @@ function createPost(el){
                 `;
                 return post;
 }
-axios.get(`model/php/api/api-post.php?id=${myvalue}`).then(response => {
+axios.get(`model/php/api/api-post.php?id=${myvalue}`, {"myid":id}).then(response => {
     console.log(response);
     const main = document.querySelector("main");
     response.data.forEach(element => {
