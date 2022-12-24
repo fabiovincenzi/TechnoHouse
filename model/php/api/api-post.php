@@ -1,5 +1,5 @@
 <?php
-require_once 'bootstrap.php';
+require_once $_SERVER['DOCUMENT_ROOT'].'/TechnoHouse/model/php/bootstrap.php';
 $posts = $dbh->getPosts(2);
 
 /*
