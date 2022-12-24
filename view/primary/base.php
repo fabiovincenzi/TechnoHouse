@@ -31,7 +31,7 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="./controller/controller_search.php">
+            <a class="nav-link" href="./controller_search.php">
                 <img class="px-2" src="./icons/search.svg" alt="search page"/>
             </a>
         </li>
