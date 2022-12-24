@@ -1,11 +1,12 @@
 <?php
-
 require_once './model/php/bootstrap.php';
 //Utente si sta loggando
 if(isset($_POST["email"]) && isset($_POST["password"])){
+
     $login_result = $dbh->checkLogin($_POST["email"], $_POST["password"]);
     if(count($login_result)==0){
-      $viewBag["errorMSG"] = "Error : Check username or password";
+        $viewBag["errorMSG"] = "Error : Check username or password";
+        var_dump($viewBag);
     }
     else{
         //$login_result[0] = array("password"=>"mario", "email"=>"dioporcodio");

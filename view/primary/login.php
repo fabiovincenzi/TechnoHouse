@@ -5,8 +5,8 @@
         <div class="card shadow-2-strong" style="border-radius: 1rem;">
           <div class="card-body p-5 text-center">
           <form action="#" method="POST">
-            <?php if(isset($templateParams["ErrorMSG"])): ?>
-              <p><?php echo $templateParams["ErrorMSG"]; ?></p>
+            <?php if(isset($viewBag["ErrorMSG"])): ?>
+              <p><?php echo $viewBag["ErrorMSG"]; ?></p>
             <?php endif; ?>
             <h3 class="mb-5">Sign in</h3>
             <div class="form-outline mb-4">
