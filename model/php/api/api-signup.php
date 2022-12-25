@@ -29,12 +29,14 @@ if(isset($_POST["name"]) && isset($_POST["surname"]) && isset($_POST["phone-numb
                             if (validatePassword($_POST["password"])) {
                                 $result["errorMSG"] = "Error : Password should be at least 12 characters in lenght and should include at least one upper case letter, one number and one special character";
                             } else {
-                                $password = hashPassword($_POST["password"]);
-                                $conf_password = hashPassword($_POST["confirm-password"]);
+                                $password = $_POST["password"];
+                                $conf_password = $_POST["confirm-password"];
                                 if (!checkPasswords($password, $conf_password)) {
                                     $result["errorMSG"] = "Error : The passwords are not equal. Please insert again the passwords";
                                 }else{
-                                    //$dbh->addUser();
+                                    $logged_user = $dbh->addUser($name, $surname, $date, $phone_number, $email, $password);
+                                    var_dump($logged_user);
+                                    //registerLoggedUser($logged_user[0]);
                                 }
                             }
                         }

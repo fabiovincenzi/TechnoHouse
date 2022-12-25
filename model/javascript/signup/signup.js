@@ -92,7 +92,7 @@ function visualizeSignupForm(){
         const birthdate = document.querySelector("#birthdate").value;
         const email = document.querySelector("#email").value;
         const password = document.querySelector("#password").value;
-        const conf_password = document.querySelector("#confirm-password");
+        const conf_password = document.querySelector("#confirm-password").value;
         //console.log(name + " " + surname + " " + residence + " " + birthdate + " " + email + " " + password + " " + conf_password);
         signup(name, surname, phone_number, birthdate, email, password, conf_password);
     });

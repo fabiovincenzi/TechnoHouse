@@ -56,14 +56,16 @@ class Database{
      * @param mixed $password       : User's password
      * @return bool                 : State of the Add
      */
-    public function addUser($name, $surname, $birthdate, $residence, $email, $password)
+    public function addUser($name, $surname, $birthdate, $phone_number, $email, $password)
     {
-        $PARAM_ADD_USER = 'iiii';                       // Values for the add of a new User
+        $PARAM_ADD_USER = 'sssisss';                       // Values for the add of a new User
         $query = "INSERT INTO User
                   (name,surname,email,phoneNumber,birthdate,password,biography)
                    VALUES (?, ?, ?, ?, ?, ?, ?)";
         $statement = $this->db->prepare($query);
-        $statement->bind_param($PARAM_ADD_USER, $name, $surname, $birthdate, $email, $password);
+        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+        $biography = "";
+        $statement->bind_param($PARAM_ADD_USER, $name, $surname, $email,$phone_number, $birthdate, $hashed_password, $biography);
         return $statement->execute();
     }
 

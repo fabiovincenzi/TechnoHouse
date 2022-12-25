@@ -21,7 +21,7 @@ USE `technohouse` ;
 -- Table `technohouse`.`User`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `technohouse`.`User` (
-  `idUser` INT NOT NULL,
+  `idUser` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
   `surname` VARCHAR(45) NOT NULL,
   `email` VARCHAR(45) NOT NULL,

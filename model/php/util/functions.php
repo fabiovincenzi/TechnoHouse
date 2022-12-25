@@ -32,7 +32,7 @@ function validatePassword($password){
 }
 
 function hashPassword($password){
-    return password_hash($password,  PASSWORD_BCRYPT);
+    return password_hash($password, PASSWORD_DEFAULT);
 }
 function checkPasswords($password1, $password2){
     return strcmp($password1, $password2) == 0;
