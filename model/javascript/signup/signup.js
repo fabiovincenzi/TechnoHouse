@@ -19,11 +19,6 @@ function generateForm(){
                 </div>
 
                 <div class="form-outline mb-4">
-                  <label for="birthdate">Birthdate</label>
-                  <input type="text" id="birthdate" placeholder="Birth date" class="form-control form-control-lg" />
-                </div>
-
-                <div class="form-outline mb-4">
                   <label for="residence">Residence</label>
                   <input type="text" id="residence" placeholder="Residence" class="form-control form-control-lg" />
                 </div>
@@ -66,15 +61,55 @@ function generateForm(){
     return form;
 }
 
+function signup(name, surname, residence, birthdate, email, password, confirm_password){
+    const formData = new FormData();
+    formData.append('name', name);
+    formData.append('surname', surname);
+    formData.append('residence', residence);
+    formData.append('birthdate', birthdate);
+    formData.append('email', email);
+    formData.append('password', password);
+    formData.append('confirm-password', confirm_password);
+    axios.post('model/php/api/api-login.php', formData).then(response => {
+        console.log(response);
+        if (response.data["logged"]) {
+            //visualizzaArticoli(response.data["articoliautore"]);
+            //Caricare il feed
+        } else {
+            document.querySelector("p").innerText = response.data["errorMSG"];
+        }
+    });
+}
+
+function visualizeSignupForm(){
+    let form = generateForm();
+    main.innerHTML = form;
+    console.log("CIAOO");
+    document.querySelector("form").addEventListener("submit", function (event) {
+        event.preventDefault();
+        const name = document.querySelector("#name").value;
+        const surname = document.querySelector("#surname").value;
+        const residence = document.querySelector("#residence").value;
+        const birthdate = document.querySelector("#birthdate").value;
+        const email = document.querySelector("#email").value;
+        const password = document.querySelector("#password").value;
+        const conf_password = document.querySelector("#confirm-password");
+        console.log(name + " " + surname + " " + residence + " " + birthdate + " " + email + " " + password + " " + conf_password);
+        signup(name, surname, residence, birthdate, email, password, conf_password);
+    });
+    
+}
+
 const main = document.querySelector("main");
 const input = document.getElementById("submit-form");
 axios.get('model/php/api/api-signup.php').then(response => {
     console.log(response);
-     if (response.data["logineseguito"]) {
+    if (response.data["logged"]) {
         // Utente loggato
+        // redirect to another page
         //visualizzaArticoli(response.data["articoliautore"]);
-     } else {
+    } else {
         // Utente NON loggato
-        visualizeLoginForm();
-     }
+        visualizeSignupForm();
+    }
 });
