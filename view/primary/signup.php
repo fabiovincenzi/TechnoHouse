@@ -26,6 +26,11 @@
                 </div>
 
                 <div class="form-outline mb-4">
+                  <label for="birthdate">Birthdate</label>
+                <input type="date" id="birthdate" name="trip-start" value="2018-07-22" min="1910-01-01">
+                </div>
+
+                <div class="form-outline mb-4">
                   <label for="email">Email</label>
                   <input type="email" id="email" placeholder="Email" class="form-control form-control-lg" />
                 </div>
