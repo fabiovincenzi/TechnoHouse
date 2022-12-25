@@ -70,7 +70,7 @@ function signup(name, surname, residence, birthdate, email, password, confirm_pa
     formData.append('email', email);
     formData.append('password', password);
     formData.append('confirm-password', confirm_password);
-    axios.post('model/php/api/api-login.php', formData).then(response => {
+    axios.post('model/php/api/api-signup.php', formData).then(response => {
         console.log(response);
         if (response.data["logged"]) {
             //visualizzaArticoli(response.data["articoliautore"]);
@@ -84,7 +84,6 @@ function signup(name, surname, residence, birthdate, email, password, confirm_pa
 function visualizeSignupForm(){
     let form = generateForm();
     main.innerHTML = form;
-    console.log("CIAOO");
     document.querySelector("form").addEventListener("submit", function (event) {
         event.preventDefault();
         const name = document.querySelector("#name").value;
@@ -94,7 +93,7 @@ function visualizeSignupForm(){
         const email = document.querySelector("#email").value;
         const password = document.querySelector("#password").value;
         const conf_password = document.querySelector("#confirm-password");
-        console.log(name + " " + surname + " " + residence + " " + birthdate + " " + email + " " + password + " " + conf_password);
+        //console.log(name + " " + surname + " " + residence + " " + birthdate + " " + email + " " + password + " " + conf_password);
         signup(name, surname, residence, birthdate, email, password, conf_password);
     });
     
