@@ -65,3 +65,16 @@ function generateForm(){
     `
     return form;
 }
+
+const main = document.querySelector("main");
+const input = document.getElementById("submit-form");
+axios.get('model/php/api/api-signup.php').then(response => {
+    console.log(response);
+     if (response.data["logineseguito"]) {
+        // Utente loggato
+        //visualizzaArticoli(response.data["articoliautore"]);
+     } else {
+        // Utente NON loggato
+        visualizeLoginForm();
+     }
+});

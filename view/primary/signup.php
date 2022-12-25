@@ -46,12 +46,11 @@
                   <input type="password" id="confirm-password" placeholder="Confirm Password" class="form-control form-control-lg" />
                 </div>
     
-                <!-- Checkbox -->
                 <div class="form-check d-flex justify-content-start mb-4">
                   <input class="form-check-input" type="checkbox" value="" id="form1Example3" />
                   <label class="form-check-label" for="form1Example3"> Remember password </label>
                 </div>
-                  <input class="btn btn-primary btn-lg btn-block w-100" name="submit" value="sign up" type="submit"/>
+                  <input class="btn btn-primary btn-lg btn-block w-100" id="submit-form" name="submit" value="sign up" type="submit"/>
                   <span>Or </span><a href="./controller_login.php">Login</a>
               </div>
               </form>
