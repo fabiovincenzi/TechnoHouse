@@ -15,15 +15,24 @@ function checkBirthdate($date){
 }
 
 function checkEmail($email){
-    return strpos("a", "@");
+    return strpos($email, "@");
 }
 
 function validatePhoneNumber($phone_number){
-    return preg_match('/^[0-9]{10}+$/', $phone_number);
+    return preg_match('/^[0-9]{10}+$/', $phone_number); 
+}
+
+function validatePassword($password){
+    // Validate password strength
+    $uppercase=preg_match('@[A-Z]@',$password);
+    $lowercase=preg_match('@[a-z]@',$password);
+    $number=preg_match('@[0-9]@',$password);
+    $specialChars=preg_match('@[^\w]@',$password);
+    return !$uppercase||!$lowercase||!$number||!$specialChars||strlen($password)< 12;
 }
 
 function hashPassword($password){
-    return password_hash($password, 'whirlpool');
+    return password_hash($password,  PASSWORD_BCRYPT);
 }
 function checkPasswords($password1, $password2){
     return strcmp($password1, $password2) == 0;
