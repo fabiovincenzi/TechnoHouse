@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS `technohouse`.`User` (
   `email` VARCHAR(45) NOT NULL,
   `phoneNumber` VARCHAR(45) NOT NULL,
   `birthDate` DATE NOT NULL,
-  `password` VARCHAR(256) NOT NULL,
+  `password` VARCHAR(512) NOT NULL,
   `biography` LONGTEXT NULL,
   PRIMARY KEY (`idUser`),
   UNIQUE INDEX `idUser_UNIQUE` (`idUser` ASC) ,

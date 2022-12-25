@@ -63,7 +63,7 @@ class Database{
                   (name,surname,email,phoneNumber,birthdate,password,biography)
                    VALUES (?, ?, ?, ?, ?, ?, ?)";
         $statement = $this->db->prepare($query);
-        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+        $hashed_password = hash('whirlpool', $password);
         $biography = "";
         $statement->bind_param($PARAM_ADD_USER, $name, $surname, $email,$phone_number, $birthdate, $hashed_password, $biography);
         return $statement->execute();
