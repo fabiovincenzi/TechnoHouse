@@ -15,7 +15,7 @@ function checkBirthdate($date){
 }
 
 function checkEmail($email){
-    return str_contains($email, "@");
+    return strpos("a", "@");
 }
 
 function checkPasswords($password1, $password2){
