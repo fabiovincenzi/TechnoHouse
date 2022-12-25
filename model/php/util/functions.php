@@ -18,6 +18,13 @@ function checkEmail($email){
     return strpos("a", "@");
 }
 
+function validatePhoneNumber($phone_number){
+    return preg_match('/^[0-9]{10}+$/', $phone_number);
+}
+
+function hashPassword($password){
+    return password_hash($password, 'whirlpool');
+}
 function checkPasswords($password1, $password2){
     return strcmp($password1, $password2) == 0;
 }

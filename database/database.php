@@ -56,7 +56,7 @@ class Database{
      * @param mixed $password       : User's password
      * @return bool                 : State of the Add
      */
-    public function addUser($name, $surname, $birthdate, $email, $password)
+    public function addUser($name, $surname, $birthdate, $residence, $email, $password)
     {
         $PARAM_ADD_USER = 'iiii';                       // Values for the add of a new User
         $query = "INSERT INTO User
