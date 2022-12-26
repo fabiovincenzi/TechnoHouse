@@ -38,8 +38,8 @@ function checkPasswords($password1, $password2){
     return strcmp($password1, $password2) == 0;
 }
 function registerLoggedUser($user){
-    $_SESSION["idUser"] = $user["email"];
-    $_SESSION["email"] = $user["password"];
+    $_SESSION["idUser"] = $user["id"];
+    $_SESSION["email"] = $user["email"];
 }
 
 function selectChat($chat){

@@ -11,7 +11,7 @@ if(isset($_POST["email"]) && isset($_POST["password"])){
         $login_result = $dbh->checkLogin($email, $password);
         //var_dump($login_result);
         if ($login_result) {
-            registerLoggedUser(array("email"=>$email, "password"=>$password));
+            registerLoggedUser(array("id"=>$, "email"=>$email));
         } else {
             $result["errorMSG"] = "Error : The password is not correct";
         }
