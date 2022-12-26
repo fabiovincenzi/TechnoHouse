@@ -58,7 +58,12 @@ function generateProfile(){
     return page;
 }
 
+function getAllPosts(){
+   
+}
+
 function visualizeProfile(){
+   let posts = getAllPosts();
    let profie = generateProfile();
    main.innerHTML = profie;
 }

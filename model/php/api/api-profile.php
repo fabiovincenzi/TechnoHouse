@@ -4,7 +4,8 @@ $result["logged"] = false;
 
 if(isUserLoggedIn()){
     $result["logged"] = true;
-    
+    $result["idUser"] = $_SESSION["idUser"];
+    $result["email"] = $_SESSION["email"];
 }
 
 header('Content-Type: application/json');
