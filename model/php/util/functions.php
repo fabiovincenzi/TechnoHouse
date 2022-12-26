@@ -1,7 +1,8 @@
 <?php
+require_once $_SERVER['DOCUMENT_ROOT'].'/model/php/bootstrap.php';
 
 function isUserLoggedIn(){
-    return !empty($_SESSION['idUser']);
+    return !empty($_SESSION[TAG_USER_ID]);
 }
 
 function containsNumber($input){
@@ -38,8 +39,8 @@ function checkPasswords($password1, $password2){
     return strcmp($password1, $password2) == 0;
 }
 function registerLoggedUser($user){
-    $_SESSION["idUser"] = $user["idUser"];
-    $_SESSION["email"] = $user["email"];
+    $_SESSION[TAG_USER_ID] = $user[TAG_USER_ID];
+    $_SESSION[TAG_USER_EMAIL] = $user[TAG_USER_EMAIL];
 }
 
 function selectChat($chat){

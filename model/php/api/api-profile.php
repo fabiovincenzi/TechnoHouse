@@ -1,11 +1,11 @@
 <?php
 require_once $_SERVER['DOCUMENT_ROOT'].'/TechnoHouse/model/php/bootstrap.php';
-$result["logged"] = false;
+$result[TAG_LOGGED] = false;
 
 if(isUserLoggedIn()){
-    $result["logged"] = true;
-    $result["idUser"] = $_SESSION["idUser"];
-    $result["email"] = $_SESSION["email"];
+    $result[TAG_LOGGED] = true;
+    $result[TAG_USER_ID] = $_SESSION[TAG_USER_ID];
+    $result[TAG_USER_EMAIL] = $_SESSION[TAG_USER_EMAIL];
 }
 
 header('Content-Type: application/json');
