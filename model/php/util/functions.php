@@ -38,7 +38,7 @@ function checkPasswords($password1, $password2){
     return strcmp($password1, $password2) == 0;
 }
 function registerLoggedUser($user){
-    $_SESSION["idUser"] = $user["id"];
+    $_SESSION["idUser"] = $user["idUser"];
     $_SESSION["email"] = $user["email"];
 }
 

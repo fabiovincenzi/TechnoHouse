@@ -36,15 +36,15 @@ class Database{
      * Summary of updateBiography : Checks if the credentials are correct
      * @param mixed $email        : User's email
      * @param mixed $password     : User's password 
-     * @return bool
+     * @return mixed
      */
     public function checkLogin($email, $password)
     {
         if(count($this->checkEmail($email)) == 0){
-            return false;
+            return array();
         }
         $PARAM_CHECK_LOGIN = 's';
-        $query = "SELECT password
+        $query = "SELECT idUser, password
                   FROM User 
                   WHERE email like ?";
         $stmt = $this->db->prepare($query);
@@ -53,8 +53,12 @@ class Database{
         $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
         $saved_password = $result[0]["password"];
         $result_psw = password_verify($password, $saved_password);
-        $this->error_string = $result ? "PASSWORD" : "";
-        return $result_psw;
+        if($result_psw){
+            return $result;
+        }else{
+            $this->error_string = $result_psw == false ? "PASSWORD" : "";
+            return array();
+        }
     }
 
     /**
