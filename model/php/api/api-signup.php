@@ -34,12 +34,9 @@ if(isset($_POST["name"]) && isset($_POST["surname"]) && isset($_POST["phone-numb
                                 if (!checkPasswords($password, $conf_password)) {
                                     $result["errorMSG"] = "Error : The passwords are not equal. Please insert again the passwords";
                                 }else{
-                                    $logged_user = $dbh->addUser($name, $surname, $date, $phone_number, $email, $password);
-                                    var_dump($dbh->getErrorString());
-                                    var_dump($_POST);
-                                    if($logged_user){
-                                        var_dump($dbh->getErrorString());
-                                        registerLoggedUser(array("email"=>$email,"password" => $password));
+                                    $login_result = $dbh->addUser($name, $surname, $date, $phone_number, $email, $password);
+                                    if($login_result){
+                                        registerLoggedUser(array("idUser"=>$dbh->getUserInfo(TAG_USER_ID, $email),"email" => $email));
                                         $result["logged"] = true;
                                     }else{
                                         $result["errorMSG"] = "Error : The ".$dbh->getErrorString()." already exist";

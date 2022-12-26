@@ -127,6 +127,10 @@ class Database{
         return $statement->execute();
     }
 
+    public function getUserInfo($info, $email){
+        return $this->getUserByEmail($email)[0][$info];
+    }
+
     /**
      * Summary of getUserByID
      * @param mixed $user_id    : User's ID
@@ -153,6 +157,9 @@ class Database{
      */
     public function getUserByEmail($email)
     {
+        if(count($this->checkEmail($email)) == 0){
+            return array();
+        }
         $PARAM_GET_USER_EMAIL = 's';                    // Value used to get tbe User by his Emeail               
         $query = "SELECT *
                   FROM User
