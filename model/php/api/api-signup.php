@@ -68,6 +68,9 @@ if(isset($_POST["name"]) && isset($_POST["surname"]) && isset($_POST["phone-numb
         $result["errorMSG"] = "Error : You must confirm the PASSWORD";
     }
 }
+if(isUserLoggedIn()){
+    $result["logged"] = true;
+}
 header('Content-Type: application/json');
 echo json_encode($result);
 ?>
