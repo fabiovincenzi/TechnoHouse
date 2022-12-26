@@ -1,6 +1,4 @@
 function generateLoginForm(){
-
-    let error_msg = 1;//!login_error ? `<p>${login_error}</p>` : `<p></p>`;     
     let login_form = 
     `<section class="vh-100" style="background-color: #508bfc;">
         <div class="container py-5 h-100">
