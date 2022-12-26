@@ -34,22 +34,27 @@ class Database{
 
      /**
      * Summary of updateBiography : Checks if the credentials are correct
-     * @param mixed $username      : User's email
-     * @param mixed $password    : User's password 
-     * @return 
+     * @param mixed $email        : User's email
+     * @param mixed $password     : User's password 
+     * @return bool
      */
-    public function checkLogin($username, $password)
+    public function checkLogin($email, $password)
     {
-        $PARAM_CHECK_LOGIN = 'ss';
-        $query = "SELECT idUser, name, surname 
+        if(count($this->checkEmail($email)) == 0){
+            return false;
+        }
+        $PARAM_CHECK_LOGIN = 's';
+        $query = "SELECT password
                   FROM User 
-                  WHERE email like ? 
-                  AND password like ?";
+                  WHERE email like ?";
         $stmt = $this->db->prepare($query);
-        $stmt->bind_param($PARAM_CHECK_LOGIN,$username, $password);
+        $stmt->bind_param($PARAM_CHECK_LOGIN,$email);
         $stmt->execute();
-        $result = $stmt->get_result();
-        return $result->fetch_all(MYSQLI_ASSOC);
+        $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+        $saved_password = $result[0]["password"];
+        $result_psw = password_verify($password, $saved_password);
+        $this->error_string = $result ? "PASSWORD" : "";
+        return $result_psw;
     }
 
     /**
