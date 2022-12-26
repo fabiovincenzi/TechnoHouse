@@ -65,6 +65,21 @@ function generatePosts(posts){
    });
 }
 
+function addListeners(){
+   document.getElementById('followers').addEventListener("click", function(evenet){
+      window.location.replace("./controller_login.php");   
+   });
+   document.getElementById('following').addEventListener("click", function(evenet){
+      window.location.replace("./controller_login.php");   
+   });
+   document.getElementById('saved').addEventListener("click", function(evenet){
+      window.location.replace("./controller_login.php");   
+   });
+}
+
+function addUserInfo(user_infos){
+   main.innerHTML = user_infos;
+}
 
 function visualizeProfile(){
    let posts = {};
@@ -75,16 +90,8 @@ function visualizeProfile(){
          user = response.data["users-info"];
          posts = response.data["users-posts"];
          let content_profile = generateProfile(user);
-         main.innerHTML = content_profile;
-         document.getElementById('followers').addEventListener("click", function(evenet){
-            console.log("ciaoo");
-         });
-         document.getElementById('followuing').addEventListener("click", function(evenet){
-            console.log("ciaoo");
-         });
-         document.getElementById('saved').addEventListener("click", function(evenet){
-            console.log("ciaoo");
-         });
+         addUserInfo(content_profile);
+         addListeners();
          generatePosts(posts);
       }else{
          window.location.replace("./controller_login.php");   
