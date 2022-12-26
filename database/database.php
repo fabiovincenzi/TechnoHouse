@@ -10,6 +10,7 @@
  */
 class Database{
     private $db;                                            // Attribute that rappresent the Database
+    private $error_string;
     /**
      * Summary of __construct
      * @param mixed server_name : Name of the server to connect
@@ -19,12 +20,47 @@ class Database{
     */
     public function __construct($server_name, $username, $password, $dbname, $port)
     {
+        $this->error_string = "";
         $this->db = new mysqli($server_name, $username, $password, $dbname, $port);
         if($this->db->connect_error)
         {
             die("Connection failed : ".$this->db->connect_error);
         }
     }
+
+    public function getErrorString(){
+        return $this->error_string;
+    }
+
+     /**
+     * Summary of updateBiography : Checks if the credentials are correct
+     * @param mixed $email        : User's email
+     * @param mixed $password     : User's password 
+     * @return mixed
+     */
+    public function checkLogin($email, $password)
+    {
+        if(count($this->checkEmail($email)) == 0){
+            return array();
+        }
+        $PARAM_CHECK_LOGIN = 's';
+        $query = "SELECT idUser, password
+                  FROM User 
+                  WHERE email like ?";
+        $stmt = $this->db->prepare($query);
+        $stmt->bind_param($PARAM_CHECK_LOGIN,$email);
+        $stmt->execute();
+        $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+        $saved_password = $result[0]["password"];
+        $result_psw = password_verify($password, $saved_password);
+        if($result_psw){
+            return $result;
+        }else{
+            $this->error_string = $result_psw == false ? "PASSWORD" : "";
+            return array();
+        }
+    }
+
     /**
      * Summary of addUser
      * @param mixed $name           : User's name
@@ -34,15 +70,46 @@ class Database{
      * @param mixed $password       : User's password
      * @return bool                 : State of the Add
      */
-    public function addUser($name, $surname, $birthdate, $email, $password)
+    public function addUser($name, $surname, $birthdate, $phone_number, $email, $password)
     {
-        $PARAM_ADD_USER = 'iiii';                       // Values for the add of a new User
+        if(count($this->checkEmail($email))>0 || count($this->checkPhoneNumber($phone_number)) > 0){
+            return false;
+        }
+
+        $PARAM_ADD_USER = 'sssisss';                       // Values for the add of a new User
         $query = "INSERT INTO User
                   (name,surname,email,phoneNumber,birthdate,password,biography)
                    VALUES (?, ?, ?, ?, ?, ?, ?)";
         $statement = $this->db->prepare($query);
-        $statement->bind_param($PARAM_ADD_USER, $name, $surname, $birthdate, $email, $password);
+        //password_hash($password, PASSWORD_DEFAULT);
+        $hashed_password = password_hash($password, PASSWORD_BCRYPT);
+        $biography = "";
+        $statement->bind_param($PARAM_ADD_USER, $name, $surname, $email,$phone_number, $birthdate, $hashed_password, $biography);
         return $statement->execute();
+    }
+
+    public function checkPhoneNumber($phone_number){
+        $PARAM_CHECK_EMAIL = 'i';                       // Values for the add of a new User
+        $query = "SELECT *
+                  FROM User
+                  WHERE phoneNumber like ?";
+        $statement = $this->db->prepare($query);
+        $statement->bind_param($PARAM_CHECK_EMAIL, $phone_number);
+        $this->error_string = $statement->execute() ? "PHONE" : "";
+        $result = $statement->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC);    
+    }
+
+    public function checkEmail($email){
+        $PARAM_CHECK_EMAIL = 's';                       // Values for the add of a new User
+        $query = "SELECT *
+                  FROM User
+                  WHERE email like ?";
+        $statement = $this->db->prepare($query);
+        $statement->bind_param($PARAM_CHECK_EMAIL, $email);
+        $this->error_string = $statement->execute() ? "EMAIL" : "";
+        $result = $statement->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC);
     }
 
     /**
@@ -58,6 +125,14 @@ class Database{
         $statement = $this->db->prepare($query);
         $statement->bind_param($PARAM_UPDATE_USER_BIOGRAPHY, $biography, $user_id);
         return $statement->execute();
+    }
+
+    public function getUserInfo($info, $email){
+        if (is_string($info)) {
+            return $this->getUserByEmail($email)[0][$info];
+        }else{
+            return array();
+        }
     }
 
     /**
@@ -86,6 +161,9 @@ class Database{
      */
     public function getUserByEmail($email)
     {
+        if(count($this->checkEmail($email)) == 0){
+            return array();
+        }
         $PARAM_GET_USER_EMAIL = 's';                    // Value used to get tbe User by his Emeail               
         $query = "SELECT *
                   FROM User
@@ -243,6 +321,29 @@ class Database{
     }
 
     /**
+     * Summary of getUsersFeed get all the posts to be shown in the feed of a specific user (posts of the users that you follow)
+     * @param mixed $user_id
+     * @return array
+     */
+    public function getUsersFeed($user_id)
+    {
+        
+        $PARAM_GET_USER_POSTS = 'i';
+        $query = "SELECT *
+                  FROM post
+                  WHERE post.User_idUser IN(
+                    SELECT User_idUser1
+                    FROM following, post
+                    WHERE following.User_idUser = ?
+                  )";
+        $statement = $this->db->prepare($query);
+        $statement->bind_param($PARAM_GET_USER_POSTS, $user_id);
+        $statement->execute();
+        $result = $statement->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    /**
      * Summary of updatePost update a specific Post
      * @param mixed $title
      * @param mixed $description
@@ -259,6 +360,25 @@ class Database{
         $statement = $this->db->prepare($query);
         $statement->bind_param($PARAM_UPDATE_POST, $title, $description, $price, $post_id);
         return $statement->execute();
+    }
+
+    /**
+     * Summary of getTagsByPost
+     * @return array : All the tags of a post
+     */
+    public function getTagsByPost($post_id)
+    {
+        $PARAM_GET_TAGS_BY_POST = 'i';
+        $query = "SELECT *
+                  FROM tag
+                  WHERE idTag IN(SELECT Tag_idTag
+                  FROM post_has_tag
+                  WHERE Post_idPost = ?)";
+        $statement = $this->db->prepare($query);
+        $statement->bind_param($PARAM_GET_TAGS_BY_POST, $post_id);
+        $statement->execute();
+        $result = $statement->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC);        
     }
 
     /**
@@ -448,7 +568,7 @@ class Database{
     {
 
         $PARAM_ADD_FOLLOWING = 'ii';
-        $query = "INSER INTO Following 
+        $query = "INSERT INTO Following 
                   (User_idUser, User_idUser1)
                   VALUES(?,?)";
         $statement = $this->db->prepare($query);

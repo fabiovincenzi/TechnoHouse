@@ -10,6 +10,6 @@ if (isUserLoggedIn()) {
     require './view/primary/base.php';
 }else{
     //redirect to the login
-    require 'controller_login.php';
+    header("location: controller_login.php");
 }
 ?>  

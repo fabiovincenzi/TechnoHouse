@@ -1,5 +1,6 @@
-<!--
-<div class="justify-content-center row">
+function generateProfile(){
+    let page = `
+        <div class="justify-content-center row">
             <div class="col-10 col-md-10 bg-white shadow rounded overflow-hidden">
  
               <div class="p-4 bg-black row">
@@ -7,26 +8,25 @@
                         <img src="https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80" alt="..." width="130" class="rounded mb-2 img-thumbnail">
                     </div>
                     <div class="text-white col-7">
-                        <h4>Mark Williams de Crescienzo</h4>
-                        <p>New York</p>
+                        <h4 id="name-surname">NAME-SURNAME</h4>
                     </div>
               </div>
               <div class="border-bottom p-4 justify-content-end text-center">
                  <ul class="list-inline mb-0">
                     <li class="list-inline-item">
-                       <h5 class="font-weight-bold mb-0 d-block">215</h5>
+                       <h5 class="font-weight-bold mb-0 d-block" id="n-photo" >N-PHOTO</h5>
                        <small class="text-muted"> <em class="fas fa-image mr-1"></em>Photos</small> 
                     </li>
                     <li class="list-inline-item">
-                       <h5 class="font-weight-bold mb-0 d-block">745</h5>
+                       <h5 class="font-weight-bold mb-0 d-block"id="followers">FOLLOWERS</h5>
                        <small class="text-muted"> <em class="fas fa-user mr-1"></em>Followers</small> 
                     </li>
                     <li class="list-inline-item">
-                       <h5 class="font-weight-bold mb-0 d-block">340</h5>
+                       <h5 class="font-weight-bold mb-0 d-block" id="following">FOLLOWING</h5>
                        <small class="text-muted"> <em class="fas fa-user mr-1"></em>Following</small> 
                     </li>
                     <li class="list-inline-item">
-                        <h5 class="font-weight-bold mb-0 d-block">120</h5>
+                        <h5 class="font-weight-bold mb-0 d-block" id="saved">SAVED</h5>
                         <small class="text-muted"> <em class="fas fa-user mr-1"></em>Saved</small> 
                      </li>
                  </ul>
@@ -45,12 +45,30 @@
                     <a href="#" class="btn btn-link text-muted">Show all</a> 
                  </div>
                  <div class="row">
-                    <div class="col-lg-6 mb-2 pr-lg-1"><img src="https://images.unsplash.com/photo-1469594292607-7bd90f8d3ba4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80" alt="" class="img-fluid rounded shadow-sm"></div>
-                    <div class="col-lg-6 mb-2 pl-lg-1"><img src="https://images.unsplash.com/photo-1493571716545-b559a19edd14?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80" alt="" class="img-fluid rounded shadow-sm"></div>
-                    <div class="col-lg-6 pr-lg-1 mb-2"><img src="https://images.unsplash.com/photo-1453791052107-5c843da62d97?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80" alt="" class="img-fluid rounded shadow-sm"></div>
-                    <div class="col-lg-6 pl-lg-1"><img src="https://images.unsplash.com/photo-1475724017904-b712052c192a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80" alt="" class="img-fluid rounded shadow-sm"></div>
+                    <div class="col-lg-6 mb-2 pr-lg-1">
+                     <a id="ID-POST">
+                        <img src="" alt="DESCRIZIONE POST" class="img-fluid rounded shadow-sm">
+                     </a>
+                  </div>
                  </div>
               </div>
            </div>
         </div>
--->
+    `
+    return page;
+}
+
+function visualizeProfile(){
+   let profie = generateProfile();
+   main.innerHTML = profie;
+}
+
+const main = document.querySelector("main");
+axios.get('model/php/api/api-profile.php').then(response => {
+   console.log(response);
+   if(response.data["logged"]){
+      visualizeProfile();
+   }else{
+      window.location.replace("./controller_login.php");   
+   }
+});

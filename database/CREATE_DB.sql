@@ -8,26 +8,26 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
 -- -----------------------------------------------------
--- Schema prova
+-- Schema technohouse
 -- -----------------------------------------------------
 
 -- -----------------------------------------------------
--- Schema prova
+-- Schema technohouse
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `prova` ;
-USE `prova` ;
+CREATE SCHEMA IF NOT EXISTS `technohouse` ;
+USE `technohouse` ;
 
 -- -----------------------------------------------------
--- Table `prova`.`User`
+-- Table `technohouse`.`User`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `prova`.`User` (
-  `idUser` INT NOT NULL,
+CREATE TABLE IF NOT EXISTS `technohouse`.`User` (
+  `idUser` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL,
   `surname` VARCHAR(45) NOT NULL,
   `email` VARCHAR(45) NOT NULL,
   `phoneNumber` VARCHAR(45) NOT NULL,
   `birthDate` DATE NOT NULL,
-  `password` VARCHAR(256) NOT NULL,
+  `password` VARCHAR(512) NOT NULL,
   `biography` LONGTEXT NULL,
   PRIMARY KEY (`idUser`),
   UNIQUE INDEX `idUser_UNIQUE` (`idUser` ASC) ,
@@ -37,9 +37,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `prova`.`Region`
+-- Table `technohouse`.`Region`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `prova`.`Region` (
+CREATE TABLE IF NOT EXISTS `technohouse`.`Region` (
   `idRegion` INT NOT NULL,
   `regionName` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`idRegion`))
@@ -47,9 +47,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `prova`.`Province`
+-- Table `technohouse`.`Province`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `prova`.`Province` (
+CREATE TABLE IF NOT EXISTS `technohouse`.`Province` (
   `idProvince` INT NOT NULL,
   `initials` VARCHAR(45) NOT NULL,
   `provinceName` VARCHAR(45) NOT NULL,
@@ -59,16 +59,16 @@ CREATE TABLE IF NOT EXISTS `prova`.`Province` (
   INDEX `fk_Province_Region1_idx` (`Region_idRegion` ASC) ,
   CONSTRAINT `fk_Province_Region1`
     FOREIGN KEY (`Region_idRegion`)
-    REFERENCES `prova`.`Region` (`idRegion`)
+    REFERENCES `technohouse`.`Region` (`idRegion`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `prova`.`City`
+-- Table `technohouse`.`City`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `prova`.`City` (
+CREATE TABLE IF NOT EXISTS `technohouse`.`City` (
   `postCode` INT NOT NULL,
   `cityName` VARCHAR(45) NOT NULL,
   `Province_idProvince` INT NOT NULL,
@@ -77,16 +77,16 @@ CREATE TABLE IF NOT EXISTS `prova`.`City` (
   INDEX `fk_City_Province1_idx` (`Province_idProvince` ASC) ,
   CONSTRAINT `fk_City_Province1`
     FOREIGN KEY (`Province_idProvince`)
-    REFERENCES `prova`.`Province` (`idProvince`)
+    REFERENCES `technohouse`.`Province` (`idProvince`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `prova`.`Building`
+-- Table `technohouse`.`Building`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `prova`.`Building` (
+CREATE TABLE IF NOT EXISTS `technohouse`.`Building` (
   `idBuilding` INT NOT NULL,
   `coordinates` POINT NOT NULL,
   `City_postCode` INT NOT NULL,
@@ -95,16 +95,16 @@ CREATE TABLE IF NOT EXISTS `prova`.`Building` (
   INDEX `fk_Building_City1_idx` (`City_postCode` ASC) ,
   CONSTRAINT `fk_Building_City1`
     FOREIGN KEY (`City_postCode`)
-    REFERENCES `prova`.`City` (`postCode`)
+    REFERENCES `technohouse`.`City` (`postCode`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `prova`.`Post`
+-- Table `technohouse`.`Post`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `prova`.`Post` (
+CREATE TABLE IF NOT EXISTS `technohouse`.`Post` (
   `idPost` INT NOT NULL,
   `title` VARCHAR(100) NOT NULL,
   `description` LONGTEXT NULL,
@@ -117,21 +117,21 @@ CREATE TABLE IF NOT EXISTS `prova`.`Post` (
   INDEX `fk_Post_Building1_idx` (`Building_idBuilding` ASC) ,
   CONSTRAINT `fk_Post_User1`
     FOREIGN KEY (`User_idUser`)
-    REFERENCES `prova`.`User` (`idUser`)
+    REFERENCES `technohouse`.`User` (`idUser`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Post_Building1`
     FOREIGN KEY (`Building_idBuilding`)
-    REFERENCES `prova`.`Building` (`idBuilding`)
+    REFERENCES `technohouse`.`Building` (`idBuilding`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `prova`.`Tag`
+-- Table `technohouse`.`Tag`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `prova`.`Tag` (
+CREATE TABLE IF NOT EXISTS `technohouse`.`Tag` (
   `idTag` INT NOT NULL,
   `tagName` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`idTag`),
@@ -141,30 +141,30 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `prova`.`SavedPosts`
+-- Table `technohouse`.`SavedPosts`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `prova`.`SavedPosts` (
+CREATE TABLE IF NOT EXISTS `technohouse`.`SavedPosts` (
   `Post_idPost` INT NOT NULL,
   `User_idUser` INT NOT NULL,
   INDEX `fk_SavedPosts_Post1_idx` (`Post_idPost` ASC) ,
   INDEX `fk_SavedPosts_User1_idx` (`User_idUser` ASC) ,
   CONSTRAINT `fk_SavedPosts_Post1`
     FOREIGN KEY (`Post_idPost`)
-    REFERENCES `prova`.`Post` (`idPost`)
+    REFERENCES `technohouse`.`Post` (`idPost`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_SavedPosts_User1`
     FOREIGN KEY (`User_idUser`)
-    REFERENCES `prova`.`User` (`idUser`)
+    REFERENCES `technohouse`.`User` (`idUser`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `prova`.`Question`
+-- Table `technohouse`.`Question`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `prova`.`Question` (
+CREATE TABLE IF NOT EXISTS `technohouse`.`Question` (
   `idQuestion` INT NOT NULL,
   `User_idUser` INT NOT NULL,
   `Post_idPost` INT NOT NULL,
@@ -175,21 +175,21 @@ CREATE TABLE IF NOT EXISTS `prova`.`Question` (
   INDEX `fk_Question_Post1_idx` (`Post_idPost` ASC) ,
   CONSTRAINT `fk_Comment_User1`
     FOREIGN KEY (`User_idUser`)
-    REFERENCES `prova`.`User` (`idUser`)
+    REFERENCES `technohouse`.`User` (`idUser`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Question_Post1`
     FOREIGN KEY (`Post_idPost`)
-    REFERENCES `prova`.`Post` (`idPost`)
+    REFERENCES `technohouse`.`Post` (`idPost`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `prova`.`Answer`
+-- Table `technohouse`.`Answer`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `prova`.`Answer` (
+CREATE TABLE IF NOT EXISTS `technohouse`.`Answer` (
   `idAnswer` INT NOT NULL,
   `User_idUser` INT NOT NULL,
   `Question_idQuestion` INT NOT NULL,
@@ -200,21 +200,21 @@ CREATE TABLE IF NOT EXISTS `prova`.`Answer` (
   INDEX `fk_Answer_Question1_idx` (`Question_idQuestion` ASC) ,
   CONSTRAINT `fk_Answer_User1`
     FOREIGN KEY (`User_idUser`)
-    REFERENCES `prova`.`User` (`idUser`)
+    REFERENCES `technohouse`.`User` (`idUser`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Answer_Question1`
     FOREIGN KEY (`Question_idQuestion`)
-    REFERENCES `prova`.`Question` (`idQuestion`)
+    REFERENCES `technohouse`.`Question` (`idQuestion`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `prova`.`Image`
+-- Table `technohouse`.`Image`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `prova`.`Image` (
+CREATE TABLE IF NOT EXISTS `technohouse`.`Image` (
   `idImage` INT NOT NULL,
   `path` VARCHAR(45) NULL,
   `Post_idPost` INT NOT NULL,
@@ -223,16 +223,16 @@ CREATE TABLE IF NOT EXISTS `prova`.`Image` (
   INDEX `fk_Image_Post1_idx` (`Post_idPost` ASC) ,
   CONSTRAINT `fk_Image_Post1`
     FOREIGN KEY (`Post_idPost`)
-    REFERENCES `prova`.`Post` (`idPost`)
+    REFERENCES `technohouse`.`Post` (`idPost`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `prova`.`Follower`
+-- Table `technohouse`.`Follower`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `prova`.`Follower` (
+CREATE TABLE IF NOT EXISTS `technohouse`.`Follower` (
   `User_idUser` INT NOT NULL,
   `User_idUser1` INT NOT NULL,
   PRIMARY KEY (`User_idUser`, `User_idUser1`),
@@ -240,21 +240,21 @@ CREATE TABLE IF NOT EXISTS `prova`.`Follower` (
   INDEX `fk_User_has_User_User1_idx` (`User_idUser` ASC) ,
   CONSTRAINT `fk_User_has_User_User1`
     FOREIGN KEY (`User_idUser`)
-    REFERENCES `prova`.`User` (`idUser`)
+    REFERENCES `technohouse`.`User` (`idUser`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_User_has_User_User2`
     FOREIGN KEY (`User_idUser1`)
-    REFERENCES `prova`.`User` (`idUser`)
+    REFERENCES `technohouse`.`User` (`idUser`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `prova`.`Following`
+-- Table `technohouse`.`Following`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `prova`.`Following` (
+CREATE TABLE IF NOT EXISTS `technohouse`.`Following` (
   `User_idUser` INT NOT NULL,
   `User_idUser1` INT NOT NULL,
   PRIMARY KEY (`User_idUser`, `User_idUser1`),
@@ -262,42 +262,42 @@ CREATE TABLE IF NOT EXISTS `prova`.`Following` (
   INDEX `fk_User_has_User1_User1_idx` (`User_idUser` ASC) ,
   CONSTRAINT `fk_User_has_User1_User1`
     FOREIGN KEY (`User_idUser`)
-    REFERENCES `prova`.`User` (`idUser`)
+    REFERENCES `technohouse`.`User` (`idUser`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_User_has_User1_User2`
     FOREIGN KEY (`User_idUser1`)
-    REFERENCES `prova`.`User` (`idUser`)
+    REFERENCES `technohouse`.`User` (`idUser`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `prova`.`Chat`
+-- Table `technohouse`.`Chat`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `prova`.`Chat` (
+CREATE TABLE IF NOT EXISTS `technohouse`.`Chat` (
   `User_idUser` INT NOT NULL,
   `User_idUser1` INT NOT NULL,
   PRIMARY KEY (`User_idUser`, `User_idUser1`),
   INDEX `fk_Chat_User2_idx` (`User_idUser1` ASC) ,
   CONSTRAINT `fk_Chat_User1`
     FOREIGN KEY (`User_idUser`)
-    REFERENCES `prova`.`User` (`idUser`)
+    REFERENCES `technohouse`.`User` (`idUser`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Chat_User2`
     FOREIGN KEY (`User_idUser1`)
-    REFERENCES `prova`.`User` (`idUser`)
+    REFERENCES `technohouse`.`User` (`idUser`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `prova`.`Message`
+-- Table `technohouse`.`Message`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `prova`.`Message` (
+CREATE TABLE IF NOT EXISTS `technohouse`.`Message` (
   `idMessage` INT NOT NULL,
   `body` LONGTEXT NOT NULL,
   `data` DATETIME NOT NULL,
@@ -310,21 +310,21 @@ CREATE TABLE IF NOT EXISTS `prova`.`Message` (
   INDEX `fk_Message_User1_idx` (`User_idUser` ASC) ,
   CONSTRAINT `fk_Message_Chat1`
     FOREIGN KEY (`Chat_User_idUser` , `Chat_User_idUser1`)
-    REFERENCES `prova`.`Chat` (`User_idUser` , `User_idUser1`)
+    REFERENCES `technohouse`.`Chat` (`User_idUser` , `User_idUser1`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Message_User1`
     FOREIGN KEY (`User_idUser`)
-    REFERENCES `prova`.`User` (`idUser`)
+    REFERENCES `technohouse`.`User` (`idUser`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `prova`.`Post_has_Tag`
+-- Table `technohouse`.`Post_has_Tag`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `prova`.`Post_has_Tag` (
+CREATE TABLE IF NOT EXISTS `technohouse`.`Post_has_Tag` (
   `Post_idPost` INT NOT NULL,
   `Tag_idTag` INT NOT NULL,
   PRIMARY KEY (`Post_idPost`, `Tag_idTag`),
@@ -332,12 +332,12 @@ CREATE TABLE IF NOT EXISTS `prova`.`Post_has_Tag` (
   INDEX `fk_Post_has_Tag_Post1_idx` (`Post_idPost` ASC) ,
   CONSTRAINT `fk_Post_has_Tag_Post1`
     FOREIGN KEY (`Post_idPost`)
-    REFERENCES `prova`.`Post` (`idPost`)
+    REFERENCES `technohouse`.`Post` (`idPost`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Post_has_Tag_Tag1`
     FOREIGN KEY (`Tag_idTag`)
-    REFERENCES `prova`.`Tag` (`idTag`)
+    REFERENCES `technohouse`.`Tag` (`idTag`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
