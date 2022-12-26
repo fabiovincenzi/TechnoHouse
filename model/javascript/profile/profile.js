@@ -18,15 +18,15 @@ function generateProfile(user){
                        <small class="text-muted"> <em class="fas fa-image mr-1"></em>Photos</small> 
                     </li>
                     <li class="list-inline-item">
-                       <h5 class="font-weight-bold mb-0 d-block"id="followers">${user["followers"]}</h5>
+                       <a class="font-weight-bold mb-0 d-block" id="followers">${user["followers"]}</a>
                        <small class="text-muted"> <em class="fas fa-user mr-1"></em>Followers</small> 
                     </li>
                     <li class="list-inline-item">
-                       <h5 class="font-weight-bold mb-0 d-block" id="following">${user["following"]}</h5>
+                       <a class="font-weight-bold mb-0 d-block" id="following">${user["following"]}</a>
                        <small class="text-muted"> <em class="fas fa-user mr-1"></em>Following</small> 
                     </li>
                     <li class="list-inline-item">
-                        <h5 class="font-weight-bold mb-0 d-block" id="saved">${user["saved"]}</h5>
+                        <a class="font-weight-bold mb-0 d-block" id="saved">${user["saved"]}</a>
                         <small class="text-muted"> <em class="fas fa-user mr-1"></em>Saved</small> 
                      </li>
                  </ul>
@@ -76,11 +76,21 @@ function visualizeProfile(){
          posts = response.data["users-posts"];
          let content_profile = generateProfile(user);
          main.innerHTML = content_profile;
+         document.getElementById('followers').addEventListener("click", function(evenet){
+            console.log("ciaoo");
+         });
+         document.getElementById('followuing').addEventListener("click", function(evenet){
+            console.log("ciaoo");
+         });
+         document.getElementById('saved').addEventListener("click", function(evenet){
+            console.log("ciaoo");
+         });
          generatePosts(posts);
       }else{
          window.location.replace("./controller_login.php");   
       }
    });
+
 }
 
 const main = document.querySelector("main");
@@ -93,3 +103,4 @@ axios.get('model/php/api/api-profile.php').then(response => {
       window.location.replace("./controller_login.php");   
    }
 });
+
