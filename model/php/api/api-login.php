@@ -1,6 +1,5 @@
 <?php
 require_once $_SERVER['DOCUMENT_ROOT'].'/TechnoHouse/model/php/bootstrap.php';
-require_once $_SERVER['DOCUMENT_ROOT'].'/database/database.php';
 $result["logged"] = false;
 
 if(isset($_POST["email"]) && isset($_POST["password"])){

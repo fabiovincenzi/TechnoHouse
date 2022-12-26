@@ -1,5 +1,6 @@
-<!--
-<div class="justify-content-center row">
+function visualizeProfile(){
+    let page = `
+        <div class="justify-content-center row">
             <div class="col-10 col-md-10 bg-white shadow rounded overflow-hidden">
  
               <div class="p-4 bg-black row">
@@ -53,4 +54,17 @@
               </div>
            </div>
         </div>
--->
+    `
+    return page;
+}
+
+
+const main = document.querySelector("main");
+axios.get('model/php/api/api-signup.php').then(response => {
+   console.log(response);
+   if(response["logged"]){
+
+   }else{
+      //window.location.replace("./controller_login.php");   
+   }
+});

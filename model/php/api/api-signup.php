@@ -1,7 +1,6 @@
 <?php
 require_once $_SERVER['DOCUMENT_ROOT'].'/TechnoHouse/model/php/bootstrap.php';
-require_once $_SERVER['DOCUMENT_ROOT'].'/model/php/util/functions.php';
-require_once $_SERVER['DOCUMENT_ROOT'].'/database/database.php';
+
 
 $result["logged"] = false;
 if(isset($_POST["name"]) && isset($_POST["surname"]) && isset($_POST["phone-number"]) && isset($_POST["birthdate"]) && isset($_POST["email"]) && isset($_POST["password"]) && isset($_POST["confirm-password"])){
