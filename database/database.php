@@ -10,6 +10,7 @@
  */
 class Database{
     private $db;                                            // Attribute that rappresent the Database
+    private $error_string;
     /**
      * Summary of __construct
      * @param mixed server_name : Name of the server to connect
@@ -19,11 +20,16 @@ class Database{
     */
     public function __construct($server_name, $username, $password, $dbname, $port)
     {
+        $this->error_string = "";
         $this->db = new mysqli($server_name, $username, $password, $dbname, $port);
         if($this->db->connect_error)
         {
             die("Connection failed : ".$this->db->connect_error);
         }
+    }
+
+    public function getErrorString(){
+        return $this->error_string;
     }
 
      /**
@@ -43,7 +49,6 @@ class Database{
         $stmt->bind_param($PARAM_CHECK_LOGIN,$username, $password);
         $stmt->execute();
         $result = $stmt->get_result();
-
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
@@ -58,6 +63,10 @@ class Database{
      */
     public function addUser($name, $surname, $birthdate, $phone_number, $email, $password)
     {
+        if(count($this->checkEmail($email))>0 || count($this->checkPhoneNumber($phone_number)) > 0){
+            return false;
+        }
+
         $PARAM_ADD_USER = 'sssisss';                       // Values for the add of a new User
         $query = "INSERT INTO User
                   (name,surname,email,phoneNumber,birthdate,password,biography)
@@ -68,6 +77,29 @@ class Database{
         $biography = "";
         $statement->bind_param($PARAM_ADD_USER, $name, $surname, $email,$phone_number, $birthdate, $hashed_password, $biography);
         return $statement->execute();
+    }
+
+    public function checkPhoneNumber($phone_number){
+        $PARAM_CHECK_EMAIL = 'i';                       // Values for the add of a new User
+        $query = "SELECT *
+                  FROM User
+                  WHERE phoneNumber like ?";
+        $statement = $this->db->prepare($query);
+        $statement->bind_param($PARAM_CHECK_EMAIL, $phone_number);
+        $this->error_string = $statement->execute() ? "PHONE" : "";
+        $result = $statement->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC);    }
+
+    public function checkEmail($email){
+        $PARAM_CHECK_EMAIL = 's';                       // Values for the add of a new User
+        $query = "SELECT *
+                  FROM User
+                  WHERE email like ?";
+        $statement = $this->db->prepare($query);
+        $statement->bind_param($PARAM_CHECK_EMAIL, $email);
+        $this->error_string = $statement->execute() ? "EMAIL" : "";
+        $result = $statement->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC);
     }
 
     /**

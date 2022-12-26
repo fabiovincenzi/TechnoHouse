@@ -36,7 +36,12 @@ if(isset($_POST["name"]) && isset($_POST["surname"]) && isset($_POST["phone-numb
                                 }else{
                                     $logged_user = $dbh->addUser($name, $surname, $date, $phone_number, $email, $password);
                                     var_dump($logged_user);
-                                    //registerLoggedUser($logged_user[0]);
+                                    if($logged_user){
+                                        registerLoggedUser(array("email"=>$email,"password" => $password));
+                                        $result["logged"] = true;
+                                    }else{
+                                        $result["errorMSG"] = "Error : The ".$dbh->getErrorString()." already exist";
+                                    }
                                 }
                             }
                         }
