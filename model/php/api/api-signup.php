@@ -35,8 +35,10 @@ if(isset($_POST["name"]) && isset($_POST["surname"]) && isset($_POST["phone-numb
                                     $result["errorMSG"] = "Error : The passwords are not equal. Please insert again the passwords";
                                 }else{
                                     $logged_user = $dbh->addUser($name, $surname, $date, $phone_number, $email, $password);
-                                    var_dump($logged_user);
+                                    var_dump($dbh->getErrorString());
+                                    var_dump($_POST);
                                     if($logged_user){
+                                        var_dump($dbh->getErrorString());
                                         registerLoggedUser(array("email"=>$email,"password" => $password));
                                         $result["logged"] = true;
                                     }else{
@@ -50,12 +52,24 @@ if(isset($_POST["name"]) && isset($_POST["surname"]) && isset($_POST["phone-numb
             }
         }
     }else{
-        //Carico il feed
+        $result["logged"] = true;
     }
-    //$password = hash('sha512', $password.$salt); // codifica la password usando una chiave univoca.
-
 }else{
-    //Controllo quale parametro manca
+    if(!isset($_POST["name"])){
+        $result["errorMSG"] = "Error : You must put the NAME";
+    }else if(!isset($_POST["surname"])){
+        $result["errorMSG"] = "Error : You must put the SURNAME";
+    }else if(!isset($_POST["phone-number"])){
+        $result["errorMSG"] = "Error : You must put the PHONE-NUMBER";
+    }else if(!isset($_POST["birthdate"])){
+        $result["errorMSG"] = "Error : You must put the BIRTHDATE";
+    }else if(!isset($_POST["emai"])){
+        $result["errorMSG"] = "Error : You must put the EMAIL";
+    }else if(!isset($_POST["password"])){
+        $result["errorMSG"] = "Error : You must put the PASSWORD";
+    }else if(!isset($_POST["confirm-password"])){
+        $result["errorMSG"] = "Error : You must confirm the PASSWORD";
+    }
 }
 header('Content-Type: application/json');
 echo json_encode($result);

@@ -73,10 +73,11 @@ function signup(name, surname, phone_number, birthdate, email, password, confirm
     axios.post('model/php/api/api-signup.php', formData).then(response => {
         console.log(response);
         if (response.data["logged"]) {
-            //visualizzaArticoli(response.data["articoliautore"]);
-            //Caricare il feed
+          // Simulate an HTTP redirect:
+          window.location.replace("./index.php");   
+          //window.location.href = "./model/javascript/feed.js";
         } else {
-            document.querySelector("p").innerText = response.data["errorMSG"];
+          document.querySelector("p").innerText = response.data["errorMSG"];
         }
     });
 }

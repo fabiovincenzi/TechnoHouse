@@ -88,7 +88,8 @@ class Database{
         $statement->bind_param($PARAM_CHECK_EMAIL, $phone_number);
         $this->error_string = $statement->execute() ? "PHONE" : "";
         $result = $statement->get_result();
-        return $result->fetch_all(MYSQLI_ASSOC);    }
+        return $result->fetch_all(MYSQLI_ASSOC);    
+    }
 
     public function checkEmail($email){
         $PARAM_CHECK_EMAIL = 's';                       // Values for the add of a new User

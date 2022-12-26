@@ -16,8 +16,7 @@ if(isset($_POST["email"]) && isset($_POST["password"])){
 
 if(isUserLoggedIn()){
     $result["logged"] = true;
-    $result["userFeed"] = $dbh->getFeedByUser($_SESSION["idUser"]);
-    
+    //$result["userFeed"] = $dbh->getFeedByUser($_SESSION["idUser"]);
 }
 header('Content-Type: application/json');
 echo json_encode($result);
