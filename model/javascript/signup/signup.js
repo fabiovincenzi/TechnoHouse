@@ -75,7 +75,6 @@ function signup(name, surname, phone_number, birthdate, email, password, confirm
         if (response.data["logged"]) {
           // Simulate an HTTP redirect:
           window.location.replace("./index.php");   
-          //window.location.href = "./model/javascript/feed.js";
         } else {
           document.querySelector("p").innerText = response.data["errorMSG"];
         }
@@ -105,11 +104,8 @@ const input = document.getElementById("submit-form");
 axios.get('model/php/api/api-signup.php').then(response => {
     console.log(response);
     if (response.data["logged"]) {
-        // Utente loggato
-        // redirect to another page
-        //visualizzaArticoli(response.data["articoliautore"]);
+      window.location.replace("./index.php");   
     } else {
-        // Utente NON loggato
         visualizeSignupForm();
     }
 });
