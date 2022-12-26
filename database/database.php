@@ -128,7 +128,11 @@ class Database{
     }
 
     public function getUserInfo($info, $email){
-        return $this->getUserByEmail($email)[0][$info];
+        if (is_string($info)) {
+            return $this->getUserByEmail($email)[0][$info];
+        }else{
+            return array();
+        }
     }
 
     /**
