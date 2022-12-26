@@ -29,9 +29,9 @@ CREATE TABLE IF NOT EXISTS `technohouse`.`User` (
   `birthDate` DATE NOT NULL,
   `password` VARCHAR(256) NOT NULL,
   PRIMARY KEY (`idUser`),
-  UNIQUE INDEX `idUser_UNIQUE` (`idUser` ASC) VISIBLE,
-  UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE,
-  UNIQUE INDEX `phoneNumber_UNIQUE` (`phoneNumber` ASC) VISIBLE)
+  UNIQUE INDEX `idUser_UNIQUE` (`idUser` ASC) ,
+  UNIQUE INDEX `email_UNIQUE` (`email` ASC) ,
+  UNIQUE INDEX `phoneNumber_UNIQUE` (`phoneNumber` ASC) )
 ENGINE = InnoDB;
 
 
@@ -54,8 +54,8 @@ CREATE TABLE IF NOT EXISTS `technohouse`.`Province` (
   `provinceName` VARCHAR(45) NOT NULL,
   `Region_idRegion` INT NOT NULL,
   PRIMARY KEY (`idProvince`),
-  UNIQUE INDEX `idProvince_UNIQUE` (`idProvince` ASC) VISIBLE,
-  INDEX `fk_Province_Region1_idx` (`Region_idRegion` ASC) VISIBLE,
+  UNIQUE INDEX `idProvince_UNIQUE` (`idProvince` ASC) ,
+  INDEX `fk_Province_Region1_idx` (`Region_idRegion` ASC) ,
   CONSTRAINT `fk_Province_Region1`
     FOREIGN KEY (`Region_idRegion`)
     REFERENCES `technohouse`.`Region` (`idRegion`)
@@ -72,8 +72,8 @@ CREATE TABLE IF NOT EXISTS `technohouse`.`City` (
   `cityName` VARCHAR(45) NOT NULL,
   `Province_idProvince` INT NOT NULL,
   PRIMARY KEY (`postCode`),
-  UNIQUE INDEX `idCity_UNIQUE` (`postCode` ASC) VISIBLE,
-  INDEX `fk_City_Province1_idx` (`Province_idProvince` ASC) VISIBLE,
+  UNIQUE INDEX `idCity_UNIQUE` (`postCode` ASC) ,
+  INDEX `fk_City_Province1_idx` (`Province_idProvince` ASC) ,
   CONSTRAINT `fk_City_Province1`
     FOREIGN KEY (`Province_idProvince`)
     REFERENCES `technohouse`.`Province` (`idProvince`)
@@ -90,8 +90,8 @@ CREATE TABLE IF NOT EXISTS `technohouse`.`Building` (
   `coordinates` POINT NOT NULL,
   `City_postCode` INT NOT NULL,
   PRIMARY KEY (`idBuilding`),
-  UNIQUE INDEX `idBuilding_UNIQUE` (`idBuilding` ASC) VISIBLE,
-  INDEX `fk_Building_City1_idx` (`City_postCode` ASC) VISIBLE,
+  UNIQUE INDEX `idBuilding_UNIQUE` (`idBuilding` ASC) ,
+  INDEX `fk_Building_City1_idx` (`City_postCode` ASC) ,
   CONSTRAINT `fk_Building_City1`
     FOREIGN KEY (`City_postCode`)
     REFERENCES `technohouse`.`City` (`postCode`)
@@ -112,9 +112,9 @@ CREATE TABLE IF NOT EXISTS `technohouse`.`Post` (
   `Building_idBuilding` INT NOT NULL,
   `PublishTime` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`idPost`),
-  UNIQUE INDEX `idPost_UNIQUE` (`idPost` ASC) VISIBLE,
-  INDEX `fk_Post_User1_idx` (`User_idUser` ASC) VISIBLE,
-  INDEX `fk_Post_Building1_idx` (`Building_idBuilding` ASC) VISIBLE,
+  UNIQUE INDEX `idPost_UNIQUE` (`idPost` ASC) ,
+  INDEX `fk_Post_User1_idx` (`User_idUser` ASC) ,
+  INDEX `fk_Post_Building1_idx` (`Building_idBuilding` ASC) ,
   CONSTRAINT `fk_Post_User1`
     FOREIGN KEY (`User_idUser`)
     REFERENCES `technohouse`.`User` (`idUser`)
@@ -135,8 +135,8 @@ CREATE TABLE IF NOT EXISTS `technohouse`.`Tag` (
   `idTag` INT NOT NULL AUTO_INCREMENT,
   `tagName` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`idTag`),
-  UNIQUE INDEX `idBuilding_UNIQUE` (`idTag` ASC) VISIBLE,
-  UNIQUE INDEX `tagName_UNIQUE` (`tagName` ASC) VISIBLE)
+  UNIQUE INDEX `idBuilding_UNIQUE` (`idTag` ASC) ,
+  UNIQUE INDEX `tagName_UNIQUE` (`tagName` ASC) )
 ENGINE = InnoDB;
 
 
@@ -146,8 +146,8 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `technohouse`.`SavedPosts` (
   `Post_idPost` INT NOT NULL,
   `User_idUser` INT NOT NULL,
-  INDEX `fk_SavedPosts_Post1_idx` (`Post_idPost` ASC) VISIBLE,
-  INDEX `fk_SavedPosts_User1_idx` (`User_idUser` ASC) VISIBLE,
+  INDEX `fk_SavedPosts_Post1_idx` (`Post_idPost` ASC) ,
+  INDEX `fk_SavedPosts_User1_idx` (`User_idUser` ASC) ,
   CONSTRAINT `fk_SavedPosts_Post1`
     FOREIGN KEY (`Post_idPost`)
     REFERENCES `technohouse`.`Post` (`idPost`)
@@ -170,9 +170,9 @@ CREATE TABLE IF NOT EXISTS `technohouse`.`Question` (
   `Post_idPost` INT NOT NULL,
   `text` LONGTEXT NOT NULL,
   PRIMARY KEY (`idQuestion`),
-  UNIQUE INDEX `idComment_UNIQUE` (`idQuestion` ASC) VISIBLE,
-  INDEX `fk_Comment_User1_idx` (`User_idUser` ASC) VISIBLE,
-  INDEX `fk_Question_Post1_idx` (`Post_idPost` ASC) VISIBLE,
+  UNIQUE INDEX `idComment_UNIQUE` (`idQuestion` ASC) ,
+  INDEX `fk_Comment_User1_idx` (`User_idUser` ASC) ,
+  INDEX `fk_Question_Post1_idx` (`Post_idPost` ASC) ,
   CONSTRAINT `fk_Comment_User1`
     FOREIGN KEY (`User_idUser`)
     REFERENCES `technohouse`.`User` (`idUser`)
@@ -195,9 +195,9 @@ CREATE TABLE IF NOT EXISTS `technohouse`.`Answer` (
   `Question_idQuestion` INT NOT NULL,
   `text` LONGTEXT NOT NULL,
   PRIMARY KEY (`idAnswer`),
-  UNIQUE INDEX `idAnswer_UNIQUE` (`idAnswer` ASC) VISIBLE,
-  INDEX `fk_Answer_User1_idx` (`User_idUser` ASC) VISIBLE,
-  INDEX `fk_Answer_Question1_idx` (`Question_idQuestion` ASC) VISIBLE,
+  UNIQUE INDEX `idAnswer_UNIQUE` (`idAnswer` ASC) ,
+  INDEX `fk_Answer_User1_idx` (`User_idUser` ASC) ,
+  INDEX `fk_Answer_Question1_idx` (`Question_idQuestion` ASC) ,
   CONSTRAINT `fk_Answer_User1`
     FOREIGN KEY (`User_idUser`)
     REFERENCES `technohouse`.`User` (`idUser`)
@@ -219,8 +219,8 @@ CREATE TABLE IF NOT EXISTS `technohouse`.`Image` (
   `path` VARCHAR(45) NOT NULL,
   `Post_idPost` INT NOT NULL,
   PRIMARY KEY (`idImage`),
-  UNIQUE INDEX `idImage_UNIQUE` (`idImage` ASC) VISIBLE,
-  INDEX `fk_Image_Post1_idx` (`Post_idPost` ASC) VISIBLE,
+  UNIQUE INDEX `idImage_UNIQUE` (`idImage` ASC) ,
+  INDEX `fk_Image_Post1_idx` (`Post_idPost` ASC) ,
   CONSTRAINT `fk_Image_Post1`
     FOREIGN KEY (`Post_idPost`)
     REFERENCES `technohouse`.`Post` (`idPost`)
@@ -236,8 +236,8 @@ CREATE TABLE IF NOT EXISTS `technohouse`.`Following` (
   `User_idUser` INT NOT NULL,
   `User_idUser1` INT NOT NULL,
   PRIMARY KEY (`User_idUser`, `User_idUser1`),
-  INDEX `fk_User_has_User1_User2_idx` (`User_idUser1` ASC) VISIBLE,
-  INDEX `fk_User_has_User1_User1_idx` (`User_idUser` ASC) VISIBLE,
+  INDEX `fk_User_has_User1_User2_idx` (`User_idUser1` ASC) ,
+  INDEX `fk_User_has_User1_User1_idx` (`User_idUser` ASC) ,
   CONSTRAINT `fk_User_has_User1_User1`
     FOREIGN KEY (`User_idUser`)
     REFERENCES `technohouse`.`User` (`idUser`)
@@ -259,7 +259,7 @@ CREATE TABLE IF NOT EXISTS `technohouse`.`Chat` (
   `User_idUser1` INT NOT NULL,
   `idChat` INT NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`idChat`),
-  INDEX `fk_Chat_User2_idx` (`User_idUser1` ASC) VISIBLE,
+  INDEX `fk_Chat_User2_idx` (`User_idUser1` ASC) ,
   CONSTRAINT `fk_Chat_User1`
     FOREIGN KEY (`User_idUser`)
     REFERENCES `technohouse`.`User` (`idUser`)
@@ -284,9 +284,9 @@ CREATE TABLE IF NOT EXISTS `technohouse`.`Message` (
   `Chat_User_idUser1` INT NOT NULL,
   `User_idUser` INT NOT NULL,
   PRIMARY KEY (`idMessage`),
-  UNIQUE INDEX `idMessage_UNIQUE` (`idMessage` ASC) VISIBLE,
-  INDEX `fk_Message_Chat1_idx` (`Chat_User_idUser` ASC, `Chat_User_idUser1` ASC) VISIBLE,
-  INDEX `fk_Message_User1_idx` (`User_idUser` ASC) VISIBLE,
+  UNIQUE INDEX `idMessage_UNIQUE` (`idMessage` ASC) ,
+  INDEX `fk_Message_Chat1_idx` (`Chat_User_idUser` ASC, `Chat_User_idUser1` ASC) ,
+  INDEX `fk_Message_User1_idx` (`User_idUser` ASC) ,
   CONSTRAINT `fk_Message_Chat1`
     FOREIGN KEY (`Chat_User_idUser` , `Chat_User_idUser1`)
     REFERENCES `technohouse`.`Chat` (`User_idUser` , `User_idUser1`)
@@ -307,8 +307,8 @@ CREATE TABLE IF NOT EXISTS `technohouse`.`Post_has_Tag` (
   `Post_idPost` INT NOT NULL,
   `Tag_idTag` INT NOT NULL,
   PRIMARY KEY (`Post_idPost`, `Tag_idTag`),
-  INDEX `fk_Post_has_Tag_Tag1_idx` (`Tag_idTag` ASC) VISIBLE,
-  INDEX `fk_Post_has_Tag_Post1_idx` (`Post_idPost` ASC) VISIBLE,
+  INDEX `fk_Post_has_Tag_Tag1_idx` (`Tag_idTag` ASC) ,
+  INDEX `fk_Post_has_Tag_Post1_idx` (`Post_idPost` ASC) ,
   CONSTRAINT `fk_Post_has_Tag_Post1`
     FOREIGN KEY (`Post_idPost`)
     REFERENCES `technohouse`.`Post` (`idPost`)
