@@ -18,15 +18,15 @@ function generateProfile(){
                        <small class="text-muted"> <em class="fas fa-image mr-1"></em>Photos</small> 
                     </li>
                     <li class="list-inline-item">
-                       <h5 class="font-weight-bold mb-0 d-block">745</h5>
+                       <h5 class="font-weight-bold mb-0 d-block"id="followers">FOLLOWERS</h5>
                        <small class="text-muted"> <em class="fas fa-user mr-1"></em>Followers</small> 
                     </li>
                     <li class="list-inline-item">
-                       <h5 class="font-weight-bold mb-0 d-block">340</h5>
+                       <h5 class="font-weight-bold mb-0 d-block" id="following">FOLLOWING</h5>
                        <small class="text-muted"> <em class="fas fa-user mr-1"></em>Following</small> 
                     </li>
                     <li class="list-inline-item">
-                        <h5 class="font-weight-bold mb-0 d-block">120</h5>
+                        <h5 class="font-weight-bold mb-0 d-block" id="saved">SAVED</h5>
                         <small class="text-muted"> <em class="fas fa-user mr-1"></em>Saved</small> 
                      </li>
                  </ul>
@@ -45,10 +45,11 @@ function generateProfile(){
                     <a href="#" class="btn btn-link text-muted">Show all</a> 
                  </div>
                  <div class="row">
-                    <div class="col-lg-6 mb-2 pr-lg-1"><img src="https://images.unsplash.com/photo-1469594292607-7bd90f8d3ba4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80" alt="" class="img-fluid rounded shadow-sm"></div>
-                    <div class="col-lg-6 mb-2 pl-lg-1"><img src="https://images.unsplash.com/photo-1493571716545-b559a19edd14?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80" alt="" class="img-fluid rounded shadow-sm"></div>
-                    <div class="col-lg-6 pr-lg-1 mb-2"><img src="https://images.unsplash.com/photo-1453791052107-5c843da62d97?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80" alt="" class="img-fluid rounded shadow-sm"></div>
-                    <div class="col-lg-6 pl-lg-1"><img src="https://images.unsplash.com/photo-1475724017904-b712052c192a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80" alt="" class="img-fluid rounded shadow-sm"></div>
+                    <div class="col-lg-6 mb-2 pr-lg-1">
+                     <a id="ID-POST">
+                        <img src="" alt="DESCRIZIONE POST" class="img-fluid rounded shadow-sm">
+                     </a>
+                  </div>
                  </div>
               </div>
            </div>
