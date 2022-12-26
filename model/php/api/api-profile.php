@@ -4,9 +4,9 @@ $result["logged"] = false;
 
 if(isUserLoggedIn()){
     $result["logged"] = true;
-    var_dump($result);
+    
 }
 
 header('Content-Type: application/json');
-echo json_encode($results);
+echo json_encode($result);
 ?>

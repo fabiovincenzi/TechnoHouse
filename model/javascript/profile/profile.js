@@ -1,4 +1,4 @@
-function visualizeProfile(){
+function generateProfile(){
     let page = `
         <div class="justify-content-center row">
             <div class="col-10 col-md-10 bg-white shadow rounded overflow-hidden">
@@ -8,14 +8,13 @@ function visualizeProfile(){
                         <img src="https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80" alt="..." width="130" class="rounded mb-2 img-thumbnail">
                     </div>
                     <div class="text-white col-7">
-                        <h4>Mark Williams de Crescienzo</h4>
-                        <p>New York</p>
+                        <h4 id="name-surname">NAME-SURNAME</h4>
                     </div>
               </div>
               <div class="border-bottom p-4 justify-content-end text-center">
                  <ul class="list-inline mb-0">
                     <li class="list-inline-item">
-                       <h5 class="font-weight-bold mb-0 d-block">215</h5>
+                       <h5 class="font-weight-bold mb-0 d-block" id="n-photo" >N-PHOTO</h5>
                        <small class="text-muted"> <em class="fas fa-image mr-1"></em>Photos</small> 
                     </li>
                     <li class="list-inline-item">
@@ -58,13 +57,17 @@ function visualizeProfile(){
     return page;
 }
 
+function visualizeProfile(){
+   let profie = generateProfile();
+   main.innerHTML = profie;
+}
 
 const main = document.querySelector("main");
-axios.get('model/php/api/api-signup.php').then(response => {
+axios.get('model/php/api/api-profile.php').then(response => {
    console.log(response);
-   if(response["logged"]){
-
+   if(response.data["logged"]){
+      visualizeProfile();
    }else{
-      //window.location.replace("./controller_login.php");   
+      window.location.replace("./controller_login.php");   
    }
 });

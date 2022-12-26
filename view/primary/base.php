@@ -23,6 +23,7 @@
     ?>
     </div>
     </main>
+    <!-- NAVBAR DA POPOLARE DINAMICAMENTE -->
     <nav class="navbar fixed-bottom navbar-expand bg-light justify-content-center">
     <ul class="navbar-nav">
         <li class="nav-item">
