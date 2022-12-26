@@ -70,7 +70,6 @@ axios.get('model/php/api/api-login.php').then(response => {
      if (response.data["logged"]) {
         window.location.replace("./index.php");   
      } else {
-        // Utente NON loggato
         visualizeLoginForm();
      }
 });
