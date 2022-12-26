@@ -519,9 +519,17 @@ class Database{
 
     }
 
-    public function getPostsImages()
+    public function getPostImages()
     {
-
+        $PARAM_GET_IMAGES_BY_POST = 'i';
+        $query = "SELECT *
+                  FROM image
+                  WHERE Post_idPost	= ?";
+        $statement = $this->db->prepare($query);
+        $statement->bind_param($PARAM_GET_IMAGES_BY_POST, $post_id);
+        $statement->execute();
+        $result = $statement->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC);     
     }
 
     public function removeImage()
