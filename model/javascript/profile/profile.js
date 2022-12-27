@@ -5,7 +5,7 @@ function generateProfile(user){
  
               <div class="p-4 bg-black row">
                     <div class="mr-3 col-5">
-                        <img src="${user[0]["profile-image"]}" alt="${user[0]["name"]} ${user[0]["surname"]} profile photo" width="130" class="rounded mb-2 img-thumbnail">
+                        <img src="" alt="${user[0]["name"]} ${user[0]["surname"]} profile photo" width="130" class="rounded mb-2 img-thumbnail">
                     </div>
                     <div class="text-white col-7">
                         <h4 id="name-surname">${user[0]["name"]} ${user[0]["surname"]}</h4>
@@ -14,19 +14,21 @@ function generateProfile(user){
               <div class="border-bottom p-4 justify-content-end text-center">
                  <ul class="list-inline mb-0">
                     <li class="list-inline-item">
-                       <h5 class="font-weight-bold mb-0 d-block" id="n-photo" >${user["n-photo"]}</h5>
+                       <h5 class="font-weight-bold mb-0 d-block" id="n-photo">${user["n-photo"]}</h5>
                        <small class="text-muted"> <em class="fas fa-image mr-1"></em>Photos</small> 
                     </li>
                     <li class="list-inline-item">
-                       <a class="font-weight-bold mb-0 d-block" id="followers">${user["followers"]}</a>
+                       <a class="font-weight-bold mb-0 d-block" id="followers" data-bs-toggle="modal" data-bs-target="#modal-info">
+                        ${user["followers"]}
+                       </a>
                        <small class="text-muted"> <em class="fas fa-user mr-1"></em>Followers</small> 
                     </li>
                     <li class="list-inline-item">
-                       <a class="font-weight-bold mb-0 d-block" id="following">${user["following"]}</a>
+                       <a class="font-weight-bold mb-0 d-block" id="following" data-bs-toggle="modal" data-bs-target="#modal-info">${user["following"]}</a>
                        <small class="text-muted"> <em class="fas fa-user mr-1"></em>Following</small> 
                     </li>
                     <li class="list-inline-item">
-                        <a class="font-weight-bold mb-0 d-block" id="saved">${user["saved"]}</a>
+                        <a class="font-weight-bold mb-0 d-block" id="saved" data-bs-toggle="modal" data-bs-target="#modal-info">${user["saved"]}</a>
                         <small class="text-muted"> <em class="fas fa-user mr-1"></em>Saved</small> 
                      </li>
                  </ul>
@@ -51,6 +53,25 @@ function generateProfile(user){
               </div>
            </div>
         </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="modal-info" tabindex="-1" aria-labelledby="modal-title" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="modal-title"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <ul id="modal-list">
+                </ul>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
     `
     return page;
 }
@@ -65,15 +86,76 @@ function generatePosts(posts){
    });
 }
 
-function addListeners(){
+function populateList(users){
+   const list = document.getElementById("modal-list");
+   users.forEach(user => user.forEach(info => {
+      console.log(user);
+      let list_item = `
+      <li class="p-2 border-bottom bg-white">
+         <a id="profile" href="${info["idUser"]}" class="d-flex justify-content-between chatListLine">
+            <div class="d-flex flex-row">
+               <!--chat image-->
+               <img src="" alt="${info["name"]} ${info["surname"]} profile image"
+               class="rounded-circle d-flex align-self-center me-3 shadow-1-strong chatListLine" width="60">
+               <!--chat image-->
+               <div class="pt-1">
+                     <!--Name-->
+                     <p class="fw-bold mb-0">${info["name"]} ${info["surname"]}</p>
+                     <!--Name-->
+               </div>
+            </div>
+         </a>
+      </li>
+      `
+      list.innerHTML+=list_item;
+   }));
+}
+
+function addFollowers(){
+   axios.get('model/php/api/api-followers.php').then(response=>{
+      console.log(response);
+      let followers = response.data["followers"];
+      populateList(followers);
+   });
+}
+
+function addFollowing(user_info){
+   axios.get('model/php/api/api-following.php').then(response=>{
+      let following = response.data["following"];
+      populateList(following);
+   });
+   /*
+   const formData = new FormData();
+   formData.append('idUser', user_info["idUser"]);
+   formData.append('target', 1);
+   
+   axios.post('model/php/api/api-following.php', formData).then(response => {
+      console.log(response);
+   });
+   */
+}
+
+function addSavedPosts(){
+   axios.get('model/php/api/api-following.php').then(response=>{
+      console.log(response);
+      let savedPosts = response.data["saved-post"];
+      //populateList(savedPosts);
+   });
+}
+
+function addListeners(user_info){
+   const title = document.getElementById("modal-title");
    document.getElementById('followers').addEventListener("click", function(evenet){
-      window.location.replace("./controller_login.php");   
+      title.innerText = "Followers";
+      addFollowers();
    });
    document.getElementById('following').addEventListener("click", function(evenet){
-      window.location.replace("./controller_login.php");   
+      title.innerText = "Following";
+      addFollowing(user_info);
    });
    document.getElementById('saved').addEventListener("click", function(evenet){
-      window.location.replace("./controller_login.php");   
+      title.innerText = "Saved posts";
+      addSavedPosts();
    });
 }
 
@@ -91,7 +173,7 @@ function visualizeProfile(){
          posts = response.data["users-posts"];
          let content_profile = generateProfile(user);
          addUserInfo(content_profile);
-         addListeners();
+         addListeners(user[0]);
          generatePosts(posts);
       }else{
          window.location.replace("./controller_login.php");   
@@ -102,6 +184,7 @@ function visualizeProfile(){
 
 const main = document.querySelector("main");
 const div_posts = document.getElementById("users-posts");
+
 axios.get('model/php/api/api-profile.php').then(response => {
    console.log(response);
    if(response.data["logged"]){
