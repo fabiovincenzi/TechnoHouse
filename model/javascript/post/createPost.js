@@ -20,14 +20,25 @@ function generateForm(){
                                     <option value="2">Attic</option>
                                     <option value="3">Fireplace</option>
                                 </select>
-                            </div>
-                            <div class="col-md-6">
                                 <!--description-->
                                 <label for="description" id="lbl-description">Description</label>
                                 <textarea class="form-control" id="description" title="post description" rows="3"></textarea>
                                 <!--description-->
+                            </div>
+                            <div class="col-md-6">
                                 <label for="price">Price</label>
-                                <input type="number" class="form-control" id="price" placeholder="Price">                    
+                                <input type="number" class="form-control" id="price" placeholder="Price">  
+                                <label for="region">Region</label>
+                                <select class="form-select" id="region" aria-label="Region">
+                                </select>      
+                                <label for="province">Province</label>
+                                <select class="form-select" id="province" aria-label="Province">
+                                    <option selected>Select a region first</option>
+                                </select>         
+                                <label for="city">City</label>
+                                <select class="form-select" id="city" aria-label="City">
+                                    <option selected>Select a province first</option>
+                                </select>        
                                 <!--map-->
                                 <div id="map-container-google-2" class="z-depth-1-half map-container m-2" style="height: 200px">
                                     <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d11452.093538879488!2d12.2433589!3d44.1447625!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x132ca58ba97cf34f%3A0x9a4e66c64fd8978c!2sCampus%20di%20Cesena%20-%20Universit%C3%A0%20di%20Bologna%20-%20Alma%20Mater%20Studiorum!5e0!3m2!1sit!2sit!4v1670314646821!5m2!1sit!2sit" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
@@ -66,6 +77,22 @@ function createPost(title, images, tags, description, price, location){
     //axios.post('model/php/api/api-upload-post-tags.php', formTags)
 }
 
+function populateRegions(){
+    axios.get(`model/php/api/api-region.php`).then(regions =>{
+        console.log(regions);
+        const regionSelect = document.getElementById("region");
+        let index = 0;
+        regions.data.forEach(region =>{
+            console.log(region);
+            var opt = document.createElement("option");
+            opt.value = region["idRegion"];
+            opt.innerHTML = region["regionName"];
+            regionSelect.appendChild(opt);
+            index++;
+        });
+    });
+}
+
 function showCreatePostForm(){
     let form = generateForm();
     main.innerHTML = form;
@@ -80,8 +107,8 @@ function showCreatePostForm(){
         //const location = document.querySelector("#location").value;
         createPost(title, images, tags, description, price, 10);
     });
-    
 }
 
 const main = document.querySelector("main");
 showCreatePostForm();
+populateRegions();

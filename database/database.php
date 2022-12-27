@@ -205,29 +205,37 @@ class Database{
     }
 
     /**
-     * Summary of getProvincies : Get all the Provincies inside the Db
-     * @return array    : All the provincies saved inside the Database
+     * Summary of getProvinciesByRegion : Get all the Provincies of a specific region
+     * @param mixed $region_id : a specific region
+     * @return array    :all the proincies of a specific region
      */
-    public function getProvincies()
+    public function getProvinciesByRegion($region_id)
     {
+        $PARAM_GET_PROVINCE_BY_REGION = 'i';   
         $query = "SELECT *
-                  FROM Provicne";
+                  FROM Provicne
+                  WHERE Region_idRegion = ?";
         $statement = $this->db->prepare($query);
-        $statement->execute();
+        $statement->execute();        
+        $statement->bind_param($PARAM_GET_PROVINCE_BY_REGION, $region_id);
         $result = $statement->get_result();
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
-    /**
-     * Summary of getCities : Get all the Cities inside the Db
-     * @return array    : All the cities saved inside the Database
+     /**
+     * Summary of getCitiesByProvince : Get all the Cities of a specific province
+     * @param mixed $province_id : a specific province
+     * @return array    : all the cities of a specific region
      */
-    public function getCities()
+    public function getCitiesByProvince($province_id)
     {
+        $PARAM_GET_CITIES_BY_PROVINCE = 'i';   
         $query = "SELECT *
-                  FROM City";
+                  FROM City
+                  WHERE Province_idProvince = ?";
         $statement = $this->db->prepare($query);
-        $statement->execute();
+        $statement->execute();        
+        $statement->bind_param($PARAM_GET_CITIES_BY_PROVINCE, $province_id);
         $result = $statement->get_result();
         return $result->fetch_all(MYSQLI_ASSOC);
     }
