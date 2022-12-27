@@ -87,7 +87,7 @@ function generatePosts(posts){
 }
 
 function populateList(users){
-   user.forEach(user => {
+   users.forEach(user => {
       let list_item = `
       <li class="p-2 border-bottom bg-white">
          <a id="profile" href="${user["idUser"]}" class="d-flex justify-content-between chatListLine">
