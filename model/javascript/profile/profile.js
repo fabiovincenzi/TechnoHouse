@@ -63,7 +63,7 @@ function generateProfile(user){
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">
-                <ul id="model-datas">
+                <ul id="model-list">
                 </ul>
               </div>
               <div class="modal-footer">
@@ -86,14 +86,39 @@ function generatePosts(posts){
    });
 }
 
-function addFollowers(){
-   axios.get('api').then(response=>{
+function populateList(users){
+   user.forEach(user => {
+      let list_item = `
+      <li class="p-2 border-bottom bg-white">
+         <a id="profile" href="${user["idUser"]}" class="d-flex justify-content-between chatListLine">
+            <div class="d-flex flex-row">
+               <!--chat image-->
+               <img src="${user["img"]}" alt="${user["name"]} ${user["surname"]} profile image"
+               class="rounded-circle d-flex align-self-center me-3 shadow-1-strong chatListLine" width="60">
+               <!--chat image-->
+               <div class="pt-1">
+                     <!--Name-->
+                     <p class="fw-bold mb-0">${user["name"]} ${user["surname"]}</p>
+                     <!--Name-->
+               </div>
+            </div>
+         </a>
+      </li>
+      `
+      list.innerHTML += list_item;
+   });
+   
+}
 
+function addFollowers(){
+   axios.get('model/php/api/api-followers.php').then(response=>{
+      console.log(response);
+      let followers = response["followers"];
+      populateList(followers);
    });
 }
 
 function addListeners(){
-   const datas = document.getElementById("modal-datas");
    const title = document.getElementById("modal-title");
    document.getElementById('followers').addEventListener("click", function(evenet){
       title.innerText = "Followers";
@@ -132,6 +157,7 @@ function visualizeProfile(){
 
 const main = document.querySelector("main");
 const div_posts = document.getElementById("users-posts");
+const list = document.getElementById("modal-list");
 
 axios.get('model/php/api/api-profile.php').then(response => {
    console.log(response);
