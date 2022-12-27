@@ -24,11 +24,11 @@ function generateProfile(user){
                        <small class="text-muted"> <em class="fas fa-user mr-1"></em>Followers</small> 
                     </li>
                     <li class="list-inline-item">
-                       <a class="font-weight-bold mb-0 d-block" id="following" data-target="modal-info">${user["following"]}</a>
+                       <a class="font-weight-bold mb-0 d-block" id="following" data-bs-toggle="modal" data-bs-target="#modal-info">${user["following"]}</a>
                        <small class="text-muted"> <em class="fas fa-user mr-1"></em>Following</small> 
                     </li>
                     <li class="list-inline-item">
-                        <a class="font-weight-bold mb-0 d-block" id="saved" data-target="modal-info">${user["saved"]}</a>
+                        <a class="font-weight-bold mb-0 d-block" id="saved" data-bs-toggle="modal" data-bs-target="#modal-info">${user["saved"]}</a>
                         <small class="text-muted"> <em class="fas fa-user mr-1"></em>Saved</small> 
                      </li>
                  </ul>
@@ -63,7 +63,8 @@ function generateProfile(user){
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">
-                ...
+                <ul id="model-datas">
+                </ul>
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -85,16 +86,24 @@ function generatePosts(posts){
    });
 }
 
+function addFollowers(){
+   axios.get('api').then(response=>{
+
+   });
+}
+
 function addListeners(){
-   const modal = document.getElementById("modal-info");
+   const datas = document.getElementById("modal-datas");
+   const title = document.getElementById("modal-title");
    document.getElementById('followers').addEventListener("click", function(evenet){
-      console.log(modal);
-      modal.title = 'followers';
+      title.innerText = "Followers";
+      addFollowers();
    });
    document.getElementById('following').addEventListener("click", function(evenet){
+      title.innerText = "Following";
    });
    document.getElementById('saved').addEventListener("click", function(evenet){
-
+      title.innerText = "Saved posts";
    });
 }
 
@@ -123,6 +132,7 @@ function visualizeProfile(){
 
 const main = document.querySelector("main");
 const div_posts = document.getElementById("users-posts");
+
 axios.get('model/php/api/api-profile.php').then(response => {
    console.log(response);
    if(response.data["logged"]){
