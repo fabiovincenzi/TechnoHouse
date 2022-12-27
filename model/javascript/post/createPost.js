@@ -30,6 +30,7 @@ function generateForm(){
                                 <input type="number" class="form-control" id="price" placeholder="Price">  
                                 <label for="region">Region</label>
                                 <select onchange="loadProvincies();" class="form-select" id="region" aria-label="Region">
+                                <option selected>Select a region</option>
                                 </select>      
                                 <label for="province">Province</label>
                                 <select onchange="loadCities();" class="form-select" id="province" aria-label="Province">
@@ -94,10 +95,11 @@ function loadProvincies(){
     const provinceSelect = document.getElementById("province");
     const region_id = regionSelect.value;
     axios.get(`model/php/api/api-province.php?region_id=${region_id}`).then(provincies =>{
+        provinceSelect.innerHTML = '';
         console.log(provincies);
         provincies.data.forEach(province =>{
             const opt = document.createElement("option");
-            opt.value = province["idProvince"];
+            opt.value = province["initials"];
             opt.innerHTML = province["initials"] + "-" + province["provinceName"];
             provinceSelect.appendChild(opt);
         });

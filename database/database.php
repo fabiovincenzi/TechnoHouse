@@ -229,10 +229,10 @@ class Database{
      */
     public function getCitiesByProvince($province_id)
     {
-        $PARAM_GET_CITIES_BY_PROVINCE = 'i';   
+        $PARAM_GET_CITIES_BY_PROVINCE = 's';   
         $query = "SELECT *
                   FROM City
-                  WHERE Province_idProvince = ?";
+                  WHERE Province_initials = ?";
         $statement = $this->db->prepare($query);
         $statement->bind_param($PARAM_GET_CITIES_BY_PROVINCE, $province_id);
         $statement->execute();        
