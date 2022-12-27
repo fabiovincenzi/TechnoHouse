@@ -5,7 +5,7 @@ function generateProfile(user){
  
               <div class="p-4 bg-black row">
                     <div class="mr-3 col-5">
-                        <img src="${user[0]["profile-image"]}" alt="${user[0]["name"]} ${user[0]["surname"]} profile photo" width="130" class="rounded mb-2 img-thumbnail">
+                        <img src="" alt="${user[0]["name"]} ${user[0]["surname"]} profile photo" width="130" class="rounded mb-2 img-thumbnail">
                     </div>
                     <div class="text-white col-7">
                         <h4 id="name-surname">${user[0]["name"]} ${user[0]["surname"]}</h4>
@@ -18,15 +18,17 @@ function generateProfile(user){
                        <small class="text-muted"> <em class="fas fa-image mr-1"></em>Photos</small> 
                     </li>
                     <li class="list-inline-item">
-                       <a class="font-weight-bold mb-0 d-block" id="followers" data-target="modal-followers">${user["followers"]}</a>
+                       <a class="font-weight-bold mb-0 d-block" id="followers" data-bs-toggle="modal" data-bs-target="#modal-info">
+                        ${user["followers"]}
+                       </a>
                        <small class="text-muted"> <em class="fas fa-user mr-1"></em>Followers</small> 
                     </li>
                     <li class="list-inline-item">
-                       <a class="font-weight-bold mb-0 d-block" id="following" data-target="modal-followers">${user["following"]}</a>
+                       <a class="font-weight-bold mb-0 d-block" id="following" data-target="modal-info">${user["following"]}</a>
                        <small class="text-muted"> <em class="fas fa-user mr-1"></em>Following</small> 
                     </li>
                     <li class="list-inline-item">
-                        <a class="font-weight-bold mb-0 d-block" id="saved" data-target="modal-followers">${user["saved"]}</a>
+                        <a class="font-weight-bold mb-0 d-block" id="saved" data-target="modal-info">${user["saved"]}</a>
                         <small class="text-muted"> <em class="fas fa-user mr-1"></em>Saved</small> 
                      </li>
                  </ul>
@@ -52,28 +54,23 @@ function generateProfile(user){
            </div>
         </div>
 
-
         <!-- Modal -->
-         <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-         <div class="modal-dialog" role="document">
+        <div class="modal fade" id="modal-info" tabindex="-1" aria-labelledby="modal-title" aria-hidden="true">
+          <div class="modal-dialog">
             <div class="modal-content">
-               <div class="modal-header">
-               <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-               </button>
-               </div>   
-               <div class="modal-body">
-                  <ul id="modal-body">
-                  
-                  </ul>
-               </div>
-               <div class="modal-footer">
-               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-               </div>
+              <div class="modal-header">
+                <h5 class="modal-title" id="modal-title"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                ...
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              </div>
             </div>
-         </div>
-         </div>
+          </div>
+        </div>
     `
     return page;
 }
@@ -89,14 +86,15 @@ function generatePosts(posts){
 }
 
 function addListeners(){
+   const modal = document.getElementById("modal-info");
    document.getElementById('followers').addEventListener("click", function(evenet){
-      window.location.replace("./controller_login.php");   
+      console.log(modal);
+      modal.title = 'followers';
    });
    document.getElementById('following').addEventListener("click", function(evenet){
-      window.location.replace("./controller_login.php");   
    });
    document.getElementById('saved').addEventListener("click", function(evenet){
-      window.location.replace("./controller_login.php");   
+
    });
 }
 
