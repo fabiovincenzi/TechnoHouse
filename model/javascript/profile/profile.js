@@ -118,6 +118,22 @@ function addFollowers(){
    });
 }
 
+function addFollowing(){
+   axios.get('model/php/api/api-following.php').then(response=>{
+      console.log(response);
+      let following = response["following"];
+      populateList(following);
+   });
+}
+
+function addSavedPosts(){
+   axios.get('model/php/api/api-following.php').then(response=>{
+      console.log(response);
+      let following = response["following"];
+      populateList(following);
+   });
+}
+
 function addListeners(){
    const title = document.getElementById("modal-title");
    document.getElementById('followers').addEventListener("click", function(evenet){
