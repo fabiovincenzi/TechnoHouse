@@ -129,8 +129,8 @@ function addFollowing(){
 function addSavedPosts(){
    axios.get('model/php/api/api-following.php').then(response=>{
       console.log(response);
-      let following = response["following"];
-      populateList(following);
+      let savedPosts = response["saved-post"];
+      populateList(savedPosts);
    });
 }
 
@@ -142,9 +142,11 @@ function addListeners(){
    });
    document.getElementById('following').addEventListener("click", function(evenet){
       title.innerText = "Following";
+      addFollowing();
    });
    document.getElementById('saved').addEventListener("click", function(evenet){
       title.innerText = "Saved posts";
+      addSavedPosts();
    });
 }
 
