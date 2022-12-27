@@ -29,10 +29,10 @@ function generateForm(){
                                 <label for="price">Price</label>
                                 <input type="number" class="form-control" id="price" placeholder="Price">  
                                 <label for="region">Region</label>
-                                <select class="form-select" id="region" aria-label="Region">
+                                <select onchange="loadProvincies();" class="form-select" id="region" aria-label="Region">
                                 </select>      
                                 <label for="province">Province</label>
-                                <select class="form-select" id="province" aria-label="Province">
+                                <select onchange="loadCities();" class="form-select" id="province" aria-label="Province">
                                     <option selected>Select a region first</option>
                                 </select>         
                                 <label for="city">City</label>
@@ -77,18 +77,44 @@ function createPost(title, images, tags, description, price, location){
     //axios.post('model/php/api/api-upload-post-tags.php', formTags)
 }
 
-function populateRegions(){
+function loadRegions(){
+    const regionSelect = document.getElementById("region");
     axios.get(`model/php/api/api-region.php`).then(regions =>{
-        console.log(regions);
-        const regionSelect = document.getElementById("region");
-        let index = 0;
         regions.data.forEach(region =>{
-            console.log(region);
-            var opt = document.createElement("option");
+            const opt = document.createElement("option");
             opt.value = region["idRegion"];
             opt.innerHTML = region["regionName"];
             regionSelect.appendChild(opt);
-            index++;
+        });
+    });
+}
+
+function loadProvincies(){
+    const regionSelect = document.getElementById("region");
+    const provinceSelect = document.getElementById("province");
+    const region_id = regionSelect.value;
+    axios.get(`model/php/api/api-province.php?region_id=${region_id}`).then(provincies =>{
+        console.log(provincies);
+        provincies.data.forEach(province =>{
+            const opt = document.createElement("option");
+            opt.value = province["idProvince"];
+            opt.innerHTML = province["initials"] + "-" + province["provinceName"];
+            provinceSelect.appendChild(opt);
+        });
+    });
+}
+
+function loadCities(){
+    const provinceSelect = document.getElementById("province");
+    const citySelect = document.getElementById("city");
+    const province_id = provinceSelect.value;
+    axios.get(`model/php/api/api-city.php?province_id=${province_id}`).then(cities =>{
+        console.log(cities);
+        cities.data.forEach(city =>{
+            const opt = document.createElement("option");
+            opt.value = city["postCode"];
+            opt.innerHTML = city["postCode"] + "-" + city["cityName"];
+            citySelect.appendChild(opt);
         });
     });
 }
@@ -109,6 +135,7 @@ function showCreatePostForm(){
     });
 }
 
+
 const main = document.querySelector("main");
 showCreatePostForm();
-populateRegions();
+loadRegions();

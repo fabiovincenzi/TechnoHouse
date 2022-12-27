@@ -213,11 +213,11 @@ class Database{
     {
         $PARAM_GET_PROVINCE_BY_REGION = 'i';   
         $query = "SELECT *
-                  FROM Provicne
+                  FROM Province
                   WHERE Region_idRegion = ?";
         $statement = $this->db->prepare($query);
-        $statement->execute();        
         $statement->bind_param($PARAM_GET_PROVINCE_BY_REGION, $region_id);
+        $statement->execute();        
         $result = $statement->get_result();
         return $result->fetch_all(MYSQLI_ASSOC);
     }
@@ -234,8 +234,8 @@ class Database{
                   FROM City
                   WHERE Province_idProvince = ?";
         $statement = $this->db->prepare($query);
-        $statement->execute();        
         $statement->bind_param($PARAM_GET_CITIES_BY_PROVINCE, $province_id);
+        $statement->execute();        
         $result = $statement->get_result();
         return $result->fetch_all(MYSQLI_ASSOC);
     }

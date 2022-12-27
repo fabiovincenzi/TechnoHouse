@@ -1,0 +1,22 @@
+INSERT INTO `region` (`idRegion`, `regionName`)
+VALUES
+(1, 'Piemonte'),
+(2, 'Valle D\'Aosta'),
+(3, 'Liguria'),
+(4, 'Lombardia'),
+(5, 'Trentino Alto Adige'),
+(6, 'Veneto'),
+(7, 'Friuli Venezia Giulia'),
+(8, 'Emilia Romagna'),
+(9, 'Marche'),
+(10, 'Toscana'),
+(11, 'Umbria'),
+(12, 'Lazio'),
+(13, 'Campania'),
+(14, 'Abruzzo'),
+(15, 'Molise'),
+(16, 'Puglia'),
+(17, 'Basilicata'),
+(18, 'Calabria'),
+(19, 'Sicilia'),
+(20, 'Sardegna');

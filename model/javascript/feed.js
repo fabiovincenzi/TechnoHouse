@@ -126,7 +126,7 @@ axios.get(`model/php/api/api-post.php`).then(posts => {
                 let postHtml = createPost(post, questions.data, tags.data);
                 main.innerHTML += postHtml;
             });
-        });
+        }); 
     });
 });
 
