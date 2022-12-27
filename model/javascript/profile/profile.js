@@ -14,19 +14,19 @@ function generateProfile(user){
               <div class="border-bottom p-4 justify-content-end text-center">
                  <ul class="list-inline mb-0">
                     <li class="list-inline-item">
-                       <h5 class="font-weight-bold mb-0 d-block" id="n-photo" >${user["n-photo"]}</h5>
+                       <h5 class="font-weight-bold mb-0 d-block" id="n-photo">${user["n-photo"]}</h5>
                        <small class="text-muted"> <em class="fas fa-image mr-1"></em>Photos</small> 
                     </li>
                     <li class="list-inline-item">
-                       <a class="font-weight-bold mb-0 d-block" id="followers">${user["followers"]}</a>
+                       <a class="font-weight-bold mb-0 d-block" id="followers" data-target="modal-followers">${user["followers"]}</a>
                        <small class="text-muted"> <em class="fas fa-user mr-1"></em>Followers</small> 
                     </li>
                     <li class="list-inline-item">
-                       <a class="font-weight-bold mb-0 d-block" id="following">${user["following"]}</a>
+                       <a class="font-weight-bold mb-0 d-block" id="following" data-target="modal-followers">${user["following"]}</a>
                        <small class="text-muted"> <em class="fas fa-user mr-1"></em>Following</small> 
                     </li>
                     <li class="list-inline-item">
-                        <a class="font-weight-bold mb-0 d-block" id="saved">${user["saved"]}</a>
+                        <a class="font-weight-bold mb-0 d-block" id="saved" data-target="modal-followers">${user["saved"]}</a>
                         <small class="text-muted"> <em class="fas fa-user mr-1"></em>Saved</small> 
                      </li>
                  </ul>
@@ -51,6 +51,29 @@ function generateProfile(user){
               </div>
            </div>
         </div>
+
+
+        <!-- Modal -->
+         <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+         <div class="modal-dialog" role="document">
+            <div class="modal-content">
+               <div class="modal-header">
+               <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+               </button>
+               </div>   
+               <div class="modal-body">
+                  <ul id="modal-body">
+                  
+                  </ul>
+               </div>
+               <div class="modal-footer">
+               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+               </div>
+            </div>
+         </div>
+         </div>
     `
     return page;
 }
