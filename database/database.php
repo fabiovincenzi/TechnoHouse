@@ -76,15 +76,14 @@ class Database{
             return false;
         }
 
-        $PARAM_ADD_USER = 'sssisss';                       // Values for the add of a new User
+        $PARAM_ADD_USER = 'sssiss';                       // Values for the add of a new User
         $query = "INSERT INTO User
-                  (name,surname,email,phoneNumber,birthdate,password,biography)
-                   VALUES (?, ?, ?, ?, ?, ?, ?)";
+                  (name,surname,email,phoneNumber,birthdate,password)
+                   VALUES (?, ?, ?, ?, ?, ?)";
         $statement = $this->db->prepare($query);
         //password_hash($password, PASSWORD_DEFAULT);
         $hashed_password = password_hash($password, PASSWORD_BCRYPT);
-        $biography = "";
-        $statement->bind_param($PARAM_ADD_USER, $name, $surname, $email,$phone_number, $birthdate, $hashed_password, $biography);
+        $statement->bind_param($PARAM_ADD_USER, $name, $surname, $email,$phone_number, $birthdate, $hashed_password);
         return $statement->execute();
     }
 

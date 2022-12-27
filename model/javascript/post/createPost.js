@@ -51,28 +51,19 @@ function createPost(title, images, tags, description, price, location){
     const formImages = new FormData();
     const formTags = new FormData();
     formPost.append('title', title);
-    images.forEach(image => {
+    /*images.forEach(image => {
         formImages.append("image", image);
     });
     tags.forEach(tag => {
         formTags.append('tag', tag);
-    });
+    });*/
     formPost.append('tags', tags);
     formPost.append('description', description);
     formPost.append('price', price);
     formPost.append('location', location);
-    axios.post('model/php/api/api-createPost.php', formPost).then(response => {
-        console.log(response);
-        //success msg
-    });
-    axios.post('model/php/api/api-uploadPostImages.php', formImages).then(response => {
-        console.log(response);
-        //success msg
-    });
-    axios.post('model/php/api/api-uploadPostTags.php', formTags).then(response => {
-        console.log(response);
-        //success msg
-    });
+    axios.post('model/php/api/api-create-post.php', formPost)
+    //axios.post('model/php/api/api-upload-post-images.php', formImages)
+    //axios.post('model/php/api/api-upload-post-tags.php', formTags)
 }
 
 function showCreatePostForm(){
