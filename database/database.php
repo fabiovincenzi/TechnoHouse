@@ -536,18 +536,6 @@ class Database{
 
     }
 
-    public function addFollower($source_user, $target_user)
-    {
-        // user1 start following user. User has a new follower 
-        $PARAM_ADD_FOLLOWER = 'ii';
-        $query = "INSERT INTO Follower
-                  (User_idUser,User_idUser1)
-                  VALUES(?,?)";
-        $statement = $this->db->prepare($query);
-        $statement->bind_param($PARAM_ADD_FOLLOWER, $source_user, $target_user);
-        return $statement->execute();
-    }
-
     public function getFollowers($user_id)
     {
         /*
@@ -576,7 +564,7 @@ class Database{
 
     public function addFollowing($source_id, $target_id)
     {
-
+        //Source id starts following target id
         $PARAM_ADD_FOLLOWING = 'ii';
         $query = "INSERT INTO Following 
                   (User_idUser, User_idUser1)

@@ -8,6 +8,7 @@ define("TAG_USER_FOLLOWERS", "followers");
 define("TAG_USER_FOLLOWING", "following");
 define("TAG_USER_NPHOTOS", "n-photo");
 define("TAG_USER_SAVED", "saved");
+define("TAG_TARGET_FOLLOWING", "target"); //upload directory
 define("TAG_USER_INFO", "users-info"); //upload directory
 define("TAG_USER_POST", "users-posts"); //upload directory
 define("TAG_USER_EMAIL", "email");

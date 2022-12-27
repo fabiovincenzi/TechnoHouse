@@ -4,7 +4,7 @@ $data[TAG_LOGGED] = false;
 
 if(isUserLoggedIn()){
     $data[TAG_LOGGED] = true;
-    $data[TAG_USER_FOLLOWERS] = $dbh->getFollowers($_SESSION[TAG_USER_ID]);
+    $data[TAG_USER_FOLLOWERS] = array(); //$dbh->getFollowers($_SESSION[TAG_USER_ID]);
 }
 header('Content-Type: application/json');
 echo json_encode($data);

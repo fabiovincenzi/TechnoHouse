@@ -63,7 +63,7 @@ function generateProfile(user){
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">
-                <ul id="model-list">
+                <ul id="modal-list">
                 </ul>
               </div>
               <div class="modal-footer">
@@ -87,54 +87,63 @@ function generatePosts(posts){
 }
 
 function populateList(users){
-   users.forEach(user => {
+   const list = document.getElementById("modal-list");
+   users.forEach(user => user.forEach(info => {
+      console.log(user);
       let list_item = `
       <li class="p-2 border-bottom bg-white">
-         <a id="profile" href="${user["idUser"]}" class="d-flex justify-content-between chatListLine">
+         <a id="profile" href="${info["idUser"]}" class="d-flex justify-content-between chatListLine">
             <div class="d-flex flex-row">
                <!--chat image-->
-               <img src="${user["img"]}" alt="${user["name"]} ${user["surname"]} profile image"
+               <img src="" alt="${info["name"]} ${info["surname"]} profile image"
                class="rounded-circle d-flex align-self-center me-3 shadow-1-strong chatListLine" width="60">
                <!--chat image-->
                <div class="pt-1">
                      <!--Name-->
-                     <p class="fw-bold mb-0">${user["name"]} ${user["surname"]}</p>
+                     <p class="fw-bold mb-0">${info["name"]} ${info["surname"]}</p>
                      <!--Name-->
                </div>
             </div>
          </a>
       </li>
       `
-      list.innerHTML += list_item;
-   });
-   
+      list.innerHTML+=list_item;
+   }));
 }
 
 function addFollowers(){
    axios.get('model/php/api/api-followers.php').then(response=>{
       console.log(response);
-      let followers = response["followers"];
+      let followers = response.data["followers"];
       populateList(followers);
    });
 }
 
-function addFollowing(){
+function addFollowing(user_info){
    axios.get('model/php/api/api-following.php').then(response=>{
-      console.log(response);
-      let following = response["following"];
+      let following = response.data["following"];
       populateList(following);
    });
+   /*
+   const formData = new FormData();
+   formData.append('idUser', user_info["idUser"]);
+   formData.append('target', 1);
+   
+   axios.post('model/php/api/api-following.php', formData).then(response => {
+      console.log(response);
+   });
+   */
 }
 
 function addSavedPosts(){
    axios.get('model/php/api/api-following.php').then(response=>{
       console.log(response);
-      let savedPosts = response["saved-post"];
-      populateList(savedPosts);
+      let savedPosts = response.data["saved-post"];
+      //populateList(savedPosts);
    });
 }
 
-function addListeners(){
+function addListeners(user_info){
    const title = document.getElementById("modal-title");
    document.getElementById('followers').addEventListener("click", function(evenet){
       title.innerText = "Followers";
@@ -142,7 +151,7 @@ function addListeners(){
    });
    document.getElementById('following').addEventListener("click", function(evenet){
       title.innerText = "Following";
-      addFollowing();
+      addFollowing(user_info);
    });
    document.getElementById('saved').addEventListener("click", function(evenet){
       title.innerText = "Saved posts";
@@ -164,7 +173,7 @@ function visualizeProfile(){
          posts = response.data["users-posts"];
          let content_profile = generateProfile(user);
          addUserInfo(content_profile);
-         addListeners();
+         addListeners(user[0]);
          generatePosts(posts);
       }else{
          window.location.replace("./controller_login.php");   
@@ -175,7 +184,6 @@ function visualizeProfile(){
 
 const main = document.querySelector("main");
 const div_posts = document.getElementById("users-posts");
-const list = document.getElementById("modal-list");
 
 axios.get('model/php/api/api-profile.php').then(response => {
    console.log(response);
