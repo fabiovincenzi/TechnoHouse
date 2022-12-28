@@ -63,7 +63,7 @@ function generateProfile(user){
                 <button id="button-close-up" type="button" class="button-close btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">
-                <ul id="modal-list">
+                <ul id="modal-list" class="list-unstyled mb-0">
                 </ul>
               </div>
               <div class="modal-footer">
