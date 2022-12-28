@@ -67,7 +67,7 @@ function generateProfile(user){
                 </ul>
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button  type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
               </div>
             </div>
           </div>
@@ -166,7 +166,7 @@ function addUserInfo(user_infos){
 function visualizeProfile(){
    let posts = {};
    let user = {};
-   axios.get('model/php/api/api-post.php').then(response => {
+   axios.get('model/php/api/api-post.php?action=1').then(response => {
       console.log(response.data);
       if(response.data["logged"]){
          user = response.data["users-info"];
