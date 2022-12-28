@@ -90,7 +90,7 @@ function populateList(users, list){
    users.forEach(user => {
       let list_item = `
       <li class="p-2 border-bottom bg-white">
-         <a id="profile" href="${user["idUser"]}" class="d-flex justify-content-between chatListLine">
+         <a id="profile" href="./controller_otheruser.php?idUser=${user["idUser"]}" class="d-flex justify-content-between chatListLine">
             <div class="d-flex flex-row">
                <!--chat image-->
                <img src="" alt="${user["name"]} ${user["surname"]} profile image"
