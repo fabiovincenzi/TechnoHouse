@@ -241,74 +241,44 @@ class Database{
     }
 
     /**
-     * Summary of addBuilding
-     * @param mixed $latitude
-     * @param mixed $longitude
-     * @param mixed $postcode
-     * @return bool
-     */
-    public function addBuilding($latitude, $longitude, $postcode)
-    {
-        $PARAM_ADD_BUILDING = 'ddi';                    // Values used to add a new Building
-        $query = ("INSERT INTO Building
-                  (POINT(latitude,longitude), City_postCode)
-                  VALUES(?,?,?)");
-        $statement = $this->db->prepare($query);
-        $statement->bind_param($PARAM_ADD_BUILDING, $latitude, $longitude, $postcode);
-        return $statement->execute();
-    }
-    
-    /**
-     * Summary of getBuilding Get a specific Building from the Database
-     * @param mixed $building_id the Building's Id
-     * @return array, contains the specific building
-     */
-    public function getBuilding($building_id)
-    {
-        $PARAM_GET_BUILDING = 'i';                      // Value used to get a specific Building from its id
-        $query = "SELECT *
-                  FROM Building
-                  WHERE idBuilding = ?";
-        $statement = $this->db->prepare($query);
-        $statement->bind_param($PARAM_GET_BUILDING, $building_id);
-        $statement->execute();
-        $result = $statement->get_result();
-        return $result->fetch_all(MYSQLI_ASSOC);    
-    }
-
-    /**
-     * Summary of deleteBuilding, delete a specific Building 
-     * @param mixed $building_id
-     * @return bool, result of query
-     */
-    public function deleteBuilding($building_id)
-    {
-        $PARAM_DELETE_BUILDING = 'i';                   // Value used to delete a specific Building from its id
-        $query = "DELETE FROM Building WHERE idBuilding = ?";
-        $statement = $this->db->prepare($query);
-        $statement->bind_param($PARAM_DELETE_BUILDING, $building_id);
-        return $statement->execute();
-    }
-
-    /**
      * Summary of addPost Adding a new post inside the database
      * @param mixed $title
      * @param mixed $description
      * @param mixed $price
      * @param mixed $user_id
-     * @param mixed $building_id
      * @return void
      */
-    public function  addPost($title, $description, $price, $user_id, $building_id)
+    public function  addPost($title, $description, $price, $user_id, $publish_time, $latitude, $longitude, $adress, $city_id)
     {
-        $PARAM_ADD_POST = 'ssdii';
-        $query = ("INSERT INTO Post
-                (POINT(title,description,price,User_idUser,Building_idBuilding)
-                VALUES(?,?,?,?,?)");
+        $PARAM_ADD_POST = 'ssdissiii';
+         $query = "INSERT INTO Post
+         (title,description,price,User_idUser,PublishTime,Address,City_idCity,latitude,LONGITUDE)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         $statement = $this->db->prepare($query);
-        $statement->bind_param($PARAM_ADD_POST, $title, $description, $price, $user_id, $building_id);
-    }
+        $statement->bind_param($PARAM_ADD_POST, $title, $description, $price, $user_id, $publish_time, $latitude, $longitude, $adress, $city_id);
 
+        
+        $statement->execute();
+        return $statement;
+    }
+     /**
+     * Summary of getUsersPosts get all the post from a specific user
+     * @param mixed $user_id
+     * @return array
+     */
+    public function getLastUsersPosts($user_id)
+    {
+        $PARAM_GET_LAST_USER_POSTS = 'i';
+        $query = "SELECT *
+                  FROM Post
+                  WHERE User_idUser = ?
+                  LIMIT 1";
+        $statement = $this->db->prepare($query);
+        $statement->bind_param($PARAM_GET_LAST_USER_POSTS, $user_id);
+        $statement->execute();
+        $result = $statement->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
     /**
      * Summary of getUsersPosts get all the post from a specific user
      * @param mixed $user_id
@@ -521,9 +491,16 @@ class Database{
         return $statement->execute();
     }
 
-    public function addImage()
+    public function addImage($path, $post_id)
     {
-
+        var_dump($path);
+        $PARAM_ADD_IMAGE = 'si';
+        $query = "INSERT INTO Image 
+                  (path, Post_idPost)
+                  VALUES(?,?)";
+        $statement = $this->db->prepare($query);
+        $statement->bind_param($PARAM_ADD_IMAGE, $path, $post_id);
+        return $statement->execute();
     }
 
     public function getPostImages()

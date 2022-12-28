@@ -116,7 +116,7 @@ postHtml +=                                `
                 `;
                 return postHtml;
 }
-axios.get(`model/php/api/api-post.php`).then(posts => {
+axios.get(`model/php/api/api-post.php?action=2`).then(posts => {
     console.log(posts);
     const main = document.querySelector("main");
     posts.data.forEach(post => {

@@ -8,11 +8,11 @@ function generateForm(){
                             <div class="col-md-6">
                                 <label for="title">Title</label>
                                 <input type="text" class="form-control mb-2" id="title" placeholder="Title">
-                                <!--images-->
-                                <label for="images">Post images</label><input type="file" name="images" id="images" />
-                                <!--images-->
-
-                                <button class="btn btn-primary btn-lg btn-block w-100 mt-2">Load Images</button>
+                                
+                                <div class="mb-3">
+                                    <label for="images" class="form-label">Load Images</label>
+                                    <input class="form-control" type="file" id="images" multiple>
+                                </div>
                                 <label for="tags">Tags</label>
                                 <select id="tags" class="form-select mt-2" multiple aria-label="Tags">
                                     <option selected>Garden</option>
@@ -24,10 +24,10 @@ function generateForm(){
                                 <label for="description" id="lbl-description">Description</label>
                                 <textarea class="form-control" id="description" title="post description" rows="3"></textarea>
                                 <!--description-->
-                            </div>
-                            <div class="col-md-6">
                                 <label for="price">Price</label>
                                 <input type="number" class="form-control" id="price" placeholder="Price">  
+                            </div>
+                            <div class="col-md-6">
                                 <label for="region">Region</label>
                                 <select onchange="loadProvincies();" class="form-select" id="region" aria-label="Region">
                                 <option selected>Select a region</option>
@@ -40,6 +40,8 @@ function generateForm(){
                                 <select class="form-select" id="city" aria-label="City">
                                     <option selected>Select a province first</option>
                                 </select>        
+                                <label for="address">Address</label>
+                                <input type="text" class="form-control" id="address" placeholder="Address">  
                                 <!--map-->
                                 <div id="map-container-google-2" class="z-depth-1-half map-container m-2" style="height: 200px">
                                     <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d11452.093538879488!2d12.2433589!3d44.1447625!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x132ca58ba97cf34f%3A0x9a4e66c64fd8978c!2sCampus%20di%20Cesena%20-%20Universit%C3%A0%20di%20Bologna%20-%20Alma%20Mater%20Studiorum!5e0!3m2!1sit!2sit!4v1670314646821!5m2!1sit!2sit" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
@@ -58,24 +60,30 @@ function generateForm(){
     return form;
 }
 
-function createPost(title, images, tags, description, price, location){
+function createPost(title, description, price, latitude, longitude, city_id, address, formImages){
     const formPost = new FormData();
-    const formImages = new FormData();
     const formTags = new FormData();
     formPost.append('title', title);
-    /*images.forEach(image => {
-        formImages.append("image", image);
-    });
-    tags.forEach(tag => {
-        formTags.append('tag', tag);
-    });*/
-    formPost.append('tags', tags);
     formPost.append('description', description);
     formPost.append('price', price);
-    formPost.append('location', location);
-    axios.post('model/php/api/api-create-post.php', formPost)
-    //axios.post('model/php/api/api-upload-post-images.php', formImages)
-    //axios.post('model/php/api/api-upload-post-tags.php', formTags)
+    formPost.append('latitude', latitude);
+    formPost.append('longitude', longitude);
+    formPost.append('city_id', city_id);
+    formPost.append('address', address);
+    /*tags.forEach(tag => {
+        formTags.append('tag', tag);
+    });*/
+    axios.post('model/php/api/api-create-post.php', formPost).then(response=>{
+        console.log(response);
+        axios.get(`model/php/api/api-last-user-post.php`).then(lastPost=>{
+            formImages.append('lastPostId', lastPost.data[0]['idPost']);
+            console.log(lastPost.data[0]['idPost']);
+            axios.post('model/php/api/api-upload-post-images.php', formImages).then(e =>{
+                console.log(e);
+            });
+            //axios.post('model/php/api/api-upload-post-tags.php', formTags);
+        });
+    });
 }
 
 function loadRegions(){
@@ -114,7 +122,7 @@ function loadCities(){
         console.log(cities);
         cities.data.forEach(city =>{
             const opt = document.createElement("option");
-            opt.value = city["postCode"];
+            opt.value = city["idCity"];
             opt.innerHTML = city["postCode"] + "-" + city["cityName"];
             citySelect.appendChild(opt);
         });
@@ -127,13 +135,23 @@ function showCreatePostForm(){
     document.querySelector("form").addEventListener("submit", function (event) {
         event.preventDefault();
         const title = document.querySelector("#title").value;
-        const images = document.querySelector("#images").files;
-        const options = document.querySelector("#tags").selectedOptions;
-        const tags = Array.from(options).map(({ value }) => value);
         const description = document.querySelector("#description").value;
         const price = document.querySelector("#price").value;
+        const latitude = 10;
+        const longitude = 20;
+        const city_id = document.querySelector("#city").value;
+        const address = document.querySelector("#address").value;
+        const images = document.querySelector("#images").files;
+        const formImage = new FormData();
+
+        for (let i = 0; i < images.length; i++) {
+            let file = images[i];
+            formImage.append('images[]', file);
+        }
+        //const options = document.querySelector("#tags").selectedOptions;
+        //const tags = Array.from(options).map(({ value }) => value);
         //const location = document.querySelector("#location").value;
-        createPost(title, images, tags, description, price, 10);
+        createPost(title, description, price, latitude, longitude, city_id, address, formImage);
     });
 }
 
