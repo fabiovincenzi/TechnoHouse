@@ -503,7 +503,7 @@ class Database{
         return $statement->execute();
     }
 
-    public function getPostImages()
+    public function getPostImages($post_id)
     {
         $PARAM_GET_IMAGES_BY_POST = 'i';
         $query = "SELECT *

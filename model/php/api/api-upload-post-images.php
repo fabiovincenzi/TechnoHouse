@@ -17,14 +17,12 @@ if(isset($_FILES["images"]) && isset( $_POST["lastPostId"])){
 
         $file = UPLOAD_DIR . $file_name;
 
-
         if ($file_size > 2097152) {
             $errors[] = 'File size exceeds limit: ' . $file_name . ' ' . $file_type;
         }
-
         if (empty($errors)) {
             move_uploaded_file($file_tmp, $file);
-            $dbh->addImage($file, $_POST["lastPostId"]);
+            $dbh->addImage($file_name, $_POST["lastPostId"]);
         }
     }
 
@@ -34,6 +32,7 @@ if(isset($_FILES["images"]) && isset( $_POST["lastPostId"])){
         print_r(json_encode(['file_names' => $fileNames]));
     }
 }else{
+    //file non caricato
     echo json_encode("error");
 }
 header('Content-Type: application/json');

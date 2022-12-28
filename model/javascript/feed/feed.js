@@ -1,5 +1,4 @@
-function createPost(post, questions, tags){
-    console.log(questions);
+function createPost(post, questions, tags, user, images){
     let postHtml = `
     <div class="justify-content-center row">
             <div class="col-10 col-md-10 bg-white shadow rounded overflow-hidden mt-2">
@@ -8,8 +7,8 @@ function createPost(post, questions, tags){
                 <div class="d-flex flex-row px-2 border-bottom">
                     <img class="rounded-circle" src="https://i.imgur.com/aoKusnD.jpg" alt="image profile of :"width="45">
                     <div class="d-flex flex-column flex-wrap ml-2">
-                        <span class="font-weight-bold">Thomson ben</span>
-                        <span class="text-black-50 time">40 minutes ago</span>
+                        <span class="font-weight-bold">${user["name"]} ${user["surname"]}</span>
+                        <span class="text-black-50 time">pubblicato il ${post["PublishTime"].split(' ')[0]} alle ${post["PublishTime"].split(' ')[1]}</span>
                     </div>
                 </div>
                 <!--profile name-->
@@ -33,17 +32,22 @@ function createPost(post, questions, tags){
                                     <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
                                     <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
                                 </ol>
-                                <div class="carousel-inner">
-                                    <div class="carousel-item active">
-                                        <img class="d-block w-100" src="https://i.imgur.com/aoKusnD.jpg" alt="First slide">
-                                    </div>
-                                    <div class="carousel-item">
-                                        <img class="d-block w-100" src="https://i.imgur.com/rSnSOKD.jpeg" alt="Second slide">
-                                    </div>
-                                    <div class="carousel-item">
-                                        <img class="d-block w-100" src="https://i.imgur.com/0feWrAk.jpeg" alt="Third slide">
-                                    </div>
-                                </div>
+                                <div class="carousel-inner">`
+let i = 0;
+images.forEach(el=>{
+    if(i == 0){
+        postHtml += `<div class="carousel-item active">
+        <img class="d-block w-100" src="upload/${el["path"]}" alt="First slide">
+    </div>`;
+    }else{
+        postHtml += `<div class="carousel-item">
+        <img class="d-block w-100" src="upload/${el["path"]}" alt="First slide">
+    </div>`;
+    }
+    i++;
+});
+                                
+postHtml +=  `</div>
                                 <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
                                     prev
                                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -64,7 +68,6 @@ function createPost(post, questions, tags){
                             <!--tags-->`
 tags.forEach(el=>{
     postHtml += `<a href="#">#${el["tagName"]}</a>`;
-
 });
 postHtml += `
                             <!--tags-->
@@ -117,14 +120,19 @@ postHtml +=                                `
                 return postHtml;
 }
 axios.get(`model/php/api/api-post.php?action=2`).then(posts => {
-    console.log(posts);
     const main = document.querySelector("main");
     posts.data.forEach(post => {
         axios.get(`model/php/api/api-questions.php?id=${post["idPost"]}`).then(questions => {
             axios.get(`model/php/api/api-tags.php?id=${post["idPost"]}`).then(tags =>{
-                const main = document.querySelector("main");
-                let postHtml = createPost(post, questions.data, tags.data);
-                main.innerHTML += postHtml;
+                axios.get(`model/php/api/api-post-images.php?id=${post["idPost"]}`).then(images =>{
+                    console.log(images);
+                    axios.get(`model/php/api/api-user.php?id=${post["User_idUser"]}`).then(user=>{
+                        console.log(user);
+                        const main = document.querySelector("main");
+                        let postHtml = createPost(post, questions.data, tags.data, user.data[0], images.data);
+                        main.innerHTML += postHtml;
+                    });
+                });
             });
         }); 
     });

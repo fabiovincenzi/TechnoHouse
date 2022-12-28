@@ -15,6 +15,7 @@ define("TAG_USER_EMAIL", "email");
 
 define("TAG_ACTION", "action");
 define("SEND_POST_USER", "1");
+define("GET_USER_FEED", "2");
 
 require_once($_SERVER["DOCUMENT_ROOT"]."/model/php/util/functions.php"); //functions directory
 require_once($_SERVER["DOCUMENT_ROOT"]."/database/database.php"); //database directory
