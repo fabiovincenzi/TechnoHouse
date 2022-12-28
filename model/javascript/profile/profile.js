@@ -67,7 +67,7 @@ function generateProfile(user){
                 </ul>
               </div>
               <div class="modal-footer">
-                <button  type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn-clone btn btn-secondary" data-bs-dismiss="modal">Close</button>
               </div>
             </div>
           </div>
@@ -86,8 +86,7 @@ function generatePosts(posts){
    });
 }
 
-function populateList(users){
-   const list = document.getElementById("modal-list");
+function populateList(users, list){
    users.forEach(user => user.forEach(info => {
       console.log(user);
       let list_item = `
@@ -143,19 +142,28 @@ function addSavedPosts(){
    });
 }
 
+function clearList(list){
+   list.innerHTML = "";
+}
+
 function addListeners(user_info){
    const title = document.getElementById("modal-title");
+   const list = document.getElementById("modal-list");
    document.getElementById('followers').addEventListener("click", function(evenet){
       title.innerText = "Followers";
       addFollowers();
    });
    document.getElementById('following').addEventListener("click", function(evenet){
       title.innerText = "Following";
-      addFollowing(user_info);
+      addFollowing(user_info, list);
    });
    document.getElementById('saved').addEventListener("click", function(evenet){
       title.innerText = "Saved posts";
       addSavedPosts();
+   });
+   document.getElementsByClassName('btn-close').addEventListener("click", function(event){
+      console.log("ciaoo");
+      clearList(list);
    });
 }
 
