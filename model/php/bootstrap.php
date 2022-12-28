@@ -26,6 +26,12 @@ define("SEND_POST_USER", "1");
 define("GET_FOLLOWERS", "1");
 
 
+// POST INFOS
+define("TAG_POST_ID", "idPost");
+define("TAG_POST_TITLE", "title");
+define("TAG_GET_POST", "Post_idPost");
+
+
 require_once($_SERVER["DOCUMENT_ROOT"]."/model/php/util/functions.php"); //functions directory
 require_once($_SERVER["DOCUMENT_ROOT"]."/database/database.php"); //database directory
 $dbh = new Database("localhost", "root", "", "technohouse", 3306);

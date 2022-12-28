@@ -246,12 +246,12 @@ class Database{
      * @param mixed $description
      * @param mixed $price
      * @param mixed $user_id
-     * @return void
+     * @return mixed
      */
     public function  addPost($title, $description, $price, $user_id, $publish_time, $latitude, $longitude, $adress, $city_id)
     {
         $PARAM_ADD_POST = 'ssdissiii';
-         $query = "INSERT INTO Post
+        $query = "INSERT INTO Post
          (title,description,price,User_idUser,PublishTime,Address,City_idCity,latitude,LONGITUDE)
           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         $statement = $this->db->prepare($query);
@@ -260,6 +260,18 @@ class Database{
         
         $statement->execute();
         return $statement;
+    }
+
+    public function getPostById($post_id){
+        $PARAM_GET_POST = 'i';
+        $query = "SELECT *
+                  FROM Post
+                  WHERE idPost = ?";
+        $statement = $this->db->prepare($query);
+        $statement->bind_param($PARAM_GET_POST, $post_id);
+        $statement->execute();
+        $result = $statement->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC);
     }
      /**
      * Summary of getUsersPosts get all the post from a specific user

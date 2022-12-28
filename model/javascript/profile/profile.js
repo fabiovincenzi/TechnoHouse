@@ -109,6 +109,26 @@ function populateList(users, list){
    });
 }
 
+function populateSaved(posts, list){
+   posts.forEach(post => {
+      let list_item = `
+      <li class="p-2 border-bottom bg-white">
+         <a id="profile" href="${post["idPost"]}" class="d-flex justify-content-between chatListLine">
+            <div class="d-flex flex-row">
+               <!--chat image-->
+               <img src="" alt="${post["title"]} image"
+               class="rounded-circle d-flex align-self-center me-3 shadow-1-strong chatListLine" width="60">
+               <!--chat image-->
+               <div class="pt-1">
+                  <p class="fw-bold mb-0">${post["title"]}</p>
+               </div>
+            </div>
+         </a>
+      </li>`
+      list.innerHTML+=list_item;
+   });
+}
+
 function addFollowers(list){
    axios.get('model/php/api/api-followers.php').then(response=>{
       let followers = response.data["followers"];
@@ -124,10 +144,10 @@ function addFollowing(list){
 }
 
 function addSavedPosts(list){
-   axios.get('model/php/api/api-following.php').then(response=>{
+   axios.get('model/php/api/api-savedposts.php').then(response=>{
       console.log(response);
       let savedPosts = response.data["saved-post"];
-      //populateList(savedPosts);
+      populateSaved(savedPosts, list);
    });
 }
 
