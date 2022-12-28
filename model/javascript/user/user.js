@@ -2,18 +2,32 @@ const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 const userId = urlParams.get('idUser');
 const main = document.querySelector('main');
+
 if(userId !== null){
     axios.get(`model/php/api/api-profile.php?idUser=${userId}`).then(response => {
         console.log(response.data);
         if(response.data["logged"]){
-            
-            let users_info = response.data["users-info"];
-            main.innerHTML += generateProfile(users_info);
-            addListeners(users_info);
+            if(!response.data["me"]){
+               let users_info = response.data["users-info"];
+               main.innerHTML = generateProfile(users_info);
+               addPosts();
+            }else{
+               window.location.replace("./controller_profile.php");   
+            }
         }else{
             window.location.replace("./controller_login.php");   
         }
     });
+}
+
+function addPosts(){
+   const div_posts = document.getElementById("users-posts");
+   axios.get(`model/php/api/api-post.php?idUser=${userId}`).then(response => {
+      console.log(response);
+      let posts = response.data["users-posts"];
+      div_posts.innerHTML = generatePosts(posts);
+      addListeners(posts);
+   });
 }
 
 function generateProfile(user){
@@ -46,7 +60,7 @@ function generateProfile(user){
                        <small class="text-muted"> <em class="fas fa-user mr-1"></em>Following</small> 
                     </li>
                  </ul>
-                 <input id="follow" class="btn btn-primary btn-lg btn-block w-100" name="follow" type="submit" value="Follow"/>
+                 <input id="?" class="btn btn-primary btn-lg btn-block w-100" name="?" type="submit" value="?"/>
                  </div>
               <div class="px-4 py-3">
                  <h5 class="mb-0">About</h5>
@@ -127,6 +141,18 @@ function populateList(users, list){
       `
       list.innerHTML+=list_item;
    });
+}
+
+function generatePosts(posts){
+   let content = "";
+   posts.forEach(post => {
+      let single_post = `
+      <a id="${post["idPost"]}">
+         <img src="${post["image"]}" alt="${post["name"]} photo" class="img-fluid rounded shadow-sm">
+      </a>`;
+      content += single_post;
+   });
+   return content;
 }
 
 function clearList(list){
