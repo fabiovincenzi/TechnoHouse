@@ -97,7 +97,7 @@ questions.forEach(el =>{
     postHtml +=`
                 <li>
                     <div>
-                        <h3 class="font-14 mb-1 tag-question">${el["User_idUser"]}</h3>
+                        <h5 class="font-8 mb-1 tag-question">${el["name"]} ${el["surname"]}</h3>
                         <p class="mb-2">${el["text"]}</p>
                     </div>
                 </li>`;

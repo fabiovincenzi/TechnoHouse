@@ -284,6 +284,7 @@ class Database{
         $query = "SELECT *
                   FROM Post
                   WHERE User_idUser = ?
+                  ORDER BY PublishTime
                   LIMIT 1";
         $statement = $this->db->prepare($query);
         $statement->bind_param($PARAM_GET_LAST_USER_POSTS, $user_id);
@@ -324,7 +325,8 @@ class Database{
                     SELECT User_idUser1
                     FROM following, post
                     WHERE following.User_idUser = ?
-                  )";
+                  )
+                  ORDER BY PublishTime Desc";
         $statement = $this->db->prepare($query);
         $statement->bind_param($PARAM_GET_USER_POSTS, $user_id);
         $statement->execute();
@@ -449,9 +451,10 @@ class Database{
     public function getPostsQuestions($post_id)
     {
         $PARAM_GET_QUESTIONS = 'i';
-        $query = "SELECT *
-                  FROM Question
-                  WHERE Post_idPost = ?";
+        $query = "SELECT Question.*, User.name, User.surname
+                  FROM Question, User
+                  WHERE Post_idPost = ?
+                  AND idUser = User_idUser";
         $statement = $this->db->prepare($query);
         $statement->bind_param($PARAM_GET_QUESTIONS, $post_id);
         $statement->execute();
@@ -503,9 +506,22 @@ class Database{
         return $statement->execute();
     }
 
+    public function addTagToPost($tag_id, $post_id)
+    {
+        $PARAM_ADD_TAG_TO_POST= 'ii';
+        $query = "INSERT INTO post_has_tag 
+                  (Post_idPost, Tag_idTag)
+                  VALUES(?,?)";
+        $statement = $this->db->prepare($query);
+        $statement->bind_param($PARAM_ADD_TAG_TO_POST, $post_id, $tag_id);
+        var_dump($tag_id);
+        var_dump($post_id);
+
+        return $statement->execute();
+    }
+
     public function addImage($path, $post_id)
     {
-        var_dump($path);
         $PARAM_ADD_IMAGE = 'si';
         $query = "INSERT INTO Image 
                   (path, Post_idPost)
