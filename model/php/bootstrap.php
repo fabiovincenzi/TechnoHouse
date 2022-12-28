@@ -8,10 +8,14 @@ define("TAG_USER_FOLLOWERS", "followers");
 define("TAG_USER_FOLLOWING", "following");
 define("TAG_USER_NPHOTOS", "n-photo");
 define("TAG_USER_SAVED", "saved");
-define("TAG_TARGET_FOLLOWING", "target"); //upload directory
+define("TAG_TARGET_FOLLOWING", "target");
 define("TAG_USER_INFO", "users-info"); //upload directory
 define("TAG_USER_POST", "users-posts"); //upload directory
 define("TAG_USER_EMAIL", "email");
+
+
+define("SEND_POST_USER", "1");
+
 require_once($_SERVER["DOCUMENT_ROOT"]."/model/php/util/functions.php"); //functions directory
 require_once($_SERVER["DOCUMENT_ROOT"]."/database/database.php"); //database directory
 $dbh = new Database("localhost", "root", "", "technohouse", 3306);

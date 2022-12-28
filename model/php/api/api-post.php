@@ -10,7 +10,7 @@ if(isUserLoggedIn()){
     $posts[TAG_USER_INFO][TAG_USER_SAVED] = count($dbh->getAllSaved($id));
     $users_posts = $dbh->getUsersPosts($id);
     $posts[TAG_USER_INFO][TAG_USER_NPHOTOS] = count($users_posts);
-    $posts[TAG_USER_POST] = $users_posts; 
+    $posts[TAG_USER_POST] = $users_posts;
 }
 header('Content-Type: application/json');
 echo json_encode($posts);
