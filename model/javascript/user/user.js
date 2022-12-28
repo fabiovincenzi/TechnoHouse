@@ -1,3 +1,21 @@
+const queryString = window.location.search;
+const urlParams = new URLSearchParams(queryString);
+const userId = urlParams.get('idUser');
+const main = document.querySelector('main');
+if(userId !== null){
+    axios.get(`model/php/api/api-profile.php?idUser=${userId}`).then(response => {
+        console.log(response.data);
+        if(response.data["logged"]){
+            
+            let users_info = response.data["users-info"];
+            main.innerHTML += generateProfile(users_info);
+            addListeners(users_info);
+        }else{
+            window.location.replace("./controller_login.php");   
+        }
+    });
+}
+
 function generateProfile(user){
     let page = `
         <div class="justify-content-center row">
@@ -5,10 +23,10 @@ function generateProfile(user){
  
               <div class="p-4 bg-black row">
                     <div class="mr-3 col-5">
-                        <img src="" alt="${user[0]["name"]} ${user[0]["surname"]} profile photo" width="130" class="rounded mb-2 img-thumbnail">
+                        <img src="" alt="${user["name"]} ${user["surname"]} profile photo" width="130" class="rounded mb-2 img-thumbnail">
                     </div>
                     <div class="text-white col-7">
-                        <h4 id="name-surname">${user[0]["name"]} ${user[0]["surname"]}</h4>
+                        <h4 id="name-surname">${user["name"]} ${user["surname"]}</h4>
                     </div>
               </div>
               <div class="border-bottom p-4 justify-content-end text-center">
@@ -27,12 +45,9 @@ function generateProfile(user){
                        <a class="font-weight-bold mb-0 d-block" id="following" data-bs-toggle="modal" data-bs-target="#modal-info">${user["following"]}</a>
                        <small class="text-muted"> <em class="fas fa-user mr-1"></em>Following</small> 
                     </li>
-                    <li class="list-inline-item">
-                        <a class="font-weight-bold mb-0 d-block" id="saved" data-bs-toggle="modal" data-bs-target="#modal-info">${user["saved"]}</a>
-                        <small class="text-muted"> <em class="fas fa-user mr-1"></em>Saved</small> 
-                     </li>
                  </ul>
-              </div>
+                 <input id="follow" class="btn btn-primary btn-lg btn-block w-100" name="follow" type="submit" value="Follow"/>
+                 </div>
               <div class="px-4 py-3">
                  <h5 class="mb-0">About</h5>
                  <div class="p-4 rounded shadow-sm bg-light">
@@ -76,13 +91,18 @@ function generateProfile(user){
     return page;
 }
 
-function generatePosts(posts){
-   posts.forEach(post => {
-      let single_post = `
-      <a id="${post["idPost"]}">
-         <img src="${post["image"]}" alt="${post["name"]} photo" class="img-fluid rounded shadow-sm">
-      </a>`;
-      div_posts.innerHTML+=single_post;
+function addFollowers(list){
+   axios.get(`model/php/api/api-followers.php?idUser=${userId}`).then(response=>{
+      console.log(response);
+      let followers = response.data["followers"];
+      populateList(followers, list);
+   });
+}
+
+function addFollowing(list){
+   axios.get(`model/php/api/api-following.php?idUser=${userId}`).then(response=>{
+      let following = response.data["following"];
+      populateList(following, list);
    });
 }
 
@@ -109,53 +129,11 @@ function populateList(users, list){
    });
 }
 
-function populateSaved(posts, list){
-   posts.forEach(post => {
-      let list_item = `
-      <li class="p-2 border-bottom bg-white">
-         <a id="profile" href="${post["idPost"]}" class="d-flex justify-content-between chatListLine">
-            <div class="d-flex flex-row">
-               <!--chat image-->
-               <img src="" alt="${post["title"]} image"
-               class="rounded-circle d-flex align-self-center me-3 shadow-1-strong chatListLine" width="60">
-               <!--chat image-->
-               <div class="pt-1">
-                  <p class="fw-bold mb-0">${post["title"]}</p>
-               </div>
-            </div>
-         </a>
-      </li>`
-      list.innerHTML+=list_item;
-   });
-}
-
-function addFollowers(list){
-   axios.get('model/php/api/api-followers.php').then(response=>{
-      let followers = response.data["followers"];
-      populateList(followers, list);
-   });
-}
-
-function addFollowing(list){
-   axios.get('model/php/api/api-following.php').then(response=>{
-      let following = response.data["following"];
-      populateList(following, list);
-   });
-}
-
-function addSavedPosts(list){
-   axios.get('model/php/api/api-savedposts.php').then(response=>{
-      console.log(response);
-      let savedPosts = response.data["saved-post"];
-      populateSaved(savedPosts, list);
-   });
-}
-
 function clearList(list){
    list.innerHTML = "";
 }
 
-function addListeners(user_info){
+function addListeners(users_info){
    const title = document.getElementById("modal-title");
    const list = document.getElementById("modal-list");
    document.getElementById('followers').addEventListener("click", function(evenet){
@@ -168,43 +146,4 @@ function addListeners(user_info){
       title.innerText = "Following";
       addFollowing(list);
    });
-   document.getElementById('saved').addEventListener("click", function(evenet){
-      clearList(list);
-      title.innerText = "Saved posts";
-      addSavedPosts(list);
-   });
 }
-
-function addUserInfo(user_infos){
-   main.innerHTML = user_infos;
-}
-
-function visualizeProfile(){
-   let posts = {};
-   let user = {};
-   axios.get('model/php/api/api-post.php?action=1').then(response => {
-      if(response.data["logged"]){
-         user = response.data["users-info"];
-         posts = response.data["users-posts"];
-         let content_profile = generateProfile(user);
-         addUserInfo(content_profile);
-         addListeners(user[0]);
-         generatePosts(posts);
-      }else{
-         window.location.replace("./controller_login.php");   
-      }
-   });
-
-}
-
-const main = document.querySelector("main");
-const div_posts = document.getElementById("users-posts");
-
-axios.get('model/php/api/api-profile.php').then(response => {
-   if(response.data["logged"]){
-      visualizeProfile();
-   }else{
-      window.location.replace("./controller_login.php");   
-   }
-});
-
