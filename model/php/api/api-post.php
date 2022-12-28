@@ -2,7 +2,7 @@
 require_once $_SERVER['DOCUMENT_ROOT'].'/TechnoHouse/model/php/bootstrap.php';
 $posts[TAG_LOGGED] = false;
 if(isUserLoggedIn()){
-    if ($_POST[TAG_ACTION] == SEND_POST_USER) {
+    if ($_GET[TAG_ACTION] == SEND_POST_USER) {
         $posts[TAG_LOGGED] = true;
         $id = $_SESSION[TAG_USER_ID];
         $posts[TAG_USER_INFO] = $dbh->getUserByID($id);
