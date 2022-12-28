@@ -24,7 +24,7 @@ define("TAG_USER_THAT_FOLLOWS", "User_idUser"); //userd in api-followers
 define("TAG_ACTION", "action");
 define("SEND_POST_USER", "1");
 define("GET_FOLLOWERS", "1");
-
+define("TAG_ME", "me");
 
 // POST INFOS
 define("TAG_POST_ID", "idPost");

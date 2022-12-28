@@ -159,22 +159,19 @@ function addListeners(user_info){
    const title = document.getElementById("modal-title");
    const list = document.getElementById("modal-list");
    document.getElementById('followers').addEventListener("click", function(evenet){
+      clearList(list);
       title.innerText = "Followers";
       addFollowers(list);
    });
    document.getElementById('following').addEventListener("click", function(evenet){
+      clearList(list);
       title.innerText = "Following";
       addFollowing(list);
    });
    document.getElementById('saved').addEventListener("click", function(evenet){
+      clearList(list);
       title.innerText = "Saved posts";
       addSavedPosts(list);
-   });
-   document.getElementById('button-close-up').addEventListener("click", function(event){
-      clearList(list);
-   });
-   document.getElementById('button-close-down').addEventListener("click", function(event){
-      clearList(list);
    });
 }
 
