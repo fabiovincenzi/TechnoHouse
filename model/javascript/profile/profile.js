@@ -60,14 +60,14 @@ function generateProfile(user){
             <div class="modal-content">
               <div class="modal-header">
                 <h5 class="modal-title" id="modal-title"></h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button id="button-close-up" type="button" class="button-close btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">
                 <ul id="modal-list">
                 </ul>
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn-clone btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button id="button-close-down" type="button" class="button-close btn btn-secondary" data-bs-dismiss="modal">Close</button>
               </div>
             </div>
           </div>
@@ -87,19 +87,18 @@ function generatePosts(posts){
 }
 
 function populateList(users, list){
-   users.forEach(user => user.forEach(info => {
-      console.log(user);
+   users.forEach(user => {
       let list_item = `
       <li class="p-2 border-bottom bg-white">
-         <a id="profile" href="${info["idUser"]}" class="d-flex justify-content-between chatListLine">
+         <a id="profile" href="${user["idUser"]}" class="d-flex justify-content-between chatListLine">
             <div class="d-flex flex-row">
                <!--chat image-->
-               <img src="" alt="${info["name"]} ${info["surname"]} profile image"
+               <img src="" alt="${user["name"]} ${user["surname"]} profile image"
                class="rounded-circle d-flex align-self-center me-3 shadow-1-strong chatListLine" width="60">
                <!--chat image-->
                <div class="pt-1">
                      <!--Name-->
-                     <p class="fw-bold mb-0">${info["name"]} ${info["surname"]}</p>
+                     <p class="fw-bold mb-0">${user["name"]} ${user["surname"]}</p>
                      <!--Name-->
                </div>
             </div>
@@ -107,34 +106,24 @@ function populateList(users, list){
       </li>
       `
       list.innerHTML+=list_item;
-   }));
-}
-
-function addFollowers(){
-   axios.get('model/php/api/api-followers.php').then(response=>{
-      console.log(response);
-      let followers = response.data["followers"];
-      populateList(followers);
    });
 }
 
-function addFollowing(user_info){
+function addFollowers(list){
+   axios.get('model/php/api/api-followers.php').then(response=>{
+      let followers = response.data["followers"];
+      populateList(followers, list);
+   });
+}
+
+function addFollowing(list){
    axios.get('model/php/api/api-following.php').then(response=>{
       let following = response.data["following"];
-      populateList(following);
+      populateList(following, list);
    });
-   /*
-   const formData = new FormData();
-   formData.append('idUser', user_info["idUser"]);
-   formData.append('target', 1);
-   
-   axios.post('model/php/api/api-following.php', formData).then(response => {
-      console.log(response);
-   });
-   */
 }
 
-function addSavedPosts(){
+function addSavedPosts(list){
    axios.get('model/php/api/api-following.php').then(response=>{
       console.log(response);
       let savedPosts = response.data["saved-post"];
@@ -151,18 +140,20 @@ function addListeners(user_info){
    const list = document.getElementById("modal-list");
    document.getElementById('followers').addEventListener("click", function(evenet){
       title.innerText = "Followers";
-      addFollowers();
+      addFollowers(list);
    });
    document.getElementById('following').addEventListener("click", function(evenet){
       title.innerText = "Following";
-      addFollowing(user_info, list);
+      addFollowing(list);
    });
    document.getElementById('saved').addEventListener("click", function(evenet){
       title.innerText = "Saved posts";
-      addSavedPosts();
+      addSavedPosts(list);
    });
-   document.getElementsByClassName('btn-close').addEventListener("click", function(event){
-      console.log("ciaoo");
+   document.getElementById('button-close-up').addEventListener("click", function(event){
+      clearList(list);
+   });
+   document.getElementById('button-close-down').addEventListener("click", function(event){
       clearList(list);
    });
 }
@@ -175,7 +166,6 @@ function visualizeProfile(){
    let posts = {};
    let user = {};
    axios.get('model/php/api/api-post.php?action=1').then(response => {
-      console.log(response.data);
       if(response.data["logged"]){
          user = response.data["users-info"];
          posts = response.data["users-posts"];
@@ -194,7 +184,6 @@ const main = document.querySelector("main");
 const div_posts = document.getElementById("users-posts");
 
 axios.get('model/php/api/api-profile.php').then(response => {
-   console.log(response);
    if(response.data["logged"]){
       visualizeProfile();
    }else{

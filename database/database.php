@@ -523,18 +523,15 @@ class Database{
 
     public function getFollowers($user_id)
     {
-        /*
         $PARAM_GET_FOLLOWERS = 'i';
         $query = "SELECT *
-                  FROM Follower
-                  WHERE User_idUser = ?";
+                  FROM Following
+                  WHERE User_idUser1 = ?";
         $statement = $this->db->prepare($query);
         $statement->bind_param($PARAM_GET_FOLLOWERS, $user_id);
         $statement->execute();
         $result = $statement->get_result();
         return $result->fetch_all(MYSQLI_ASSOC);
-        */
-        return array();
     }
 
     public function removeFollower($source_user, $target_user)
