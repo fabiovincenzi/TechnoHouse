@@ -568,6 +568,18 @@ class Database{
         return $statement->execute();
     }
 
+    public function isFollowing($source, $target){
+        $PARAM_GET_FOLLOWING = 'ii';
+        $query = "SELECT *
+                  FROM Following
+                  WHERE User_idUser = ? AND User_idUser1 = ?";
+        $statement = $this->db->prepare($query);
+        $statement->bind_param($PARAM_GET_FOLLOWING, $source, $target);
+        $statement->execute();
+        $result = $statement->get_result();
+        return count($result->fetch_all(MYSQLI_ASSOC)) > 0;
+    }
+
     public function getFollowing($user_id)
     {
         $PARAM_GET_FOLLOWING = 'i';
@@ -587,7 +599,7 @@ class Database{
         $query = "DELETE FROM Following
                   WHERE User_idUser = ? AND User_idUser1 = ?";
         $statement = $this->db->prepare($query);
-        $statement->bind_param($PARAM_REMOVE_FOLLOWING, $source_user, $target_user);
+        $statement->bind_param($PARAM_REMOVE_FOLLOWING, $source_id, $target_id);
         return $statement->execute();
     }
 }

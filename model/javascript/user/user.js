@@ -5,12 +5,16 @@ const main = document.querySelector('main');
 
 if(userId !== null){
     axios.get(`model/php/api/api-profile.php?idUser=${userId}`).then(response => {
-        console.log(response.data);
         if(response.data["logged"]){
             if(!response.data["me"]){
                let users_info = response.data["users-info"];
-               main.innerHTML = generateProfile(users_info);
-               addPosts();
+               axios.get(`model/php/api/api-follow.php?idUser=${userId}`).then(response=>{
+                  console.log(response);
+                  let info = response.data["follow"];
+                  main.innerHTML = generateProfile(users_info, info);
+                  addListeners(info);
+                  addPosts();
+               })
             }else{
                window.location.replace("./controller_profile.php");   
             }
@@ -26,11 +30,11 @@ function addPosts(){
       console.log(response);
       let posts = response.data["users-posts"];
       div_posts.innerHTML = generatePosts(posts);
-      addListeners(posts);
    });
 }
 
-function generateProfile(user){
+function generateProfile(user, info){
+   let value = info === true ? "Unfollow" : "Follow";
     let page = `
         <div class="justify-content-center row">
             <div class="col-10 col-md-10 bg-white shadow rounded overflow-hidden">
@@ -60,7 +64,7 @@ function generateProfile(user){
                        <small class="text-muted"> <em class="fas fa-user mr-1"></em>Following</small> 
                     </li>
                  </ul>
-                 <input id="?" class="btn btn-primary btn-lg btn-block w-100" name="?" type="submit" value="?"/>
+                 <input id="action" class="btn btn-primary btn-lg btn-block w-100" name="${value}" type="submit" value="${value}"/>
                  </div>
               <div class="px-4 py-3">
                  <h5 class="mb-0">About</h5>
@@ -159,7 +163,7 @@ function clearList(list){
    list.innerHTML = "";
 }
 
-function addListeners(users_info){
+function addListeners(info){
    const title = document.getElementById("modal-title");
    const list = document.getElementById("modal-list");
    document.getElementById('followers').addEventListener("click", function(evenet){
@@ -171,5 +175,21 @@ function addListeners(users_info){
       clearList(list);
       title.innerText = "Following";
       addFollowing(list);
+   });
+   let input = document.getElementById('action');
+   input.addEventListener("click", function(event){
+      console.log(info);
+      axios.get(`model/php/api/api-follow.php?idUser=${userId}&action=${info===true?1:2}`).then(response => {
+         console.log(response);
+         if(info === true){
+            input.value = "Follow";
+            info = false;
+         }else{
+            input.value = "Unfollow";
+            info = true;
+         }
+         location.reload()
+      });
+
    });
 }

@@ -20,12 +20,16 @@ define("TAG_USER_EMAIL", "email");
 define("TAG_USER_TO_FOLLOW", "User_idUser1"); //used in api-following
 define("TAG_USER_THAT_FOLLOWS", "User_idUser"); //userd in api-followers
 
-
+// ACTIONS
 define("TAG_ACTION", "action");
+define("TAG_ACTION_FOLLOW", "action-follow");
 define("SEND_POST_USER", "1");
+define("ACTION_UNFOLLOW", "1");
+define("ACTION_FOLLOW", "2");
 define("GET_USER_FEED", "2");
 define("GET_FOLLOWERS", "1");
 define("TAG_ME", "me");
+define("TAG_FOLLOW", "follow");
 
 // POST INFOS
 define("TAG_POST_ID", "idPost");
