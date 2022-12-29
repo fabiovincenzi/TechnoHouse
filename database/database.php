@@ -28,6 +28,20 @@ class Database{
         }
     }
 
+    /**
+     * Summary of getLastIndex
+     * @return mixed
+     */
+    public function getLastIndex($table){
+        $PARAM_LAST_INDEX = 's';
+        $query = "SELECT MAX(id) FROM ?";
+        $statement = $this->db->prepare($query);
+        $statement->bind_param($PARAM_LAST_INDEX, $table);
+        $statement->execute();
+        $result = $statement->get_result();
+        return $result->fetch_all(MYSQLI_NUM);
+    }
+
     public function getErrorString(){
         return $this->error_string;
     }
@@ -634,6 +648,62 @@ class Database{
         $statement = $this->db->prepare($query);
         $statement->bind_param($PARAM_REMOVE_FOLLOWING, $source_id, $target_id);
         return $statement->execute();
+    }
+
+    public function addChat($source, $destination){
+        $PARAM_ADD_CHAT = 'ii';
+        $query = "INSERT INTO Chat
+                  (User_idUser, User_idUser1)
+                  VALUES(?,?)";
+        $statement = $this->db->prepare($query);
+        $statement->bind_param($PARAM_ADD_CHAT, $source, $destination);
+        return $statement->execute();
+    }
+
+    public function getChatById($idChat){
+        $PARAM_SELECT_CHAT = 'i';
+        $query = "SELECT *
+                  FROM Chat
+                  WHERE idChat = ?";
+        $statement = $this->db->prepare($query);
+        $statement->bind_param($PARAM_SELECT_CHAT, $idChat);
+        $statement->execute();
+        $result = $statement->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    public function getAllChat($source){
+        $PARAM_SELECT_CHAT = 'ii';
+        $query = "SELECT *
+                  FROM Chat
+                  WHERE User_idUser = ? OR User_idUser1 = ?";
+        $statement = $this->db->prepare($query);
+        $statement->bind_param($PARAM_SELECT_CHAT, $source, $source);
+        $statement->execute();
+        $result = $statement->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    public function addMessage($body, $date, $user, $chat){
+        $PARAM_ADD_MESSAGE = 'ssii';
+        $query = "INSERT INTO Message
+                  (body, data, User_idUser, Chat_idChat)
+                  VALUES(?,?,?,?)";
+        $statement = $this->db->prepare($query);
+        $statement->bind_param($PARAM_ADD_MESSAGE, $body, $date, $user, $chat);
+        return $statement->execute();
+    }
+
+    public function getChatMessages($idChat){
+        $PARAM_SELECT_MESSAGE = 'i';
+        $query = "SELECT *
+                  FROM Message
+                  WHERE Chat_idChat= ?";
+        $statement = $this->db->prepare($query);
+        $statement->bind_param($PARAM_SELECT_MESSAGE, $idChat);
+        $statement->execute();
+        $result = $statement->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC);
     }
 }
 ?>

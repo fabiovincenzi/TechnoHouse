@@ -1,6 +1,9 @@
 <?php
 session_start();
 $_SERVER["DOCUMENT_ROOT"] = $_SERVER["DOCUMENT_ROOT"]. "/TechnoHouse";
+
+define("USER_TABLE", "User");
+
 define("UPLOAD_DIR", $_SERVER["DOCUMENT_ROOT"]."/upload/"); //upload directory
 define("DATA_DIR", $_SERVER["DOCUMENT_ROOT"]."/data/"); //upload directory
 define("DIR_SEPARATOR", "/");
@@ -8,6 +11,7 @@ define("DIR_SEPARATOR", "/");
 define("TAG_LOGGED", "logged");
 define("TAG_USER_ID", "idUser");
 define("TAG_USER_NAME", "name");
+
 define("TAG_USER_SURNAME", "surname");
 define("TAG_USER_IMAGE", "");
 
@@ -22,6 +26,18 @@ define("TAG_USER_POST", "users-posts"); //upload directory
 define("TAG_USER_EMAIL", "email");
 define("TAG_USER_TO_FOLLOW", "User_idUser1"); //used in api-following
 define("TAG_USER_THAT_FOLLOWS", "User_idUser"); //userd in api-followers
+
+// CHAT
+define("TAG_USER_CHAT_SOURCE", "User_idUser"); //used in api-following
+define("TAG_USER_CHAT_DESTINATION", "User_idUser1"); //used in api-following
+define("TAG_CHAT_ID", "idChat"); //userd in api-followers
+define("TAG_SOURCE", "source"); //userd in api-followers
+define("TAG_DESTINATION", "destination"); //userd in api-followers
+define("TAG_USER_ALL_CHAT", "all-chat");
+define("TAG_USER_SINGLE_CHAT", "chat");
+define("TAG_CHAT_BODY", "body");
+define("TAG_CHAT_DATE", "data");
+
 
 // ACTIONS
 define("TAG_ACTION", "action");
