@@ -631,5 +631,15 @@ class Database{
         $statement->bind_param($PARAM_REMOVE_FOLLOWING, $source_id, $target_id);
         return $statement->execute();
     }
+
+    public function addChat($source, $destination){
+        $PARAM_ADD_CHAT = 'ii';
+        $query = "INSERT INTO Chat
+                  (User_idUser, User_idUser1)
+                  VALUES(?,?)";
+        $statement = $this->db->prepare($query);
+        $statement->bind_param($PARAM_ADD_CHAT, $source, $destination);
+        return $statement->execute();
+    }
 }
 ?>

@@ -1,5 +1,19 @@
-<!--
-<div class="row justify-content-center">
+const main = document.querySelector('main');
+
+axios.get('model/php/api/api-allchat.php').then(response => {
+    console.log(response);
+    if (response.data["logged"]) {
+        
+      } else {
+        window.location.replace("./controller_login.php");   
+      }
+});
+
+
+
+function getAllChat(){
+    let all_chat = `
+    <div class="row justify-content-center">
             <div class="col-md-10 col-lg-8 col-xl-6">
                 <h5 class="font-weight-bold mb-3 text-center text-lg-start">Chat</h5>
                 <div class="card">
@@ -27,5 +41,6 @@
                     </div>
                 </div>
             </div>
-        </div>
--->
+        </div>`;
+        return all_chat;
+}

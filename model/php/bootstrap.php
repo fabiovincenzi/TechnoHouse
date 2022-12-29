@@ -11,6 +11,8 @@ define("DIR_SEPARATOR", "/");
 define("TAG_LOGGED", "logged");
 define("TAG_USER_ID", "idUser");
 define("TAG_USER_NAME", "name");
+define("TAG_USER_ALL_CHAT", "all-chat");
+
 define("TAG_USER_SURNAME", "surname");
 define("TAG_USER_IMAGE", "");
 
