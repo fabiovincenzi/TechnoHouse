@@ -365,6 +365,20 @@ class Database{
         $statement->bind_param($PARAM_UPDATE_POST, $title, $description, $price, $post_id);
         return $statement->execute();
     }
+    
+    public function getLocationInfoFromPost(){
+        $PARAM_GET_TAGS_BY_POST = 'i';
+        $query = "SELECT *
+                  FROM Region, Province, City, Post
+                  WHERE Post.City_idCity = City.idCity
+                  AND City.Province_initials = Province.initials
+                  AND Province.Region_idRegion = Regio.idRegion";
+        $statement = $this->db->prepare($query);
+        $statement->bind_param($PARAM_GET_TAGS_BY_POST, $post_id);
+        $statement->execute();
+        $result = $statement->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC);  
+    }
 
     /**
      * Summary of getTagsByPost
