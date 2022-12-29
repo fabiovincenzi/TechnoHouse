@@ -16,7 +16,9 @@ if(isUserLoggedIn()){
         }else if($ID_s != $id && $ID_d == $id){
             $other = $dbh->getUserByID($ID_s)[0];
         }
-        array_push($chats[TAG_USER_ALL_CHAT], array(TAG_DESTINATION => $other));
+        array_push($chats[TAG_USER_ALL_CHAT], array(TAG_CHAT_ID => $chat[TAG_CHAT_ID],
+         TAG_USER_NAME => $other[TAG_USER_NAME],
+         TAG_USER_SURNAME => $other[TAG_USER_SURNAME]));
     }
 }
 header('Content-Type: application/json');

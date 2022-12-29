@@ -30,6 +30,8 @@ define("TAG_USER_CHAT_DESTINATION", "User_idUser1"); //used in api-following
 define("TAG_USER_TO_FOLLOW", "User_idUser1"); //used in api-following
 define("TAG_USER_THAT_FOLLOWS", "User_idUser"); //userd in api-followers
 
+// CHAT
+define("TAG_CHAT_ID", "idChat"); //userd in api-followers
 define("TAG_SOURCE", "source"); //userd in api-followers
 define("TAG_DESTINATION", "destination"); //userd in api-followers
 
