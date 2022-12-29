@@ -14,6 +14,7 @@ axios.get('model/php/api/api-allchat.php').then(response => {
 function getAllChat(chats){
     let content = "";
     chats.forEach(chat => {
+        console.log(chat);
         let single_chat = `
                 <div class="row justify-content-center">
                         <div class="col-md-10 col-lg-8 col-xl-6">
@@ -25,7 +26,7 @@ function getAllChat(chats){
                                         <li class="p-2 border-bottom bg-white">
                                             <a href="./controller_chat.php?idChat=${chat["idChat"]}" class="d-flex justify-content-between chatListLine">
                                                 <div class="d-flex flex-row">
-                                                    <img src="" alt="${chat["name"]} ${chat["surname"]} profile image" class="rounded-circle d-flex align-self-center me-3 shadow-1-strong chatListLine" width="60">
+                                                    <img src="upload/${chat["userImage"]}" alt="${chat["name"]} ${chat["surname"]} profile image" class="rounded-circle d-flex align-self-center me-3 shadow-1-strong chatListLine" width="60">
                                                     <div class="pt-1">
                                                         <p class="fw-bold mb-0">${chat["name"]} ${chat["surname"]}</p>
                                                     </div>

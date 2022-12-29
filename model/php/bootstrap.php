@@ -13,7 +13,7 @@ define("TAG_USER_ID", "idUser");
 define("TAG_USER_NAME", "name");
 
 define("TAG_USER_SURNAME", "surname");
-define("TAG_USER_IMAGE", "");
+define("TAG_USER_IMAGE", "userImage");
 
 define("TAG_USER_FOLLOWERS", "followers");
 define("TAG_USER_FOLLOWING", "following");

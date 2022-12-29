@@ -1,11 +1,12 @@
 function generateProfile(user){
+   console.log(user);
     let page = `
         <div class="justify-content-center row">
             <div class="col-10 col-md-10 bg-white shadow rounded overflow-hidden">
  
               <div class="p-4 bg-black row">
                     <div class="mr-3 col-5">
-                        <img src="" alt="${user[0]["name"]} ${user[0]["surname"]} profile photo" width="130" class="rounded mb-2 img-thumbnail">
+                        <img src="upload/${user[0]["userImage"]}" alt="${user[0]["name"]} ${user[0]["surname"]} profile photo" width="130" class="rounded mb-2 img-thumbnail">
                     </div>
                     <div class="text-white col-7">
                         <h4 id="name-surname">${user[0]["name"]} ${user[0]["surname"]}</h4>

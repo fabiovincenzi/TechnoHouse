@@ -366,15 +366,20 @@ class Database{
         return $statement->execute();
     }
     
-    public function getLocationInfoFromPost(){
-        $PARAM_GET_TAGS_BY_POST = 'i';
-        $query = "SELECT *
+    public function getLocationInfoFromPost($post_id){
+        $PARAM_GET_LOCATION = 'i';
+        $query = "SELECT Region.regionName AS Region,
+                         Province.initials AS Province,
+                         City.cityName AS City,
+                         City.postCode As PostCode,
+                         Post.Address AS Address
                   FROM Region, Province, City, Post
-                  WHERE Post.City_idCity = City.idCity
+                  WHERE Post.idPost = ?
+                  AND Post.City_idCity = City.idCity
                   AND City.Province_initials = Province.initials
-                  AND Province.Region_idRegion = Regio.idRegion";
+                  AND Province.Region_idRegion = Region.idRegion";
         $statement = $this->db->prepare($query);
-        $statement->bind_param($PARAM_GET_TAGS_BY_POST, $post_id);
+        $statement->bind_param($PARAM_GET_LOCATION, $post_id);
         $statement->execute();
         $result = $statement->get_result();
         return $result->fetch_all(MYSQLI_ASSOC);  

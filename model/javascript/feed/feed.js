@@ -134,7 +134,7 @@ function loadUserToPost(user, post){
 
 function loadLocationInfoToPost(locationInfo, post){
     const userContainer = document.getElementById(`locationInfo${post["idPost"]}`);
-    userContainer.innerHTML +=`${locationInfo["Region"]}, ${locationInfo["Province"]}, ${locationInfo["City"]}, ${post["adress"]}`;
+    userContainer.innerHTML +=`${locationInfo["Region"]}, ${locationInfo["Province"]}, ${locationInfo["City"]}(${locationInfo["PostCode"]}), ${post["Address"]}`;
 }
 
 function loadAnswersToQuestion(answers, questionId){
@@ -241,7 +241,8 @@ axios.get(`model/php/api/api-post.php?action=2`).then(posts => {
             loadUserToPost(user.data[0], post);
         });
         axios.get(`model/php/api/api-location-info.php?id=${post["idPost"]}`).then(locationInfo=>{
-            loadLocationInfoToPost(locationInfo, post);
+            console.log(locationInfo.data)
+            loadLocationInfoToPost(locationInfo.data[0], post);
         });
         updateSave(post["idPost"]);        
     });

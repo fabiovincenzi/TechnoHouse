@@ -18,7 +18,9 @@ if(isUserLoggedIn()){
         }
         array_push($chats[TAG_USER_ALL_CHAT], array(TAG_CHAT_ID => $chat[TAG_CHAT_ID],
          TAG_USER_NAME => $other[TAG_USER_NAME],
-         TAG_USER_SURNAME => $other[TAG_USER_SURNAME]));
+         TAG_USER_SURNAME => $other[TAG_USER_SURNAME],
+         TAG_USER_IMAGE => $other[TAG_USER_IMAGE]
+        ));
     }
 }
 header('Content-Type: application/json');
