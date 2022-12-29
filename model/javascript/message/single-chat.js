@@ -112,8 +112,6 @@ function generateChat(other_user, messages){
             </a>
           </div>
             <div id="messages" onload="addRefreshing()" class="card-body scroll">
-
-
             </div>
 
           <div class="card-footer d-flex justify-content-start align-items-center p-3">
