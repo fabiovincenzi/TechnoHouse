@@ -45,7 +45,9 @@ if(isUserLoggedIn()){
         $publish_time = date('Y-m-d H:i:s', time());
         $message = $_POST[TAG_CHAT_BODY];
         $chat_id = $_POST[TAG_CHAT_ID];
-        $dbh->addMessage($message, $publish_time, $id, $chat_id);
+        if ($message != "") {
+            $dbh->addMessage($message, $publish_time, $id, $chat_id);
+        }
     }
 }
 //$chats = $dbh->getChatsByUser($_SESSION["idUser"]);
