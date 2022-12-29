@@ -653,5 +653,27 @@ class Database{
         $result = $statement->get_result();
         return $result->fetch_all(MYSQLI_ASSOC);
     }
+
+    public function addMessage($body, $date, $user, $chat){
+        $PARAM_ADD_MESSAGE = 'ssii';
+        $query = "INSERT INTO Message
+                  (body, data, User_idUser, Chat_idChat)
+                  VALUES(?,?,?,?)";
+        $statement = $this->db->prepare($query);
+        $statement->bind_param($PARAM_ADD_MESSAGE, $body, $date, $user, $chat);
+        return $statement->execute();
+    }
+
+    public function getChatMessages($idChat){
+        $PARAM_SELECT_MESSAGE = 'i';
+        $query = "SELECT *
+                  FROM Message
+                  WHERE Chat_idChat= ?";
+        $statement = $this->db->prepare($query);
+        $statement->bind_param($PARAM_SELECT_MESSAGE, $idChat);
+        $statement->execute();
+        $result = $statement->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
 }
 ?>

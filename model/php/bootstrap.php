@@ -11,7 +11,6 @@ define("DIR_SEPARATOR", "/");
 define("TAG_LOGGED", "logged");
 define("TAG_USER_ID", "idUser");
 define("TAG_USER_NAME", "name");
-define("TAG_USER_ALL_CHAT", "all-chat");
 
 define("TAG_USER_SURNAME", "surname");
 define("TAG_USER_IMAGE", "");
@@ -34,6 +33,11 @@ define("TAG_USER_THAT_FOLLOWS", "User_idUser"); //userd in api-followers
 define("TAG_CHAT_ID", "idChat"); //userd in api-followers
 define("TAG_SOURCE", "source"); //userd in api-followers
 define("TAG_DESTINATION", "destination"); //userd in api-followers
+define("TAG_USER_ALL_CHAT", "all-chat");
+define("TAG_USER_SINGLE_CHAT", "chat");
+define("TAG_CHAT_BODY", "body");
+define("TAG_CHAT_DATE", "date");
+
 
 // ACTIONS
 define("TAG_ACTION", "action");
