@@ -16,7 +16,21 @@ axios.get(`model/php/api/api-chat.php?idChat=${chatId}`).then(response=>{
 );
 
 function addRefreshing(){
-  var refreshTimer = setInterval(function(){reloadChat()},5000); //creates timer to request every 5 second
+  var refreshTimer = setInterval(function(){reloadChat()},60000); //creates timer to request every 5 second
+}
+
+function refresh(){
+  axios.get(`model/php/api/api-last-message.php?idChat=${chatId}`).then(response=>{
+    if (response.data["logged"]){
+        main.innerHTML = generateChat(response.data['destination']);
+        populateMessages(response.data['chat'], response.data['source']);
+        addRefreshing();
+        addListener();
+      } else {
+        window.location.replace("./controller_login.php");   
+      }
+    }
+);
 }
 
 function populateMessages(messages, source){
@@ -79,6 +93,7 @@ function reloadChat(){
     axios.get(`model/php/api/api-chat.php?idChat=${chatId}`).then(response=>{
         if (response.data["logged"]){
           console.log(response);
+            tot_messages = response.data["total-messages"];
             populateMessages(response.data['chat'], response.data['source']);
           } else {
             window.location.replace("./controller_login.php");   
@@ -96,7 +111,9 @@ function generateChat(other_user, messages){
 
         <div class="card">
           <div class="card-header d-flex justify-content-between align-items-center p-3">
+            <a href="./controller_otheruser.php?idUser=${other_user["idUser"]}" >
             <h5 id="other-user" class="mb-0">${other_user["name"]} ${other_user["surname"]}</h5>
+            </a>
           </div>
             <div id="messages" onload="addRefreshing()" class="card-body scroll">
 

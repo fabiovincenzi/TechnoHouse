@@ -112,6 +112,7 @@ function populateList(users, list){
 }
 
 function populateSaved(posts, list){
+   console.log(posts.data);
    posts.forEach(post => {
       let list_item = `
       <li class="p-2 border-bottom bg-white">
@@ -143,12 +144,13 @@ function addFollowing(list){
       let following = response.data["following"];
       populateList(following, list);
    });
-}
+}x 
 
 function addSavedPosts(list){
    axios.get('model/php/api/api-savedposts.php').then(response=>{
       console.log(response);
-      let savedPosts = response.data["saved-post"];
+      let savedPosts = response.data["saved"];
+      console.log(savedPosts);
       populateSaved(savedPosts, list);
    });
 }

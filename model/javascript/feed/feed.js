@@ -5,7 +5,7 @@ function createPost(post){
 
     <!--profile name-->
                 <div class="d-flex flex-row px-2 border-bottom">
-                    <img class="rounded-circle" src="https://i.imgur.com/aoKusnD.jpg" alt="image profile of :"width="45">
+                    <div id="imgUser${post["idPost"]}"></div>
                     <div class="d-flex flex-column flex-wrap ml-2">
                     <div id="user${post["idPost"]}"></div>
                         <span class="text-black-50 time">pubblicato il ${post["PublishTime"].split(' ')[0]} alle ${post["PublishTime"].split(' ')[1]}</span>
@@ -129,7 +129,11 @@ function createPost(post){
 
 function loadUserToPost(user, post){
     const userContainer = document.getElementById(`user${post["idPost"]}`);
-    userContainer.innerHTML +=`<span class="font-weight-bold">${user["name"]} ${user["surname"]}</span>`;
+    userContainer.innerHTML +=`<a href="./controller_otheruser.php?idUser=${user["idUser"]}"><span class="font-weight-bold">${user["name"]} ${user["surname"]}</span></a>`;
+    const userImgContainer = document.getElementById(`imgUser${post["idPost"]}`);
+    userImgContainer.innerHTML +=`<img class="rounded-circle" src="upload/${user["userImage"]}" alt="image profile of :"width="45">`;
+    
+                    
 }
 
 function loadLocationInfoToPost(locationInfo, post){

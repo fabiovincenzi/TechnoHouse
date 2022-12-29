@@ -15,6 +15,7 @@ if(isUserLoggedIn()){
         TAG_USER_SURNAME => $destination[TAG_USER_SURNAME], 
         TAG_USER_IMAGE => $destination[TAG_USER_IMAGE]);
         
+        //This is the logged user, infos about the logged user
         $source = $dbh->getUserById($id)[0];
         $chats[TAG_SOURCE] = array(TAG_USER_ID => $source[TAG_USER_ID], 
         TAG_USER_NAME => $source[TAG_USER_NAME],
@@ -24,6 +25,7 @@ if(isUserLoggedIn()){
         if(!isset($_POST[TAG_CHAT_BODY])){
             $chats[TAG_USER_SINGLE_CHAT] = array();
             $messages = $dbh->getChatMessages($idChat);
+            $chats[TAG_TOTAL_MESSAGES] = count($messages);
             if(count($messages) > 0){
                 $sender_info = $dbh->getUserByID($messages[0][TAG_USER_CHAT_SOURCE])[0];
                 

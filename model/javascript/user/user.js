@@ -41,7 +41,7 @@ function generateProfile(user, info){
  
               <div class="p-4 bg-black row">
                     <div class="mr-3 col-5">
-                        <img src="" alt="${user["name"]} ${user["surname"]} profile photo" width="130" class="rounded mb-2 img-thumbnail">
+                        <img src="upload/${user["userImage"]}" alt="${user["name"]} ${user["surname"]} profile photo" width="130" class="rounded mb-2 img-thumbnail">
                     </div>
                     <div class="text-white col-7">
                         <h4 id="name-surname">${user["name"]} ${user["surname"]}</h4>

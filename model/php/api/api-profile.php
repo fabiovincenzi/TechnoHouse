@@ -17,6 +17,7 @@ if(isUserLoggedIn()){
             TAG_USER_ID => $userInfos[TAG_USER_ID],
             TAG_USER_NAME => $userInfos[TAG_USER_NAME],
             TAG_USER_SURNAME => $userInfos[TAG_USER_SURNAME],
+            TAG_USER_IMAGE => $userInfos[TAG_USER_IMAGE],
             TAG_USER_FOLLOWERS => count($dbh->getFollowers($userInfos[TAG_USER_ID])),
             TAG_USER_FOLLOWING => count($dbh->getFollowing($userInfos[TAG_USER_ID])),
             TAG_USER_NPHOTOS => count($dbh->getPostById($id_user))
