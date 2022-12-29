@@ -5,11 +5,12 @@ const main = document.querySelector('main');
 
 axios.get(`model/php/api/api-chat.php?idChat=${chatId}`).then(response=>{
     console.log(response);
-    if (response.data["logged"]) {
-        main.innerHTML = generateChat(response.data['chat']);
+    if (response.data["logged"]){
+        main.innerHTML = generateChat(response.data['destination'], response.data['chat']);
+        //aggiungo i messaggi
         addListener();
       } else {
-        window.location.replace("./controller_login.php");   
+        //window.location.replace("./controller_login.php");   
       }
     }
 );
@@ -34,7 +35,7 @@ function sendMessage(message){
     });
 }
 
-function generateChat(c){
+function generateChat(other_user, messages){
     console.log(c);
     let chat = `
     <div class="container">
@@ -43,7 +44,7 @@ function generateChat(c){
 
         <div class="card">
           <div class="card-header d-flex justify-content-between align-items-center p-3">
-            <h5 class="mb-0">ALTRO USER</h5>
+            <h5 class="mb-0"></h5>
           </div>
           <div class="card-body scroll">
             <div class="d-flex flex-row justify-content-start">

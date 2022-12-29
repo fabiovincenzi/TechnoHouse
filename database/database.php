@@ -642,6 +642,18 @@ class Database{
         return $statement->execute();
     }
 
+    public function getChatById($idChat){
+        $PARAM_SELECT_CHAT = 'i';
+        $query = "SELECT *
+                  FROM Chat
+                  WHERE idChat = ?";
+        $statement = $this->db->prepare($query);
+        $statement->bind_param($PARAM_SELECT_CHAT, $idChat);
+        $statement->execute();
+        $result = $statement->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
     public function getAllChat($source){
         $PARAM_SELECT_CHAT = 'ii';
         $query = "SELECT *
