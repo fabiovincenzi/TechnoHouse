@@ -55,6 +55,9 @@ function createPost(post){
                             <div id="tags${post["idPost"]}">
                             </div>
                             <!--tags-->
+                            <!--Location info-->
+                            <span id="locationInfo${post["idPost"]}" class="font-weight-bold"></span>
+                            <!--Location info-->
                         </div>
 
                         <div class="col-md-6">
@@ -127,6 +130,11 @@ function createPost(post){
 function loadUserToPost(user, post){
     const userContainer = document.getElementById(`user${post["idPost"]}`);
     userContainer.innerHTML +=`<span class="font-weight-bold">${user["name"]} ${user["surname"]}</span>`;
+}
+
+function loadLocationInfoToPost(locationInfo, post){
+    const userContainer = document.getElementById(`locationInfo${post["idPost"]}`);
+    userContainer.innerHTML +=`${locationInfo["Region"]}, ${locationInfo["Province"]}, ${locationInfo["City"]}, ${post["adress"]}`;
 }
 
 function loadAnswersToQuestion(answers, questionId){
@@ -231,6 +239,9 @@ axios.get(`model/php/api/api-post.php?action=2`).then(posts => {
         
         axios.get(`model/php/api/api-user.php?id=${post["User_idUser"]}`).then(user=>{
             loadUserToPost(user.data[0], post);
+        });
+        axios.get(`model/php/api/api-location-info.php?id=${post["idPost"]}`).then(locationInfo=>{
+            loadLocationInfoToPost(locationInfo, post);
         });
         updateSave(post["idPost"]);        
     });
