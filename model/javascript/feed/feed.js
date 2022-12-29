@@ -47,8 +47,8 @@ function createPost(post){
                     
                             <!--save-->
                             <div class="row mt-2">
-                                <button class="btn btn-primary col-6 m-2">Save</button>
-                                <span class="col-5 font-weight-bold"> 7 saved</span>
+                                <button class="btn btn-primary col-6 m-2" onclick="save(${post["idPost"]})">Save</button>
+                                <div id="saved${post["idPost"]}"></div>
                             </div>
                             <!--save-->
                             <!--tags-->
@@ -80,7 +80,39 @@ function createPost(post){
                                     </ul>
                                     </div>
                             </div>
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#questionModal${post["idPost"]}">
+                            New question
+                            </button>
+                            
+                            <!-- New Question Modal -->
+                            <div class="modal fade" id="questionModal${post["idPost"]}" tabindex="-1" role="dialog" aria-labelledby="questionModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="questionModalLabel">New question</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form>
+                                                <div class="form-group">
+                                                    <label for="exampleFormControlTextarea1">Insert the question here:</label>
+                                                    <textarea class="form-control" id="newQuestion${post["idPost"]}" rows="3"></textarea>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                                <button type="button" class="btn btn-primary" onclick="newQuestion(${post["idPost"]})" data-dismiss="modal">Send question</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <!--questions-->
+                            <div id="modalContainer${post["idPost"]}">
+                            </div>
+                            
                         
                         </div>
                     </div>
@@ -97,16 +129,61 @@ function loadUserToPost(user, post){
     userContainer.innerHTML +=`<span class="font-weight-bold">${user["name"]} ${user["surname"]}</span>`;
 }
 
-function loadQuestionsToPost(questions, post){
-    const questionsContainer = document.getElementById(`questions${post["idPost"]}`);
-    questions.forEach(el =>{
-        questionsContainer.innerHTML +=`
+function loadAnswersToQuestion(answers, questionId){
+    const answersContainer = document.getElementById(`answers${questionId}`);
+    
+    answersContainer.innerHTML="";
+    answers.forEach(el =>{
+        answersContainer.innerHTML +=`
                     <li>
                         <div>
                             <h5 class="font-8 mb-1 tag-question">${el["name"]} ${el["surname"]}</h3>
                             <p class="mb-2">${el["text"]}</p>
                         </div>
                     </li>`;
+    });
+}
+
+function loadQuestionsToPost(questions, postId){
+    const questionsContainer = document.getElementById(`questions${postId}`);
+    const modalContainer = document.getElementById(`modalContainer${postId}`);
+    questionsContainer.innerHTML="";
+    questions.forEach(el =>{
+        questionsContainer.innerHTML +=`
+                    <li>
+                        <div>
+                            <h5 class="font-8 mb-1 tag-question">${el["name"]} ${el["surname"]}</h3>
+                            <p class="mb-2">${el["text"]} <a href="#answerModal${el["idQuestion"]}" data-toggle="modal" data-target="#answerModal${el["idQuestion"]}">Answer</a></p>
+                        </div>
+                        <ul id="answers${el["idQuestion"]}">
+                        <ul>
+                    </li>`;
+        modalContainer.innerHTML += `<!-- New Answer Modal -->
+        <div class="modal fade" id="answerModal${el["idQuestion"]}" tabindex="-1" role="dialog" aria-labelledby="questionModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id=answerModalLabel">New answer</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-group">
+                                <label for="exampleFormControlTextarea1">${el["text"]}</label>
+                                <textarea class="form-control" id="newAnswer${el["idQuestion"]}" rows="3"></textarea>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-primary" onclick="newAnswer(${el["idQuestion"]})" data-dismiss="modal">Send answer</button>
+                    </div>
+                </div>
+            </div>
+        </div>`;
+        updateAnswer(el["idQuestion"]);
     });
 }
 
@@ -134,6 +211,11 @@ function loadImagesToPost(images, post){
     });
 }
 
+function loadSavedToPost(saved, postId){
+    const savedContainer = document.getElementById(`saved${postId}`);
+    savedContainer.innerHTML = `<span class="col-5 font-weight-bold"> ${saved} saved</span>`;
+}
+
 axios.get(`model/php/api/api-post.php?action=2`).then(posts => {
     posts.data.forEach(post => {                
         const main = document.querySelector("main");
@@ -145,12 +227,56 @@ axios.get(`model/php/api/api-post.php?action=2`).then(posts => {
         axios.get(`model/php/api/api-post-tags.php?id=${post["idPost"]}`).then(tags =>{
             loadTagsToPost(tags.data, post);
         });
-        axios.get(`model/php/api/api-questions.php?id=${post["idPost"]}`).then(questions => {
-            loadQuestionsToPost(questions.data, post);
-        }); 
+        updateQuestions(post["idPost"]);
+        
         axios.get(`model/php/api/api-user.php?id=${post["User_idUser"]}`).then(user=>{
             loadUserToPost(user.data[0], post);
-        });       
+        });
+        updateSave(post["idPost"]);        
     });
 });
 
+function updateQuestions(postId){
+    axios.get(`model/php/api/api-questions.php?id=${postId}`).then(questions => {
+        loadQuestionsToPost(questions.data, postId);
+    }); 
+}
+
+function updateAnswer(questionId){
+    axios.get(`model/php/api/api-answer.php?id=${questionId}`).then(answer => {
+        loadAnswersToQuestion(answer.data, questionId);
+    }); 
+}
+
+function updateSave(postId){
+    axios.get(`model/php/api/api-post-save.php?id=${postId}`).then(saved=>{
+        loadSavedToPost(saved.data[0]["saved"], postId);
+    });  
+}
+
+function save(postId){
+    axios.get(`model/php/api/api-save-post.php?postId=${postId}`).then(val =>{
+        updateSave(postId);
+    });
+}
+
+function newQuestion(postId){
+    const question = document.getElementById(`newQuestion${postId}`);
+    const formQuestion = new FormData();
+    formQuestion.append('postId', postId);
+    formQuestion.append('question', question.value);
+    axios.post('model/php/api/api-create-question.php', formQuestion).then(val =>{
+        question.value = "";
+        updateQuestions(postId);
+    });
+}
+function newAnswer(questionId){
+    const answer = document.getElementById(`newAnswer${questionId}`);
+    const formAnswer = new FormData();
+    formAnswer.append('questionId', questionId);
+    formAnswer.append('answer', answer.value);
+    axios.post('model/php/api/api-create-answer.php', formAnswer).then(val =>{
+        answer.value = "";
+        updateAnswer(questionId);
+    });
+}

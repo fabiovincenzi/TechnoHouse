@@ -403,6 +403,23 @@ class Database{
     }
 
     /**
+     * Summary of getSaveByPost
+     * @param mixed $post_id
+     * @return array : The number of saved of a specific post
+     */
+    public function getSaveByPost($post_id){
+        $PARAM_GET_SAVE_POST = 'i';
+        $query = "SELECT COUNT(Post_idPost) AS saved
+                  FROM SavedPosts
+                  WHERE Post_idPost = ?";
+        $statement = $this->db->prepare($query);
+        $statement->bind_param($PARAM_GET_SAVE_POST, $post_id);
+        $statement->execute();
+        $result = $statement->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    /**
      * Summary of getAllSaved
      * @param mixed $user_id
      * @return array : All saved posts from a specific User
@@ -440,7 +457,7 @@ class Database{
     {
         $PARAM_ADD_QUESTION = 'iis';
         $query = "INSERT INTO Question
-                  (User_idUsER,Post_idPost,question)
+                  (User_idUser,Post_idPost,text)
                   VALUES(?,?,?)";
         $statement = $this->db->prepare($query);
         $statement->bind_param($PARAM_ADD_QUESTION, $user_id, $post_id, $question);
@@ -475,7 +492,7 @@ class Database{
     {
         $PARAM_ADD_ANSWER = 'iis';
         $query = "INSERT INTO Answer
-                     (User_idUser, Question_idQuestion,answer)
+                     (User_idUser, Question_idQuestion,text)
                      VALUES(?,?,?)";
         $statement = $this->db->prepare($query);
         $statement->bind_param($PARAM_ADD_ANSWER, $user_id, $question_id, $answer);
@@ -485,9 +502,10 @@ class Database{
     public function getAnswerOf($question_id)
     {
         $PREPARE_GET_ANSWER = 'i';
-        $query = "SELECT *
-                  FROM Answer 
-                  WHERE Question_idQuestion = ?";
+        $query = "SELECT Answer.*, User.name, User.surname
+                  FROM Answer, User
+                  WHERE Question_idQuestion = ?
+                  AND idUser = User_idUser";
         $statement = $this->db->prepare($query);
         $statement->bind_param($PREPARE_GET_ANSWER, $question_id);
         $statement->execute();
