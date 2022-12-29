@@ -28,6 +28,20 @@ class Database{
         }
     }
 
+    /**
+     * Summary of getLastIndex
+     * @return mixed
+     */
+    public function getLastIndex($table){
+        $PARAM_LAST_INDEX = 's';
+        $query = "SELECT MAX(id) FROM ?";
+        $statement = $this->db->prepare($query);
+        $statement->bind_param($PARAM_LAST_INDEX, $table);
+        $statement->execute();
+        $result = $statement->get_result();
+        return $result->fetch_all(MYSQLI_NUM);
+    }
+
     public function getErrorString(){
         return $this->error_string;
     }

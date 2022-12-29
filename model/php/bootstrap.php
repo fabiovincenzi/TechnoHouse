@@ -1,6 +1,9 @@
 <?php
 session_start();
 $_SERVER["DOCUMENT_ROOT"] = $_SERVER["DOCUMENT_ROOT"]. "/TechnoHouse";
+
+define("USER_TABLE", "User");
+
 define("UPLOAD_DIR", $_SERVER["DOCUMENT_ROOT"]."/upload/"); //upload directory
 define("DATA_DIR", $_SERVER["DOCUMENT_ROOT"]."/data/"); //upload directory
 define("DIR_SEPARATOR", "/");
