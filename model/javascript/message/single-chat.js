@@ -15,7 +15,8 @@ axios.get(`model/php/api/api-chat.php?idChat=${chatId}`).then(response=>{
 );
 
 function populateMessages(messages, source){
-    document.getElementById("messages").innerHTML = ""; 
+    let content_div = document.getElementById("messages");
+    content_div.innerHTML = ""; 
     messages.forEach(element => {
         let div = "";
         if(element["me"]){
@@ -38,8 +39,9 @@ function populateMessages(messages, source){
                     </div>`;
                 
         }
-        document.getElementById("messages").innerHTML += div; 
+        content_div.innerHTML += div; 
     });
+    content_div.scrollTop = content_div.scrollHeight;
 }
 
 function addListener(){
@@ -68,7 +70,7 @@ function reloadChat(){
     axios.get(`model/php/api/api-chat.php?idChat=${chatId}`).then(response=>{
         if (response.data["logged"]){
             populateMessages(response.data['chat'], response.data['source']);
-            addListener();
+            
           } else {
             window.location.replace("./controller_login.php");   
           }
