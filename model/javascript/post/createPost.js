@@ -15,10 +15,6 @@ function generateForm(){
                                 </div>
                                 <label for="tags">Tags</label>
                                 <select id="tags" class="form-select mt-2" multiple aria-label="Tags">
-                                    <option selected>Garden</option>
-                                    <option value="1">Garage</option>
-                                    <option value="2">Attic</option>
-                                    <option value="3">Fireplace</option>
                                 </select>
                                 <!--description-->
                                 <label for="description" id="lbl-description">Description</label>
@@ -60,9 +56,15 @@ function generateForm(){
     return form;
 }
 
-function createPost(title, description, price, latitude, longitude, city_id, address, formImages){
+function addTags(tags){
+    const tagSelect = document.getElementById("tags");
+    tags.forEach(el=>{
+        tagSelect.innerHTML += `<option value="${el["idTag"]}">${el["tagName"]}</option>`;
+    });
+}
+
+function createPost(title, description, price, latitude, longitude, city_id, address, formImages, formTags){
     const formPost = new FormData();
-    const formTags = new FormData();
     formPost.append('title', title);
     formPost.append('description', description);
     formPost.append('price', price);
@@ -70,18 +72,14 @@ function createPost(title, description, price, latitude, longitude, city_id, add
     formPost.append('longitude', longitude);
     formPost.append('city_id', city_id);
     formPost.append('address', address);
-    /*tags.forEach(tag => {
-        formTags.append('tag', tag);
-    });*/
     axios.post('model/php/api/api-create-post.php', formPost).then(response=>{
-        console.log(response);
         axios.get(`model/php/api/api-last-user-post.php`).then(lastPost=>{
             formImages.append('lastPostId', lastPost.data[0]['idPost']);
-            console.log(lastPost.data[0]['idPost']);
-            axios.post('model/php/api/api-upload-post-images.php', formImages).then(e =>{
-                console.log(e);
+            formTags.append('lastPostId', lastPost.data[0]['idPost']);
+            axios.post('model/php/api/api-upload-post-images.php', formImages);
+            axios.post('model/php/api/api-upload-post-tags.php', formTags).then(response =>{
+                console.log(response);
             });
-            //axios.post('model/php/api/api-upload-post-tags.php', formTags);
         });
     });
 }
@@ -104,7 +102,6 @@ function loadProvincies(){
     const region_id = regionSelect.value;
     axios.get(`model/php/api/api-province.php?region_id=${region_id}`).then(provincies =>{
         provinceSelect.innerHTML = '';
-        console.log(provincies);
         provincies.data.forEach(province =>{
             const opt = document.createElement("option");
             opt.value = province["initials"];
@@ -119,7 +116,6 @@ function loadCities(){
     const citySelect = document.getElementById("city");
     const province_id = provinceSelect.value;
     axios.get(`model/php/api/api-city.php?province_id=${province_id}`).then(cities =>{
-        console.log(cities);
         cities.data.forEach(city =>{
             const opt = document.createElement("option");
             opt.value = city["idCity"];
@@ -130,32 +126,43 @@ function loadCities(){
 }
 
 function showCreatePostForm(){
-    let form = generateForm();
-    main.innerHTML = form;
-    document.querySelector("form").addEventListener("submit", function (event) {
-        event.preventDefault();
-        const title = document.querySelector("#title").value;
-        const description = document.querySelector("#description").value;
-        const price = document.querySelector("#price").value;
-        const latitude = 10;
-        const longitude = 20;
-        const city_id = document.querySelector("#city").value;
-        const address = document.querySelector("#address").value;
-        const images = document.querySelector("#images").files;
-        const formImage = new FormData();
+            document.querySelector("form").addEventListener("submit", function (event) {
+                event.preventDefault();
+            const title = document.querySelector("#title").value;
+            const description = document.querySelector("#description").value;
+            const price = document.querySelector("#price").value;
+            const latitude = 10;
+            const longitude = 20;
+            const city_id = document.querySelector("#city").value;
+            const address = document.querySelector("#address").value;
+            const options = document.querySelector("#tags").selectedOptions;
+            const tags = Array.from(options).map(({ value }) => value);
+            const images = document.querySelector("#images").files;
+            const formImage = new FormData();
 
-        for (let i = 0; i < images.length; i++) {
-            let file = images[i];
-            formImage.append('images[]', file);
-        }
-        //const options = document.querySelector("#tags").selectedOptions;
-        //const tags = Array.from(options).map(({ value }) => value);
-        //const location = document.querySelector("#location").value;
-        createPost(title, description, price, latitude, longitude, city_id, address, formImage);
+            for (let i = 0; i < images.length; i++) {
+                let file = images[i];
+                formImage.append('images[]', file);
+            }
+
+            const formTags = new FormData();
+            for (let i = 0; i < tags.length; i++) {
+                let tag = tags[i];
+                formTags.append('tags[]', tag);
+            }
+            console.log(formTags);
+            //const location = document.querySelector("#location").value;
+            createPost(title, description, price, latitude, longitude, city_id, address, formImage, formTags);
     });
 }
 
 
 const main = document.querySelector("main");
-showCreatePostForm();
-loadRegions();
+axios.get(`model/php/api/api-tags.php`).then(tags =>{
+    console.log(tags);
+    let form = generateForm();
+    main.innerHTML = form;
+    addTags(tags.data);
+    showCreatePostForm();
+    loadRegions();
+});
