@@ -3,6 +3,8 @@ session_start();
 $_SERVER["DOCUMENT_ROOT"] = $_SERVER["DOCUMENT_ROOT"]. "/TechnoHouse";
 
 define("USER_TABLE", "User");
+define("MESSAGE_TABLE", "Message");
+
 
 define("UPLOAD_DIR", $_SERVER["DOCUMENT_ROOT"]."/upload/"); //upload directory
 define("DATA_DIR", $_SERVER["DOCUMENT_ROOT"]."/data/"); //upload directory
@@ -35,9 +37,10 @@ define("TAG_SOURCE", "source"); //userd in api-followers
 define("TAG_DESTINATION", "destination"); //userd in api-followers
 define("TAG_USER_ALL_CHAT", "all-chat");
 define("TAG_USER_SINGLE_CHAT", "chat");
+define("TAG_LAST_MESSAGE", "last-message");
 define("TAG_CHAT_BODY", "body");
 define("TAG_CHAT_DATE", "data");
-
+define("TAG_TOTAL_MESSAGES", "total-messages");
 
 // ACTIONS
 define("TAG_ACTION", "action");
