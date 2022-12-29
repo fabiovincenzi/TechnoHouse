@@ -2,18 +2,22 @@ const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 const chatId = urlParams.get('idChat');
 const main = document.querySelector('main');
-
 axios.get(`model/php/api/api-chat.php?idChat=${chatId}`).then(response=>{
     if (response.data["logged"]){
       console.log(response);
         main.innerHTML = generateChat(response.data['destination']);
         populateMessages(response.data['chat'], response.data['source']);
+        addRefreshing();
         addListener();
       } else {
         window.location.replace("./controller_login.php");   
       }
     }
 );
+
+function addRefreshing(){
+  var refreshTimer = setInterval(function(){reloadChat()},5000); //creates timer to request every 5 second
+}
 
 function populateMessages(messages, source){
   console.log(source);
@@ -57,6 +61,7 @@ function addListener(){
             }
         }
     });
+    
 }
 
 function sendMessage(message){
@@ -69,18 +74,19 @@ function sendMessage(message){
 }
 
 function reloadChat(){
-    document.getElementById("messages").innerHTML = ""; 
+    let div = document.getElementById("messages");
+    div.innerHTML = "";
     axios.get(`model/php/api/api-chat.php?idChat=${chatId}`).then(response=>{
         if (response.data["logged"]){
           console.log(response);
             populateMessages(response.data['chat'], response.data['source']);
-            
           } else {
             window.location.replace("./controller_login.php");   
           }
         }
     );
 }
+
 
 function generateChat(other_user, messages){
     let chat = `
@@ -92,7 +98,7 @@ function generateChat(other_user, messages){
           <div class="card-header d-flex justify-content-between align-items-center p-3">
             <h5 id="other-user" class="mb-0">${other_user["name"]} ${other_user["surname"]}</h5>
           </div>
-            <div id="messages" class="card-body scroll">
+            <div id="messages" onload="addRefreshing()" class="card-body scroll">
 
 
             </div>
