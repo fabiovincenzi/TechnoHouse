@@ -14,7 +14,6 @@ axios.get('model/php/api/api-allchat.php').then(response => {
 function getAllChat(chats){
     let content = "";
     chats.forEach(chat => {
-        console.log(chat);
         let single_chat = `
                 <div class="row justify-content-center">
                         <div class="col-md-10 col-lg-8 col-xl-6">
