@@ -2,6 +2,9 @@
 session_start();
 $_SERVER["DOCUMENT_ROOT"] = $_SERVER["DOCUMENT_ROOT"]. "/TechnoHouse";
 define("UPLOAD_DIR", $_SERVER["DOCUMENT_ROOT"]."/upload/"); //upload directory
+define("DATA_DIR", $_SERVER["DOCUMENT_ROOT"]."/data/"); //upload directory
+define("DIR_SEPARATOR", "/");
+
 define("TAG_LOGGED", "logged");
 define("TAG_USER_ID", "idUser");
 define("TAG_USER_NAME", "name");

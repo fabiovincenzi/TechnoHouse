@@ -5,6 +5,16 @@ function isUserLoggedIn(){
     return !empty($_SESSION[TAG_USER_ID]);
 }
 
+function createDirUser($id_user){
+    $path = DATA_DIR.DIR_SEPARATOR.strval($id_user);
+    mkdir($path, 0777, true);
+}
+
+function createDirUserPost($id_user, $id_post){
+    $path = DATA_DIR.DIR_SEPARATOR.strval($id_user).DIR_SEPARATOR.strval($id_post);
+    mkdir($path, 0777, true);
+}
+
 function containsNumber($input){
     return (preg_match('~[0-9]+~', $input));
 }
