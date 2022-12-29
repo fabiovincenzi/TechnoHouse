@@ -641,5 +641,17 @@ class Database{
         $statement->bind_param($PARAM_ADD_CHAT, $source, $destination);
         return $statement->execute();
     }
+
+    public function getAllChat($source){
+        $PARAM_SELECT_CHAT = 'ii';
+        $query = "SELECT *
+                  FROM Chat
+                  WHERE User_idUser = ? OR User_idUser1 = ?";
+        $statement = $this->db->prepare($query);
+        $statement->bind_param($PARAM_SELECT_CHAT, $source, $source);
+        $statement->execute();
+        $result = $statement->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
 }
 ?>

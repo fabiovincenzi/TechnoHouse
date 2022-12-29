@@ -25,8 +25,13 @@ define("TAG_TARGET_FOLLOWING", "target");
 define("TAG_USER_INFO", "users-info"); //upload directory
 define("TAG_USER_POST", "users-posts"); //upload directory
 define("TAG_USER_EMAIL", "email");
+define("TAG_USER_CHAT_SOURCE", "User_idUser"); //used in api-following
+define("TAG_USER_CHAT_DESTINATION", "User_idUser1"); //used in api-following
 define("TAG_USER_TO_FOLLOW", "User_idUser1"); //used in api-following
 define("TAG_USER_THAT_FOLLOWS", "User_idUser"); //userd in api-followers
+
+define("TAG_SOURCE", "source"); //userd in api-followers
+define("TAG_DESTINATION", "destination"); //userd in api-followers
 
 // ACTIONS
 define("TAG_ACTION", "action");
