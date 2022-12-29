@@ -3,8 +3,6 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/TechnoHouse/model/php/bootstrap.php';
 $data[TAG_LOGGED] = false;
 
 if(isUserLoggedIn()){
-    createDirUserPost(1,2);
-    die("");
     $id = $_SESSION[TAG_USER_ID];
     $data[TAG_LOGGED] = true;
 
