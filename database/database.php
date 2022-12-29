@@ -317,7 +317,6 @@ class Database{
      */
     public function getUsersFeed($user_id)
     {
-        
         $PARAM_GET_USER_POSTS = 'i';
         $query = "SELECT *
                   FROM post
@@ -326,7 +325,7 @@ class Database{
                     FROM following, post
                     WHERE following.User_idUser = ?
                   )
-                  ORDER BY PublishTime Desc";
+                  ORDER BY PublishTime DESC";
         $statement = $this->db->prepare($query);
         $statement->bind_param($PARAM_GET_USER_POSTS, $user_id);
         $statement->execute();

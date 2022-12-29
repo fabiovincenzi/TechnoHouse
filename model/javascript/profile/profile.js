@@ -46,9 +46,7 @@ function generateProfile(user){
                     <h5 class="mb-0">Recent photos</h5>
                     <a href="#" class="btn btn-link text-muted">Show all</a> 
                  </div>
-                 <div class="row">
-                    <div class="col-lg-6 mb-2 pr-lg-1" id="users-posts">
-                  </div>
+                 <div class="row" id="users-posts">
                  </div>
               </div>
            </div>
@@ -77,12 +75,15 @@ function generateProfile(user){
 }
 
 function generatePosts(posts){
+   const div_posts = document.getElementById("users-posts");
    posts.forEach(post => {
-      let single_post = `
-      <a id="${post["idPost"]}">
-         <img src="${post["image"]}" alt="${post["name"]} photo" class="img-fluid rounded shadow-sm">
-      </a>`;
-      div_posts.innerHTML+=single_post;
+      axios.get(`model/php/api/api-post-images.php?id=${post["idPost"]}`).then(images =>{
+         let single_post = `
+         <a id="${post["idPost"]}">
+         <img src="upload/${images.data[0]["path"]}" alt="${post["name"]} photo" class="col-md-4 col-6 img-fluid rounded shadow-sm">
+         </a>`;
+         div_posts.innerHTML+=single_post;
+      });
    });
 }
 
@@ -182,6 +183,7 @@ function addUserInfo(user_infos){
 function visualizeProfile(){
    let posts = {};
    let user = {};
+   
    axios.get('model/php/api/api-post.php?action=1').then(response => {
       if(response.data["logged"]){
          user = response.data["users-info"];
@@ -198,8 +200,6 @@ function visualizeProfile(){
 }
 
 const main = document.querySelector("main");
-const div_posts = document.getElementById("users-posts");
-
 axios.get('model/php/api/api-profile.php').then(response => {
    if(response.data["logged"]){
       visualizeProfile();

@@ -29,7 +29,7 @@ function addPosts(){
    axios.get(`model/php/api/api-post.php?idUser=${userId}`).then(response => {
       console.log(response);
       let posts = response.data["users-posts"];
-      div_posts.innerHTML = generatePosts(posts);
+      generatePosts(div_posts, posts);
    });
 }
 
@@ -79,9 +79,7 @@ function generateProfile(user, info){
                     <h5 class="mb-0">Recent photos</h5>
                     <a href="#" class="btn btn-link text-muted">Show all</a> 
                  </div>
-                 <div class="row">
-                    <div class="col-lg-6 mb-2 pr-lg-1" id="users-posts">
-                  </div>
+                 <div class="row" id="users-posts">
                  </div>
               </div>
            </div>
@@ -147,16 +145,18 @@ function populateList(users, list){
    });
 }
 
-function generatePosts(posts){
+function generatePosts(div_posts, posts){
    let content = "";
    posts.forEach(post => {
-      let single_post = `
-      <a id="${post["idPost"]}">
-         <img src="${post["image"]}" alt="${post["name"]} photo" class="img-fluid rounded shadow-sm">
-      </a>`;
-      content += single_post;
+      axios.get(`model/php/api/api-post-images.php?id=${post["idPost"]}`).then(images =>{
+         console.log(images.data);
+         console.log(post["idPost"]);
+         let single_post = `
+         <img src="upload/${images.data[0]["path"]}" alt="${post["name"]} photo" class="col-md-4 col-6 img-fluid rounded shadow-sm">
+        `;
+         div_posts.innerHTML += single_post;
+      });
    });
-   return content;
 }
 
 function clearList(list){

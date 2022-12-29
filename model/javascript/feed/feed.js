@@ -1,4 +1,4 @@
-function createPost(post, questions, tags, user, images){
+function createPost(post){
     let postHtml = `
     <div class="justify-content-center row">
             <div class="col-10 col-md-10 bg-white shadow rounded overflow-hidden mt-2">
@@ -7,7 +7,7 @@ function createPost(post, questions, tags, user, images){
                 <div class="d-flex flex-row px-2 border-bottom">
                     <img class="rounded-circle" src="https://i.imgur.com/aoKusnD.jpg" alt="image profile of :"width="45">
                     <div class="d-flex flex-column flex-wrap ml-2">
-                        <span class="font-weight-bold">${user["name"]} ${user["surname"]}</span>
+                    <div id="user${post["idPost"]}"></div>
                         <span class="text-black-50 time">pubblicato il ${post["PublishTime"].split(' ')[0]} alle ${post["PublishTime"].split(' ')[1]}</span>
                     </div>
                 </div>
@@ -32,22 +32,8 @@ function createPost(post, questions, tags, user, images){
                                     <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
                                     <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
                                 </ol>
-                                <div class="carousel-inner">`
-let i = 0;
-images.forEach(el=>{
-    if(i == 0){
-        postHtml += `<div class="carousel-item active">
-        <img class="d-block w-100" src="upload/${el["path"]}" alt="First slide">
-    </div>`;
-    }else{
-        postHtml += `<div class="carousel-item">
-        <img class="d-block w-100" src="upload/${el["path"]}" alt="First slide">
-    </div>`;
-    }
-    i++;
-});
-                                
-postHtml +=  `</div>
+                                <div id="images${post["idPost"]}" class="carousel-inner">
+                                </div>
                                 <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
                                     prev
                                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -65,11 +51,9 @@ postHtml +=  `</div>
                                 <span class="col-5 font-weight-bold"> 7 saved</span>
                             </div>
                             <!--save-->
-                            <!--tags-->`
-tags.forEach(el=>{
-    postHtml += `<a href="#">#${el["tagName"]}</a>`;
-});
-postHtml += `
+                            <!--tags-->
+                            <div id="tags${post["idPost"]}">
+                            </div>
                             <!--tags-->
                         </div>
 
@@ -92,20 +76,8 @@ postHtml += `
                             <div class="d-flex flex-row">
                                 <div class="d-flex flex-column flex-wrap ml-2">
                                     <span class="font-weight-bold">Questions:</span>
-                                    <ul class="dz-comments-list">`
-questions.forEach(el =>{
-    postHtml +=`
-                <li>
-                    <div>
-                        <h5 class="font-8 mb-1 tag-question">${el["name"]} ${el["surname"]}</h3>
-                        <p class="mb-2">${el["text"]}</p>
-                    </div>
-                </li>`;
-});
-        
-postHtml +=                                `
-                                        
-                                        </ul>
+                                    <ul id="questions${post["idPost"]}" class="dz-comments-list">
+                                    </ul>
                                     </div>
                             </div>
                             <!--questions-->
@@ -119,22 +91,66 @@ postHtml +=                                `
                 `;
                 return postHtml;
 }
+
+function loadUserToPost(user, post){
+    const userContainer = document.getElementById(`user${post["idPost"]}`);
+    userContainer.innerHTML +=`<span class="font-weight-bold">${user["name"]} ${user["surname"]}</span>`;
+}
+
+function loadQuestionsToPost(questions, post){
+    const questionsContainer = document.getElementById(`questions${post["idPost"]}`);
+    questions.forEach(el =>{
+        questionsContainer.innerHTML +=`
+                    <li>
+                        <div>
+                            <h5 class="font-8 mb-1 tag-question">${el["name"]} ${el["surname"]}</h3>
+                            <p class="mb-2">${el["text"]}</p>
+                        </div>
+                    </li>`;
+    });
+}
+
+function loadTagsToPost(tags, post){
+    const tagsContainer = document.getElementById(`tags${post["idPost"]}`);
+    tags.forEach(el=>{
+        tagsContainer.innerHTML += `<a href="#">#${el["tagName"]}</a>`;
+    });
+}
+
+function loadImagesToPost(images, post){
+    const imgContainer = document.getElementById(`images${post["idPost"]}`);
+    let i = 0;
+    images.forEach(el=>{
+        if(i == 0){
+            imgContainer.innerHTML += `<div class="carousel-item active">
+            <img class="d-block w-100" src="upload/${el["path"]}" alt="First slide">
+        </div>`;
+        }else{
+            imgContainer.innerHTML += `<div class="carousel-item">
+            <img class="d-block w-100" src="upload/${el["path"]}" alt="First slide">
+        </div>`;
+        }
+        i++;
+    });
+}
+
 axios.get(`model/php/api/api-post.php?action=2`).then(posts => {
-    const main = document.querySelector("main");
-    posts.data.forEach(post => {
+    posts.data.forEach(post => {                
+        const main = document.querySelector("main");
+        let postHtml = createPost(post);
+        main.innerHTML += postHtml;
+        axios.get(`model/php/api/api-post-images.php?id=${post["idPost"]}`).then(images =>{
+            loadImagesToPost(images.data, post);
+        });
+        axios.get(`model/php/api/api-post-tags.php?id=${post["idPost"]}`).then(tags =>{
+            loadTagsToPost(tags.data, post);
+        });
         axios.get(`model/php/api/api-questions.php?id=${post["idPost"]}`).then(questions => {
-            axios.get(`model/php/api/api-tags.php?id=${post["idPost"]}`).then(tags =>{
-                axios.get(`model/php/api/api-post-images.php?id=${post["idPost"]}`).then(images =>{
-                    console.log(images);
-                    axios.get(`model/php/api/api-user.php?id=${post["User_idUser"]}`).then(user=>{
-                        console.log(user);
-                        const main = document.querySelector("main");
-                        let postHtml = createPost(post, questions.data, tags.data, user.data[0], images.data);
-                        main.innerHTML += postHtml;
-                    });
-                });
-            });
+            loadQuestionsToPost(questions.data, post);
         }); 
+        axios.get(`model/php/api/api-user.php?id=${post["User_idUser"]}`).then(user=>{
+            loadUserToPost(user.data[0], post);
+        });       
     });
 });
 

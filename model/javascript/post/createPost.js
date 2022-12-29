@@ -1,4 +1,4 @@
-function generateForm(tags){
+function generateForm(){
     let form = `
     <div class="justify-content-center row">
                 <div class="col-10 col-md-10 bg-white shadow rounded overflow-hidden mt-2">
@@ -14,13 +14,8 @@ function generateForm(tags){
                                     <input class="form-control" type="file" id="images" multiple>
                                 </div>
                                 <label for="tags">Tags</label>
-                                <select id="tags" class="form-select mt-2" multiple aria-label="Tags">`
-            
-tags.forEach(el=>{
-    form += `<option value="${el["idTag"]}">${el["tagName"]}</option>`;
-});
-                                       
-form +=`</select>
+                                <select id="tags" class="form-select mt-2" multiple aria-label="Tags">
+                                </select>
                                 <!--description-->
                                 <label for="description" id="lbl-description">Description</label>
                                 <textarea class="form-control" id="description" title="post description" rows="3"></textarea>
@@ -59,6 +54,13 @@ form +=`</select>
             </div>
     `;
     return form;
+}
+
+function addTags(tags){
+    const tagSelect = document.getElementById("tags");
+    tags.forEach(el=>{
+        tagSelect.innerHTML += `<option value="${el["idTag"]}">${el["tagName"]}</option>`;
+    });
 }
 
 function createPost(title, description, price, latitude, longitude, city_id, address, formImages, formTags){
@@ -158,8 +160,9 @@ function showCreatePostForm(){
 const main = document.querySelector("main");
 axios.get(`model/php/api/api-tags.php`).then(tags =>{
     console.log(tags);
-    let form = generateForm(tags.data);
+    let form = generateForm();
     main.innerHTML = form;
+    addTags(tags.data);
     showCreatePostForm();
     loadRegions();
 });
