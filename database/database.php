@@ -724,5 +724,32 @@ class Database{
         $result = $statement->get_result();
         return $result->fetch_all(MYSQLI_ASSOC);
     }
+
+    public function getUserPreference($iduser){
+        $PARAM_USER_PREFERENCE = 'i';
+        $query = 'SELECT COUNT(Tag_idTag) AS Total
+                  FROM SavedPosts INNER JOIN Post_has_Tag ON `SavedPosts`.Post_idPost=`Post_has_Tag`.Post_idPost
+                  WHERE `SavedPosts`.User_idUser = ?
+                  GROUP BY (Tag_idTag)
+                  ORDER BY Total DESC';
+        $statement = $this->db->prepare($query);
+        $statement->bind_param($PARAM_USER_PREFERENCE, $iduser);
+        $statement->execute();
+        $result = $statement->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+    public function getRandomPostsOf($tag, $n=10){
+        $PARAM_RANDOM_POSTS = 'ii';
+        $query = "SELECT *
+                  FROM Post_has_Tag INNER JOIN Posts ON Post_has_Tag.Post_idPost=Post.idPost
+                  WHERE Post_has_Tag,Tag_idTag=?
+                  ORDER BY RAND()
+                  LIMIT ?";
+        $statement = $this->db->prepare($query);
+        $statement->bind_param($PARAM_RANDOM_POSTS, $tag, $n);
+        $statement->execute();
+        $result = $statement->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
 }
 ?>
