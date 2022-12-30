@@ -80,8 +80,8 @@ function generatePosts(posts){
    posts.forEach(post => {
       axios.get(`model/php/api/api-post-images.php?id=${post["idPost"]}`).then(images =>{
          let single_post = `
-         <a id="${post["idPost"]}">
-         <img src="${images.data[0]["path"]}" alt="${post["name"]} photo" class="col-md-4 col-6 img-fluid rounded shadow-sm">
+         <a class="col-md-4 col-6 " id="${post["idPost"]}">
+         <img src="${images.data[0]["path"]}" alt="${post["name"]} photo" class="img-fluid rounded shadow-sm">
          </a>`;
          div_posts.innerHTML+=single_post;
       });
