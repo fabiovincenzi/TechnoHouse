@@ -13,10 +13,19 @@ function createDirUser($id_user){
 }
 
 function createDirUserPost($id_user, $id_post){
-    $path = DATA_DIR.DIR_SEPARATOR.strval($id_user).DIR_SEPARATOR.strval($id_post);
+    $path = getDirUserPost($id_user, $id_post);
+    var_dump($path);
     if (!is_dir($path)) {
         mkdir($path, 0777, true);
     }
+}
+
+function getDirUserPost($id_user, $id_post){
+    return DATA_DIR.DIR_SEPARATOR.strval($id_user).DIR_SEPARATOR.strval($id_post).DIR_SEPARATOR;
+}
+
+function getRelativeDirUserPost($id_user, $id_post){
+    return "data/".strval($id_user).DIR_SEPARATOR.strval($id_post).DIR_SEPARATOR;
 }
 
 function containsNumber($input){

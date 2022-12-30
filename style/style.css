@@ -11,8 +11,11 @@
     width:100%;
     position:absolute;
   }
-  .body-padding {
+  .body-padding-top {
     padding-top: 4.5rem;
+  }
+  .body-padding-bottom {
+    padding-bottom: 4.5rem;
   }
   .bg-blur{
     background: rgba(255,255,255,0.4);

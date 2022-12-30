@@ -8,6 +8,7 @@ define("MESSAGE_TABLE", "Message");
 
 define("UPLOAD_DIR", $_SERVER["DOCUMENT_ROOT"]."/upload/"); //upload directory
 define("DATA_DIR", $_SERVER["DOCUMENT_ROOT"]."/data/"); //upload directory
+define("DATA_RELATIVE_DIR", "/data/"); //upload relative directory
 define("DIR_SEPARATOR", "/");
 
 define("TAG_LOGGED", "logged");

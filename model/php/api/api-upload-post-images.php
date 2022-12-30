@@ -1,7 +1,9 @@
 <?php
 require_once $_SERVER['DOCUMENT_ROOT'].'/TechnoHouse/model/php/bootstrap.php';
-print_r($_FILES);
+
 if(isset($_FILES["images"]) && isset( $_POST["lastPostId"])){
+    $post = $dbh->getPostById($_POST["lastPostId"]);
+    var_dump($post);
     $errors = [];
     $extensions = ['jpg', 'jpeg', 'png', 'gif'];
 
@@ -15,13 +17,14 @@ if(isset($_FILES["images"]) && isset( $_POST["lastPostId"])){
         $file_size = $_FILES['images']['size'][$i];
         $fileNames[] = $file_name;
 
-        $file = UPLOAD_DIR . $file_name;
-
+        
         if ($file_size > 2097152) {
             $errors[] = 'File size exceeds limit: ' . $file_name . ' ' . $file_type;
         }
         if (empty($errors)) {
-            move_uploaded_file($file_tmp, $file);
+            createDirUserPost($post[0]["User_idUser"],$post[0]["idPost"]);
+            $dir = getDirUserPost($post[0]["User_idUser"],$post[0]["idPost"]);
+            move_uploaded_file($file_tmp, $dir.$file_name);
             $dbh->addImage($file_name, $_POST["lastPostId"]);
         }
     }

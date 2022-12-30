@@ -298,7 +298,7 @@ class Database{
         $query = "SELECT *
                   FROM Post
                   WHERE User_idUser = ?
-                  ORDER BY PublishTime
+                  ORDER BY PublishTime desc
                   LIMIT 1";
         $statement = $this->db->prepare($query);
         $statement->bind_param($PARAM_GET_LAST_USER_POSTS, $user_id);

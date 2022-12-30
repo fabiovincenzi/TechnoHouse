@@ -131,7 +131,7 @@ function loadUserToPost(user, post){
     const userContainer = document.getElementById(`user${post["idPost"]}`);
     userContainer.innerHTML +=`<a href="./controller_otheruser.php?idUser=${user["idUser"]}"><span class="font-weight-bold">${user["name"]} ${user["surname"]}</span></a>`;
     const userImgContainer = document.getElementById(`imgUser${post["idPost"]}`);
-    userImgContainer.innerHTML +=`<img class="rounded-circle" src="upload/${user["userImage"]}" alt="image profile of :"width="45">`;
+    userImgContainer.innerHTML +=`<img class="rounded-circle" src="${user["userImage"]}" alt="image profile of :"width="45">`;
     
                     
 }
@@ -207,16 +207,17 @@ function loadTagsToPost(tags, post){
 }
 
 function loadImagesToPost(images, post){
+    console.log(images);
     const imgContainer = document.getElementById(`images${post["idPost"]}`);
     let i = 0;
     images.forEach(el=>{
         if(i == 0){
             imgContainer.innerHTML += `<div class="carousel-item active">
-            <img class="d-block w-100" src="upload/${el["path"]}" alt="First slide">
+            <img class="d-block w-100" src="${el["path"]}" alt="First slide">
         </div>`;
         }else{
             imgContainer.innerHTML += `<div class="carousel-item">
-            <img class="d-block w-100" src="upload/${el["path"]}" alt="First slide">
+            <img class="d-block w-100" src="${el["path"]}" alt="First slide">
         </div>`;
         }
         i++;

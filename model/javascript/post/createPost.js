@@ -76,9 +76,11 @@ function createPost(title, description, price, latitude, longitude, city_id, add
         axios.get(`model/php/api/api-last-user-post.php`).then(lastPost=>{
             formImages.append('lastPostId', lastPost.data[0]['idPost']);
             formTags.append('lastPostId', lastPost.data[0]['idPost']);
-            axios.post('model/php/api/api-upload-post-images.php', formImages);
+            axios.post('model/php/api/api-upload-post-images.php', formImages).then(res =>{
+                console.log(res);
+            });
             axios.post('model/php/api/api-upload-post-tags.php', formTags).then(response =>{
-                console.log(response);
+                //console.log(response);
             });
         });
     });
@@ -159,7 +161,6 @@ function showCreatePostForm(){
 
 const main = document.querySelector("main");
 axios.get(`model/php/api/api-tags.php`).then(tags =>{
-    console.log(tags);
     let form = generateForm();
     main.innerHTML = form;
     addTags(tags.data);

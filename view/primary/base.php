@@ -13,7 +13,7 @@
         ?>
     </title>
 </head>
-<body>
+<body class="body-padding-bottom">
     <main>
     <div class="container">
     <?php
