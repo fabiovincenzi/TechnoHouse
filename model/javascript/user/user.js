@@ -41,7 +41,7 @@ function generateProfile(user, info){
  
               <div class="p-4 bg-black row">
                     <div class="mr-3 col-5">
-                        <img src="upload/${user["userImage"]}" alt="${user["name"]} ${user["surname"]} profile photo" width="130" class="rounded mb-2 img-thumbnail">
+                        <img src="${user["userImage"]}" alt="${user["name"]} ${user["surname"]} profile photo" width="130" class="rounded mb-2 img-thumbnail">
                     </div>
                     <div class="text-white col-7">
                         <h4 id="name-surname">${user["name"]} ${user["surname"]}</h4>
@@ -152,7 +152,7 @@ function generatePosts(div_posts, posts){
          console.log(images.data);
          console.log(post["idPost"]);
          let single_post = `
-         <img src="upload/${images.data[0]["path"]}" alt="${post["name"]} photo" class="col-md-4 col-6 img-fluid rounded shadow-sm">
+         <img src="${images.data[0]["path"]}" alt="${post["name"]} photo" class="col-md-4 col-6 img-fluid rounded shadow-sm">
         `;
          div_posts.innerHTML += single_post;
       });
