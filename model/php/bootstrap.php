@@ -55,6 +55,7 @@ define("GET_USER_FEED", "2");
 define("GET_FOLLOWERS", "1");
 define("TAG_ME", "me");
 define("TAG_FOLLOW", "follow");
+define("GET_POST_BY_ID", "3");
 
 // SEARCH
 define("N_RANDOM_POSTS", 10);

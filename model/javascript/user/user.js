@@ -152,8 +152,9 @@ function generatePosts(div_posts, posts){
          console.log(images.data);
          console.log(post["idPost"]);
          let single_post = `
-         <img src="${images.data[0]["path"]}" alt="${post["name"]} photo" class="col-md-4 col-6 img-fluid rounded shadow-sm">
-        `;
+         <a class="col-md-4 col-6 " id="${post["idPost"]}" href="./controller_single_post.php?idPost=${post["idPost"]}">
+         <img src="${images.data[0]["path"]}" alt="${post["name"]} photo" class="img-fluid rounded shadow-sm">
+         </a>`;
          div_posts.innerHTML += single_post;
       });
    });

@@ -80,7 +80,7 @@ function generatePosts(posts){
    posts.forEach(post => {
       axios.get(`model/php/api/api-post-images.php?id=${post["idPost"]}`).then(images =>{
          let single_post = `
-         <a class="col-md-4 col-6 " id="${post["idPost"]}">
+         <a class="col-md-4 col-6 " id="${post["idPost"]}" href="./controller_single_post.php?idPost=${post["idPost"]}">
          <img src="${images.data[0]["path"]}" alt="${post["name"]} photo" class="img-fluid rounded shadow-sm">
          </a>`;
          div_posts.innerHTML+=single_post;
@@ -118,7 +118,7 @@ function populateSaved(posts, list){
       axios.get(`model/php/api/api-post-images.php?id=${post["idPost"]}`).then(images =>{
       let list_item = `
       <li class="p-2 border-bottom bg-white">
-         <a id="profile" href="${post["idPost"]}" class="d-flex justify-content-between chatListLine">
+         <a id="profile" href="./controller_single_post.php?idPost=${post["idPost"]}" class="d-flex justify-content-between chatListLine">
             <div class="d-flex flex-row">
                <!--chat image-->
                <img src="${images.data[0]["path"]}" alt="${post["title"]} image"

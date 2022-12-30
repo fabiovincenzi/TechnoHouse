@@ -1,7 +1,9 @@
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 const postId = urlParams.get('idPost');
-axios.get(`model/php/api/api-post.php?action=2`).then(posts => {
+axios.get(`model/php/api/api-post.php?action=3&idPost=${postId}`).then(post => {
+    post = post.data[0];
+    console.log(post);
     const main = document.querySelector("main");
     let postHtml = createPost(post);
     main.innerHTML += postHtml;
