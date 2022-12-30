@@ -6,7 +6,7 @@ axios.get('model/php/api/api-random-posts.php').then(response => {
         addListener();
         addElements(response.data["search-post"]);
     }else{
-        //window.location.replace("./controller_login.php");
+        window.location.replace("./controller_login.php");
     }
 });
 
