@@ -35,9 +35,9 @@ function addListener(){
         console.log(input.value);
         if(!value){
             console.log("ciao");    
-            //randomPosts();
+            randomPosts();
         }else{
-            //addSearched(value);
+            addSearched(value);
         }
     });
 }

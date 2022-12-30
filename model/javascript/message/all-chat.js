@@ -34,11 +34,7 @@ function getAllChat(chats){
     chats.forEach(chat => {
         console.log(chat);
         let single_chat = `
-                <div class="row justify-content-center">
-                        <div class="col-md-10 col-lg-8 col-xl-6">
-                            <h5 class="font-weight-bold mb-3 text-center text-lg-start">Chat</h5>
-                            <div class="card">
-                                <div class="card-body">
+
                                     <ul class="list-unstyled mb-0">
 
                                         <li class="p-2 border-bottom bg-white">
@@ -52,11 +48,7 @@ function getAllChat(chats){
                                             </a>
                                         </li>
 
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>`;
+                                    </ul>`;
         content += single_chat
     });
     ul.innerHTML = content;
