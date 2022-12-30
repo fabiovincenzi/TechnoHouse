@@ -10,7 +10,6 @@ if(isUserLoggedIn()){
     $posts = array();
     foreach($tags as $tag){
         array_push($posts, $dbh->getRandomPostsOf($tag, N_RANDOM_POSTS)[0]);
-        
     }
     $result[TAG_SEARCH_POSTS] = $posts;
 }

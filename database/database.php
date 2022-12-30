@@ -741,8 +741,8 @@ class Database{
     public function getRandomPostsOf($tag, $n=10){
         $PARAM_RANDOM_POSTS = 'ii';
         $query = "SELECT *
-                  FROM Post_has_Tag INNER JOIN Posts ON Post_has_Tag.Post_idPost=Post.idPost
-                  WHERE Post_has_Tag,Tag_idTag=?
+                  FROM Post_has_Tag INNER JOIN Posts ON `Post_has_Tag`.Post_idPost=`Post`.idPost
+                  WHERE `Post_has_Tag`.Tag_idTag=?
                   ORDER BY RAND()
                   LIMIT ?";
         $statement = $this->db->prepare($query);
