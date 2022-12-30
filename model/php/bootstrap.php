@@ -45,6 +45,8 @@ define("TAG_TOTAL_MESSAGES", "total-messages");
 
 // ACTIONS
 define("TAG_ACTION", "action");
+define("TAG_SEARCH", "search");
+define("TAG_SEPARATOR", " ");
 define("TAG_ACTION_FOLLOW", "action-follow");
 define("SEND_POST_USER", "1");
 define("ACTION_UNFOLLOW", "1");

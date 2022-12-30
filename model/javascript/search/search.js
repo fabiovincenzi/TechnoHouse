@@ -1,13 +1,15 @@
 const main = document.querySelector('main');
-axios.get('model/php/api/api-search.php').then(response => {
+axios.get('model/php/api/api-random-posts.php').then(response => {
     console.log(response.data);
     if(response.data["logged"]){
         main.innerHTML = generateBase();
-        addPosts(response.data["search-post"]);
+        addListener();
+        addElements(response.data["search-post"]);
     }else{
         window.location.replace("./controller_login.php");
     }
 });
+
 
 function generateBase(){
     let base = `
@@ -17,11 +19,6 @@ function generateBase(){
                 <label for="search-bar" type="">Search</label>
                 <input type="search" id="search-bar" class="form-control" placeholder="Search" aria-label="Search" />
             </nav>
-            <div>
-                <nav class="navbar fixed-top navbar-light bg-blur p-3">
-                    <label for="search-bar" type="">Search</label>
-                    <input type="search" id="search-bar" class="form-control" placeholder="Search" aria-label="Search" />
-                </nav>
         <div>
 
         <ul id="content-search">
@@ -31,11 +28,47 @@ function generateBase(){
         return base;
 }
 
-function addPosts(posts){
+function addListener(){
+    let input = document.getElementById("search-bar");
+    input.addEventListener('input', function (evt) {
+        let value = input.value;
+        console.log(input.value);
+        if(!value){
+            console.log("ciao");    
+            //randomPosts();
+        }else{
+            //addSearched(value);
+        }
+    });
+}
+
+function randomPosts(){
+    axios.get('model/php/api/api-random-posts.php').then(response => {
+        if(response.data["logged"]){
+            addElements(response.data["search-post"]);
+        }else{
+            window.location.replace("./controller_login.php");
+        }
+    });
+}
+
+function addSearched(value){
+    axios.get(`model/php/api/api-search.php?search=${value}`).then(response => {
+        console.log(response);
+        if(response.data["logged"]){
+            addElements(response.data["search"]);
+        }else{
+            window.location.replace("./controller_login.php");
+        }
+    });
+}
+
+function addElements(elements){
     const ul = document.getElementById('content-search');
+    ul.innerHTML = "";
     let cont = 0;
     let content = "";
-    posts.forEach(element => {
+    elements.forEach(element => {
         let div_item = `
             <div class="col-sm">
                     <a href="./controller_single-post.php?idPost=${element["idPost"]}">
@@ -69,7 +102,7 @@ function addPosts(posts){
                 </div>
             </div>
         </li>`;
-        ul.innerHTML +=list_item;
+        ul.innerHTML += list_item ;
     }
 }
 
