@@ -55,6 +55,7 @@ define("TAG_FOLLOW", "follow");
 
 // SEARCH
 define("N_RANDOM_POSTS", 10);
+define("TAG_SEARCH_POSTS", "search-post");
 
 // POST INFOS
 define("TAG_POST_ID", "idPost");

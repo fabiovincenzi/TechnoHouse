@@ -738,8 +738,18 @@ class Database{
         $result = $statement->get_result();
         return $result->fetch_all(MYSQLI_ASSOC);
     }
-    public function getRandomPostOf($tag, $n=10){
-        
+    public function getRandomPostsOf($tag, $n=10){
+        $PARAM_RANDOM_POSTS = 'ii';
+        $query = "SELECT *
+                  FROM Post_has_Tag INNER JOIN Posts ON Post_has_Tag.Post_idPost=Post.idPost
+                  WHERE Post_has_Tag,Tag_idTag=?
+                  ORDER BY RAND()
+                  LIMIT ?";
+        $statement = $this->db->prepare($query);
+        $statement->bind_param($PARAM_RANDOM_POSTS, $tag, $n);
+        $statement->execute();
+        $result = $statement->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC);
     }
 }
 ?>

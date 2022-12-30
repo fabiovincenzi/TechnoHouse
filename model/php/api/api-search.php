@@ -9,9 +9,10 @@ if(isUserLoggedIn()){
     $tags = $dbh->getUserPreference($id);
     $posts = array();
     foreach($tags as $tag){
-        array_push($posts, $dbh->getRandomPostsOf($tag, N_RANDOM_POSTS));
+        array_push($posts, $dbh->getRandomPostsOf($tag, N_RANDOM_POSTS)[0]);
+        
     }
-
+    $result[TAG_SEARCH_POSTS] = $posts;
 }
 header('Content-Type: application/json');
 echo json_encode($result);
