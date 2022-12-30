@@ -129,7 +129,7 @@ function populateList(users, list){
          <a id="profile" href="./controller_otheruser.php?idUser=${user["idUser"]}" class="d-flex justify-content-between chatListLine">
             <div class="d-flex flex-row">
                <!--chat image-->
-               <img src="" alt="${user["name"]} ${user["surname"]} profile image"
+               <img src="${user["userImage"]}" alt="${user["name"]} ${user["surname"]} profile image"
                class="rounded-circle d-flex align-self-center me-3 shadow-1-strong chatListLine" width="60">
                <!--chat image-->
                <div class="pt-1">

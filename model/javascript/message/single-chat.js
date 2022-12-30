@@ -3,14 +3,14 @@ const urlParams = new URLSearchParams(queryString);
 const chatId = urlParams.get('idChat');
 const main = document.querySelector('main');
 axios.get(`model/php/api/api-chat.php?idChat=${chatId}`).then(response=>{
+  console.log(response);
     if (response.data["logged"]){
-      console.log(response);
         main.innerHTML = generateChat(response.data['destination']);
         populateMessages(response.data['chat'], response.data['source']);
         addRefreshing();
         addListener();
       } else {
-        window.location.replace("./controller_login.php");   
+        //window.location.replace("./controller_login.php");   
       }
     }
 );
@@ -27,7 +27,7 @@ function refresh(){
         addRefreshing();
         addListener();
       } else {
-        window.location.replace("./controller_login.php");   
+       // window.location.replace("./controller_login.php");   
       }
     }
 );
@@ -47,12 +47,12 @@ function populateMessages(messages, source){
                         <p class="small p-2 me-3 mb-1 text-white rounded-3 bg-primary">${element["body"]}</p>
                         <p class="small me-3 mb-3 rounded-3 text-muted d-flex justify-content-end">${element["data"]}</p>
                     </div>
-                    <img class="profileImg" src="upload/${source["userImage"]}" alt="${source["name"]} ${source["surname"]} profile image" />
+                    <img class="profileImg" src="${source["userImage"]}" alt="${source["name"]} ${source["surname"]} profile image" />
                 </div>`;
         }else{
             div = `
                     <div class="d-flex flex-row justify-content-start">
-                        <img class="profileImg" src="upload/${element["userImage"]}" alt="${element["name"]} ${element["surname"]} profile image" />
+                        <img class="profileImg" src="${element["userImage"]}" alt="${element["name"]} ${element["surname"]} profile image" />
                             <div>
                                 <p class="small p-2 ms-3 mb-1 rounded-3 bg-light">${element["body"]}</p>
                                 <p class="small ms-3 mb-3 rounded-3 text-muted">${element["data"]}</p>

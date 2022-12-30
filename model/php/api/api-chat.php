@@ -13,23 +13,22 @@ if(isUserLoggedIn()){
         $chats[TAG_DESTINATION] = array(TAG_USER_ID => $destination[TAG_USER_ID], 
         TAG_USER_NAME => $destination[TAG_USER_NAME],
         TAG_USER_SURNAME => $destination[TAG_USER_SURNAME], 
-        TAG_USER_IMAGE => $destination[TAG_USER_IMAGE]);
+        TAG_USER_IMAGE => getRelativeDirUser($destination[TAG_USER_ID]).$destination[TAG_USER_IMAGE]);
         
         //This is the logged user, infos about the logged user
         $source = $dbh->getUserById($id)[0];
         $chats[TAG_SOURCE] = array(TAG_USER_ID => $source[TAG_USER_ID], 
         TAG_USER_NAME => $source[TAG_USER_NAME],
         TAG_USER_SURNAME => $source[TAG_USER_SURNAME], 
-        TAG_USER_IMAGE => $source[TAG_USER_IMAGE]);
+        TAG_USER_IMAGE => getRelativeDirUser($source[TAG_USER_ID]).$source[TAG_USER_IMAGE]);
 
         if(!isset($_POST[TAG_CHAT_BODY])){
             $chats[TAG_USER_SINGLE_CHAT] = array();
             $messages = $dbh->getChatMessages($idChat);
             $chats[TAG_TOTAL_MESSAGES] = count($messages);
             if(count($messages) > 0){
-                $sender_info = $dbh->getUserByID($messages[0][TAG_USER_CHAT_SOURCE])[0];
-                
                 foreach($messages as $message){
+                    $sender_info = $dbh->getUserByID($message[TAG_USER_CHAT_SOURCE])[0];
                     $sender = $message[TAG_USER_CHAT_SOURCE];
                     $body = $message[TAG_CHAT_BODY];
                     $date = $message[TAG_CHAT_DATE];
@@ -39,7 +38,7 @@ if(isUserLoggedIn()){
                     TAG_USER_SURNAME => $sender_info[TAG_USER_SURNAME],
                     TAG_CHAT_BODY => $body,
                     TAG_CHAT_DATE => $date,
-                    TAG_USER_IMAGE => $sender_info[TAG_USER_IMAGE]
+                    TAG_USER_IMAGE => getRelativeDirUser($sender_info[TAG_USER_ID]).$sender_info[TAG_USER_IMAGE]
                     ));
                 }
             }

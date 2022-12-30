@@ -7,6 +7,7 @@ if(isUserLoggedIn()){
     if (isset($_GET[TAG_ACTION])) {
         if ($_GET[TAG_ACTION] == SEND_POST_USER) {
             $posts[TAG_USER_INFO] = $dbh->getUserByID($id);
+            $posts[TAG_USER_INFO][0][TAG_USER_IMAGE] = getRelativeDirUser($id).$posts[TAG_USER_INFO][0][TAG_USER_IMAGE];
             $posts[TAG_USER_INFO][TAG_USER_FOLLOWERS] = count($dbh->getFollowers($id));
             $posts[TAG_USER_INFO][TAG_USER_FOLLOWING] = count($dbh->getFollowing($id));
             $posts[TAG_USER_INFO][TAG_USER_SAVED] = count($dbh->getAllSaved($id));

@@ -89,13 +89,14 @@ function generatePosts(posts){
 }
 
 function populateList(users, list){
+   console.log(users);
    users.forEach(user => {
       let list_item = `
       <li class="p-2 border-bottom bg-white">
          <a id="profile" href="./controller_otheruser.php?idUser=${user["idUser"]}" class="d-flex justify-content-between chatListLine">
             <div class="d-flex flex-row">
                <!--chat image-->
-               <img src="" alt="${user["name"]} ${user["surname"]} profile image"
+               <img src="${user["userImage"]}" alt="${user["name"]} ${user["surname"]} profile image"
                class="rounded-circle d-flex align-self-center me-3 shadow-1-strong chatListLine" width="60">
                <!--chat image-->
                <div class="pt-1">
@@ -114,12 +115,13 @@ function populateList(users, list){
 function populateSaved(posts, list){
    console.log(posts.data);
    posts.forEach(post => {
+      axios.get(`model/php/api/api-post-images.php?id=${post["idPost"]}`).then(images =>{
       let list_item = `
       <li class="p-2 border-bottom bg-white">
          <a id="profile" href="${post["idPost"]}" class="d-flex justify-content-between chatListLine">
             <div class="d-flex flex-row">
                <!--chat image-->
-               <img src="" alt="${post["title"]} image"
+               <img src="${images.data[0]["path"]}" alt="${post["title"]} image"
                class="rounded-circle d-flex align-self-center me-3 shadow-1-strong chatListLine" width="60">
                <!--chat image-->
                <div class="pt-1">
@@ -129,6 +131,7 @@ function populateSaved(posts, list){
          </a>
       </li>`
       list.innerHTML+=list_item;
+      });
    });
 }
 

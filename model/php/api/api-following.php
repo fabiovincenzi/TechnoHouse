@@ -13,7 +13,8 @@ if(isUserLoggedIn()){
             
             array_push($data[TAG_USER_FOLLOWING],  array(TAG_USER_ID => $user[TAG_USER_ID], 
             TAG_USER_NAME => $user[TAG_USER_NAME], 
-            TAG_USER_SURNAME => $user[TAG_USER_SURNAME]));
+            TAG_USER_SURNAME => $user[TAG_USER_SURNAME],
+            TAG_USER_IMAGE => getRelativeDirUser($user[TAG_USER_ID]).$user[TAG_USER_IMAGE]));
         }
     }else if(isset($_GET[TAG_USER_ID])){
         $user_id = $_GET[TAG_USER_ID];
@@ -27,7 +28,8 @@ if(isUserLoggedIn()){
                 array_push($data[TAG_USER_FOLLOWING], array(
                 TAG_USER_ID => $user[TAG_USER_ID],
                 TAG_USER_NAME => $user[TAG_USER_NAME],
-                TAG_USER_SURNAME => $user[TAG_USER_SURNAME]
+                TAG_USER_SURNAME => $user[TAG_USER_SURNAME],
+                TAG_USER_IMAGE => getRelativeDirUser($user[TAG_USER_ID]).$user[TAG_USER_IMAGE]
                 )
                 );
             }
