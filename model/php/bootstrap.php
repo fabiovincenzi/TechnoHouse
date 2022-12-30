@@ -59,9 +59,12 @@ define("N_RANDOM_POSTS", 10);
 define("TAG_SEARCH_POSTS", "search-post");
 
 // POST INFOS
+define("TAG_POST_USER", "User_idUser");
 define("TAG_POST_ID", "idPost");
 define("TAG_POST_TITLE", "title");
 define("TAG_GET_POST", "Post_idPost");
+define("TAG_POST_PATH", "path");
+
 
 require_once($_SERVER["DOCUMENT_ROOT"]."/model/php/util/functions.php"); //functions directory
 require_once($_SERVER["DOCUMENT_ROOT"]."/database/database.php"); //database directory
