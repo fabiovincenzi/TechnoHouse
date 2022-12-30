@@ -4,7 +4,6 @@ if (isUserLoggedIn()) {
     //Base Template
     $viewBag["title"] = "Search";
     $viewBag["script"] = array(
-        "https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.j",
         "https://unpkg.com/axios/dist/axios.min.js",
         "./model/javascript/search/search.js"
     );

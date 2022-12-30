@@ -1,3 +1,4 @@
+<!--
 <div class="justify-content-center row">
       <div class="col-10 col-md-10 bg-white shadow rounded overflow-hidden">
       <nav class="navbar fixed-top navbar-light bg-blur p-3">
@@ -29,3 +30,4 @@
       </li>
   </ul>
 </div>
+-->
