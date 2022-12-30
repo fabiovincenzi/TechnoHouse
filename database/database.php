@@ -728,8 +728,8 @@ class Database{
     public function getUserPreference($iduser){
         $PARAM_USER_PREFERENCE = 'i';
         $query = 'SELECT COUNT(Tag_idTag) AS Total
-                  FROM SavedPosts INNER JOIN Post_has_Tag ON SavedPosts.Post_idPost=Post_has_Tag,Post_idPost
-                  WHERE SavedPosts.User_idUser = ?
+                  FROM SavedPosts INNER JOIN Post_has_Tag ON `SavedPosts`.Post_idPost=`Post_has_Tag`.Post_idPost
+                  WHERE `SavedPosts`.User_idUser = ?
                   GROUP BY (Tag_idTag)
                   ORDER BY Total DESC';
         $statement = $this->db->prepare($query);
