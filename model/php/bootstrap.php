@@ -27,6 +27,14 @@ define("TAG_TARGET_FOLLOWING", "target");
 define("TAG_USER_INFO", "users-info"); //upload directory
 define("TAG_USER_POST", "users-posts"); //upload directory
 define("TAG_USER_EMAIL", "email");
+define("TAG_USER_BIRTHDATE", "birthDate");
+define("TAG_USER_PHONE", "phoneNumber");
+define("TAG_OLD_PSW", "old-password");
+define("TAG_NEW_PSW", "new-password");
+define("TAG_USER_PASSWORD", "password");
+define("TAG_CONFIRM_PSW", "confirm-password");
+
+
 define("TAG_USER_TO_FOLLOW", "User_idUser1"); //used in api-following
 define("TAG_USER_THAT_FOLLOWS", "User_idUser"); //userd in api-followers
 

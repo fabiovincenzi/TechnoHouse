@@ -6,8 +6,8 @@ function generateProfile(user){
  
               <div class="p-4 bg-black row">
                     <div class="mr-3 col-5">
-                        <img src="${user[0]["userImage"]}" alt="${user[0]["name"]} ${user[0]["surname"]} profile photo" width="130" class="rounded mb-2 img-thumbnail">
-                    </div>
+                        <img id="user-image" src="${user[0]["userImage"]}" alt="${user[0]["name"]} ${user[0]["surname"]} profile photo" width="130" class="rounded mb-2 img-thumbnail"/>
+                     </div>
                     <div class="text-white col-7">
                         <h4 id="name-surname">${user[0]["name"]} ${user[0]["surname"]}</h4>
                     </div>
@@ -35,11 +35,8 @@ function generateProfile(user){
                  </ul>
               </div>
               <div class="py-4 px-4">
-                 <div class="d-flex align-items-center justify-content-between mb-3">
-                    <h5 class="mb-0">Recent photos</h5>
-                    <a href="#" class="btn btn-link text-muted">Show all</a> 
-                 </div>
                  <div class="row" id="users-posts">
+                     <button id="button-settings">Settings</button>
                  </div>
               </div>
            </div>
@@ -171,6 +168,26 @@ function addListeners(user_info){
       clearList(list);
       title.innerText = "Saved posts";
       addSavedPosts(list);
+   });
+   document.getElementById("button-settings").addEventListener("click", function(event){
+      axios.get('model/php/api/api-profile.php').then(response => {
+         console.log(response);
+         if(response.data["logged"]){
+            window.location.replace(`./controller_settings.php?idUser=${response.data["idUser"]}`);   
+         }else{
+            window.location.replace("./controller_login.php");   
+         }
+      });
+   });
+   document.getElementById("user-image").addEventListener("click", function(event){
+      axios.get('model/php/api/api-profile.php').then(response => {
+         console.log(response);
+         if(response.data["logged"]){
+            window.location.replace(`./controller_profile-image.php?idUser=${response.data["idUser"]}`);   
+         }else{
+            window.location.replace("./controller_login.php");   
+         }
+      });
    });
 }
 

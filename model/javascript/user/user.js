@@ -69,10 +69,6 @@ function generateProfile(user, info){
                  <input id="send-message" class="btn btn-primary btn-lg btn-block w-100" name="Send a Message" type="submit" value="Send a message"/>
                  </div>
               <div class="py-4 px-4">
-                 <div class="d-flex align-items-center justify-content-between mb-3">
-                    <h5 class="mb-0">Recent photos</h5>
-                    <a href="#" class="btn btn-link text-muted">Show all</a> 
-                 </div>
                  <div class="row" id="users-posts">
                  </div>
               </div>

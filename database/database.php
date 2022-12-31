@@ -379,6 +379,49 @@ class Database{
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
+    public function updateUser($idUser, $name, $surname, $phone, $birth, $email){
+        $PARAM_UPDATE_USER = 'sssssi';
+        $query = "UPDATE User
+                  SET name = ?, surname = ?, phoneNumber = ?, birthDate = ?, email = ?
+                  WHERE idUser = ?";
+        $statement = $this->db->prepare($query);
+        
+        $statement->bind_param($PARAM_UPDATE_USER, $name, $surname, $phone, $birth, $email, $idUser);
+        return $statement->execute();
+    }
+    public function updateTotalUser($idUser, $name, $surname, $phone, $birth, $email, $password){
+        $PARAM_UPDATE_USER = 'ssssssi';
+        $query = "UPDATE User
+                  SET name = ?, surname = ?, phoneNumber = ?, birthDate = ?, email = ?, password = ?
+                  WHERE idUser = ?";
+        $hashed_password = password_hash($password, PASSWORD_BCRYPT);
+        $statement = $this->db->prepare($query);
+        $statement->bind_param($PARAM_UPDATE_USER, $name, $surname, $phone, $birth, $email,$hashed_password, $idUser);
+        return $statement->execute();
+    }
+
+    public function userCheckEmail($iduser, $email){
+        $PARAM_CHECK_EMAIL = 'is';
+        $query = "SELECT *
+                  FROM User
+                  WHERE idUser <> ? AND email like ?";
+        $statement = $this->db->prepare($query);
+        $statement->bind_param($PARAM_CHECK_EMAIL, $iduser, $email);
+        $statement->execute();
+        return count($statement->get_result()->fetch_all(MYSQLI_ASSOC)) <= 0;
+    }
+
+    public function userCheckPhone($iduser, $phone){
+        $PARAM_CHECK_EMAIL = 'is';
+        $query = "SELECT *
+                  FROM User
+                  WHERE idUser <> ? AND phoneNumber like ?";
+        $statement = $this->db->prepare($query);
+        $statement->bind_param($PARAM_CHECK_EMAIL, $iduser, $phone);
+        $statement->execute();
+        return count($statement->get_result()->fetch_all(MYSQLI_ASSOC)) <= 0;
+    }
+
     /**
      * Summary of updatePost update a specific Post
      * @param mixed $title
