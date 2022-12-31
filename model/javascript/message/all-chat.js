@@ -4,11 +4,27 @@ axios.get('model/php/api/api-allchat.php').then(response => {
     //console.log(response.data['all-chat']);
     if (response.data["logged"]) {
         main.innerHTML = generateBase();
-        getAllChat(response.data['all-chat']);
+        console.log(response.data);
+        if(response.data['all-chat'].length > 0){
+            getAllChat(response.data['all-chat']);
+            addListener();
+        }
       } else {
         window.location.replace("./controller_login.php");   
       }
 });
+
+
+function addListener(){
+    let input = document.getElementById("delete-chat");
+    input.addEventListener("click", function(event){
+        let idChat =input.value; 
+        console.log(idChat);
+        axios.get(`model/php/api/api-delete-chat.php?idChat=${idChat}`).then(response=>{
+            console.log(response);
+        });
+    });
+}
 
 function generateBase(){
     let base = `
@@ -34,22 +50,18 @@ function getAllChat(chats){
     chats.forEach(chat => {
         console.log(chat);
         let single_chat = `
-
-                <ul class="list-unstyled mb-0">
-
                     <li class="p-2 border-bottom bg-white">
-                        <a href="./controller_chat.php?idChat=${chat["idChat"]}" class="d-flex justify-content-between chatListLine">
+                        <a value=${chat["idChat"]} href="./controller_chat.php?idChat=${chat["idChat"]}" class="d-flex justify-content-between chatListLine">
                             <div class="d-flex flex-row">
                                 <img src="${chat["userImage"]}" alt="${chat["name"]} ${chat["surname"]} profile image" class="rounded-circle d-flex align-self-center me-3 shadow-1-strong chatListLine" width="60">
                                 <div class="pt-1">
                                     <p class="fw-bold mb-0">${chat["name"]} ${chat["surname"]}</p>
                                 </div>
                             </div>
-                            <input type="submit" name="delete chat" value="delete chat" />
                         </a>
-                    </li>
-
-                </ul>`;
+                        <label for="delete-chat">Delete chat</label>
+                        <input id="delete-chat" type="submit" name="delete chat" value="${chat["idChat"]}" />
+                    </li>`;
         content += single_chat
     });
     ul.innerHTML = content;

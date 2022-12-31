@@ -808,6 +808,24 @@ class Database{
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
+    public function deleteMessages($idchat){
+        $PARAM_DELETE_MESSAGES = 'i';
+        $query = "DELETE FROM Message 
+                  WHERE Chat_idChat = ?";
+        $statement = $this->db->prepare($query);
+        $statement->bind_param($PARAM_DELETE_MESSAGES, $idchat);
+        return $statement->execute();
+    }
+
+    public function deleteChat($idchat){
+        $PARAM_DELETE_CHAT = 'i';
+        $query = "DELETE FROM Chat 
+                  WHERE idChat = ?";
+        $statement = $this->db->prepare($query);
+        $statement->bind_param($PARAM_DELETE_CHAT, $idchat);
+        return $statement->execute();
+    }
+
     public function getRandomPosts($n=10, $iduser){
         $PARAM_RANDOM_POSTS = 'ii';
         $query = "SELECT *
