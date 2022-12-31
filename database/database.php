@@ -617,7 +617,7 @@ class Database{
     {
         $PARAM_GET_IMAGES_BY_POST = 'i';
         $query = "SELECT *
-                  FROM image
+                  FROM Image
                   WHERE Post_idPost	= ?";
         $statement = $this->db->prepare($query);
         $statement->bind_param($PARAM_GET_IMAGES_BY_POST, $post_id);
@@ -779,6 +779,20 @@ class Database{
                   LIMIT ?";
         $statement = $this->db->prepare($query);
         $statement->bind_param($PARAM_RANDOM_POSTS, $tag, $n, $iduser);
+        $statement->execute();
+        $result = $statement->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    public function getRandomPosts($n=10, $iduser){
+        $PARAM_RANDOM_POSTS = 'ii';
+        $query = "SELECT *
+                  FROM `Post`
+                  WHERE `Post`.User_idUser <> ?
+                  ORDER BY RAND()
+                  LIMIT ?";
+        $statement = $this->db->prepare($query);
+        $statement->bind_param($PARAM_RANDOM_POSTS, $iduser, $n);
         $statement->execute();
         $result = $statement->get_result();
         return $result->fetch_all(MYSQLI_ASSOC);
