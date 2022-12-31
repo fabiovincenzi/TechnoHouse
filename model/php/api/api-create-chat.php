@@ -7,8 +7,13 @@ if(isUserLoggedIn()){
     $id = $_SESSION[TAG_USER_ID];
     if(isset($_GET[TAG_USER_ID])){
         $id_user = $_GET[TAG_USER_ID];
-        $dbh->addChat($id, $id_user);
-        $data[TAG_CHAT_ID] = $dbh->getChatByUsers($id, $id_user)[0][TAG_CHAT_ID];
+        $chat = $dbh->getChatByUsers($id, $id_user);
+        if (count($chat) > 0) {
+            $data[TAG_CHAT_ID] = $chat[0][TAG_CHAT_ID];
+        }else{
+            $dbh->addChat($id, $id_user);
+            $data[TAG_CHAT_ID] = $dbh->getChatByUsers($id, $id_user)[0][TAG_CHAT_ID];
+        }
     }
 }
 header('Content-Type: application/json');
