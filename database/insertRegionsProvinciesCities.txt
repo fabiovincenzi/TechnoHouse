@@ -21,7 +21,7 @@ VALUES
 (19, 'Sicilia'),
 (20, 'Sardegna');
 
-INSERT INTO `province` (`initials`, `provinceName`, `Region_idRegion`)
+INSERT INTO `Province` (`initials`, `provinceName`, `Region_idRegion`)
 VALUES
 ('TO', 'Torino', 1),
 ('VC', 'Vercelli', 1),
