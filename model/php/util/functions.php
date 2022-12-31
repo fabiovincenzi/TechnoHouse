@@ -98,7 +98,7 @@ function newAnswerNotification($dbh, $targerUser, $sourceUser, $post){
 function newPostNotification($dbh, $sourceUser, $post){
     date_default_timezone_set('Europe/Rome');
     $time = date('Y-m-d H:i:s', time());
-    $followers = dbh->getFollowers($sourceUser);
+    $followers = $dbh->getFollowers($sourceUser);
     foreach ($followers as $follower) {
         $dbh->createNewPostNotification($follower[TAG_USER_ID], $sourceUser, $time);
     }
