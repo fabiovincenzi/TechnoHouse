@@ -8,10 +8,12 @@ if(isUserLoggedIn()){
     if(isset($_GET[TAG_USER_ID])){
         $id_user = $_GET[TAG_USER_ID];
         $chat = $dbh->getChatByUsers($id, $id_user);
+        $other_chat = $dbh->getChatByUsers($id_user, $id);
         if (count($chat) > 0) {
             $data[TAG_CHAT_ID] = $chat[0][TAG_CHAT_ID];
         }else{
             $dbh->addChat($id, $id_user);
+            $chat = $dbh->getChatByUsers($id, $id_user);
             $data[TAG_CHAT_ID] = $dbh->getChatByUsers($id, $id_user)[0][TAG_CHAT_ID];
         }
     }
