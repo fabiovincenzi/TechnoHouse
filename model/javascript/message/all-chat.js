@@ -45,6 +45,7 @@ function getAllChat(chats){
                                     <p class="fw-bold mb-0">${chat["name"]} ${chat["surname"]}</p>
                                 </div>
                             </div>
+                            <input type="submit" name="delete chat" value="delete chat" />
                         </a>
                     </li>
 
