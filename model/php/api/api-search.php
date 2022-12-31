@@ -4,6 +4,7 @@ $result[TAG_LOGGED] = false;
 
 if(isUserLoggedIn()){
     $result[TAG_LOGGED] = true;
+    $id = $_SESSION[TAG_USER_ID];
     if(isset($_GET[TAG_SEARCH])){
         $str_searched = $_GET[TAG_SEARCH];
         if ($str_searched != "") {
@@ -18,7 +19,8 @@ if(isUserLoggedIn()){
                         array(
                             TAG_USER_ID => $user[TAG_USER_ID],
                             TAG_USER_NAME => $user[TAG_USER_NAME],
-                            TAG_USER_SURNAME => $user[TAG_USER_SURNAME]
+                            TAG_USER_SURNAME => $user[TAG_USER_SURNAME],
+                            TAG_USER_IMAGE => (getRelativeDirUser($user[TAG_USER_ID])).$user[TAG_USER_IMAGE]
                         )
                     );
                 }

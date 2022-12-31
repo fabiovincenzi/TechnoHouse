@@ -4,7 +4,7 @@ axios.get('model/php/api/api-random-posts.php').then(response => {
     if(response.data["logged"]){
         main.innerHTML = generateBase();
         addListener();
-        addElements(response.data["search-post"]);
+        addPosts(response.data["search-post"]);
     }else{
        // window.location.replace("./controller_login.php");
     }
@@ -21,7 +21,7 @@ function generateBase(){
             </nav>
         <div>
 
-        <ul id="content-search" class="search-margin-top">
+        <ul id="content-search" class="search-margin-top list-unstyled">
            
         </ul>
         </div>`;
@@ -43,7 +43,7 @@ function addListener(){
 function randomPosts(){
     axios.get('model/php/api/api-random-posts.php').then(response => {
         if(response.data["logged"]){
-            addElements(response.data["search-post"]);
+            addPosts(response.data["search-post"]);
         }else{
            // window.location.replace("./controller_login.php");
         }
@@ -54,14 +54,34 @@ function addSearched(value){
     axios.get(`model/php/api/api-search.php?search=${value}`).then(response => {
         console.log(response);
         if(response.data["logged"]){
-            addElements(response.data["search"]);
+            addUsers(response.data["search"]);
         }else{
            // window.location.replace("./controller_login.php");
         }
     });
 }
 
-function addElements(elements){
+function addUsers(users){
+    const ul = document.getElementById('content-search');
+    ul.innerHTML = "";
+    users.forEach(element => {
+            let list_item = `
+            <li>
+                <div class="container">
+                    <div class="row">
+                    <div class="col-sm">
+                        <img src="${element["userImage"]}" alt="${element["name"]} ${element["surname"]} profile picture" width="100">
+                        <a href ="./controller_otheruser.php?idUser=${element["idUser"]}">
+                            <p>${element["name"]} ${element["surname"]} </p>
+                        </a>
+                    </div>
+                </div>
+            </li>`;
+        ul.innerHTML += list_item;
+    });
+}
+
+function addPosts(elements){
     const ul = document.getElementById('content-search');
     ul.innerHTML = "";
     let cont = 0;
