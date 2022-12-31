@@ -7,7 +7,6 @@ axios.get(`model/php/api/api-user-info.php?idUser=${userId}`).then(response=>{
     if(response.data["logged"]){
         if(response.data["me"]){
             console.log(response.data['users-info']);
-            addUserIMG(response.data['users-info']);
             addListener();
         }else{
             window.location.replace("./index.php");   
@@ -17,9 +16,6 @@ axios.get(`model/php/api/api-user-info.php?idUser=${userId}`).then(response=>{
     }
 });
 
-function addUserIMG(user){
-    document.getElementById("user-image").innerHTML = `<img src="${user["userImage"]}" alt="${user["name"]} ${user["surname"]} profile image" />`
-}
 
 function generateForm(){
     let form = `

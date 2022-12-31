@@ -1,6 +1,7 @@
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 const chatId = urlParams.get('idChat');
+let tot_messages = 0;
 const main = document.querySelector('main');
 axios.get(`model/php/api/api-chat.php?idChat=${chatId}`).then(response=>{
   console.log(response);
@@ -16,7 +17,7 @@ axios.get(`model/php/api/api-chat.php?idChat=${chatId}`).then(response=>{
 );
 
 function addRefreshing(){
-  var refreshTimer = setInterval(function(){reloadChat()},60000); //creates timer to request every 5 second
+  var refreshTimer = setInterval(function(){reloadChat()},5000); //creates timer to request every 5 second
 }
 
 function refresh(){
@@ -27,7 +28,7 @@ function refresh(){
         addRefreshing();
         addListener();
       } else {
-       // window.location.replace("./controller_login.php");   
+        window.location.replace("./controller_login.php");   
       }
     }
 );
@@ -88,18 +89,25 @@ function sendMessage(message){
 }
 
 function reloadChat(){
-    let div = document.getElementById("messages");
-    div.innerHTML = "";
-    axios.get(`model/php/api/api-chat.php?idChat=${chatId}`).then(response=>{
-        if (response.data["logged"]){
-          console.log(response);
-            tot_messages = response.data["total-messages"];
-            populateMessages(response.data['chat'], response.data['source']);
-          } else {
-            window.location.replace("./controller_login.php");   
-          }
-        }
-    );
+    axios.get(`model/php/api/api-chat-messages.php?idChat=${chatId}`).then(response=>{
+      let n_msg= response.data["total-messages"];
+      if(tot_messages !== n_msg){
+        tot_messages = n_msg;
+        let div = document.getElementById("messages");
+        div.innerHTML = "";
+        axios.get(`model/php/api/api-chat.php?idChat=${chatId}`).then(response=>{
+            if (response.data["logged"]){
+                console.log(response);
+                tot_messages = response.data["total-messages"];
+                populateMessages(response.data['chat'], response.data['source']);
+              } else {
+                window.location.replace("./controller_login.php");   
+              }
+            }
+        );
+      }
+    });
+    
 }
 
 
