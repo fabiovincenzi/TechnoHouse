@@ -588,6 +588,17 @@ class Database{
         return $statement->execute();
     }
 
+    public function addTag($tag)
+    {
+        $PARAM_ADD_TAG = 's';
+        $query = "INSERT INTO Tag
+                  (tagName)
+                  VALUES(?)";
+        $statement = $this->db->prepare($query);
+        $statement->bind_param($PARAM_ADD_TAG, $tag);
+        return $statement->execute();
+    }
+
     public function addTagToPost($tag_id, $post_id)
     {
         $PARAM_ADD_TAG_TO_POST= 'ii';
