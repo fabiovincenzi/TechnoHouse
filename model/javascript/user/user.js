@@ -66,6 +66,7 @@ function generateProfile(user, info){
                     </li>
                  </ul>
                  <input id="action" class="btn btn-primary btn-lg btn-block w-100" name="${value}" type="submit" value="${value}"/>
+                 <input id="send-message" class="btn btn-primary btn-lg btn-block w-100" name="Send a Message" type="submit" value="Send a message"/>
                  </div>
               <div class="py-4 px-4">
                  <div class="d-flex align-items-center justify-content-between mb-3">
@@ -185,5 +186,12 @@ function addListeners(info){
          //location.reload()
       });
 
+   });
+   document.getElementById('send-message').addEventListener("click", function(event){
+      axios.get(`model/php/api/api-create-chat.php?idUser=${userId}`).then(response=>{
+         if(response.data["logged"]){
+            window.location.replace(`./controller_chat.php?idChat=${response.data["idChat"]}`);
+         }
+      });
    });
 }

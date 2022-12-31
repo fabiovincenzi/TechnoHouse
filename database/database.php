@@ -796,6 +796,18 @@ class Database{
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
+    public function getChatByUsers($user, $user1){
+        $PARAM_GET_CHAT = 'ii';
+        $query = "SELECT *
+                  FROM Chat
+                  WHERE User_idUser = ? AND User_idUser1 = ?";
+        $statement = $this->db->prepare($query);
+        $statement->bind_param($PARAM_GET_CHAT, $user, $user1);
+        $statement->execute();
+        $result = $statement->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
     public function getRandomPosts($n=10, $iduser){
         $PARAM_RANDOM_POSTS = 'ii';
         $query = "SELECT *
