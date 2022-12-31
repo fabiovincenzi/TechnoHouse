@@ -76,6 +76,12 @@ define("NEW_ANSWER", "newAnswer");
 define("NEW_POST", "newPost");
 
 
+// MAIL
+define("MAIL_SOURCE", "our-projectphp@gmail.com");
+define("FOLLOW_SUBJECT", "You have a new follower!");
+
+
+
 require_once($_SERVER["DOCUMENT_ROOT"]."/database/database.php"); //database directory
 $dbh = new Database("localhost", "root", "", "technohouse", 3306);
 require_once($_SERVER["DOCUMENT_ROOT"]."/model/php/util/functions.php"); //functions directory

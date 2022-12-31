@@ -104,4 +104,10 @@ function newPostNotification($dbh, $sourceUser, $post){
     }
 }
 
+function sendEmail($from, $to, $subject,$message){
+    $headers = 'From:'.'<'.$from.'>'. "\r\n" .
+    'Reply-To:'.'<'.$to.'>';    
+    return mail("<".$to.">", $subject, $message, $headers);
+}
+
 ?>
