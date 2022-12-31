@@ -756,6 +756,7 @@ class Database{
         return $statement->execute();
     }
 
+
     public function getChatMessages($idChat){
         $PARAM_SELECT_MESSAGE = 'i';
         $query = "SELECT *

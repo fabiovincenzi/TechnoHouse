@@ -20,7 +20,7 @@ if(isUserLoggedIn()){
             TAG_USER_IMAGE => (getRelativeDirUser($userInfos[TAG_USER_ID]).$userInfos[TAG_USER_IMAGE]),
             TAG_USER_FOLLOWERS => count($dbh->getFollowers($userInfos[TAG_USER_ID])),
             TAG_USER_FOLLOWING => count($dbh->getFollowing($userInfos[TAG_USER_ID])),
-            TAG_USER_NPHOTOS => count($dbh->getPostById($id_user))
+            TAG_USER_NPHOTOS => count($dbh->getUsersPosts($id_user))
             );
         }else{
             $result[TAG_ME] = true;

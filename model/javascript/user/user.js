@@ -8,6 +8,7 @@ if(userId !== null){
         if(response.data["logged"]){
             if(!response.data["me"]){
                let users_info = response.data["users-info"];
+               console.log(users_info);
                axios.get(`model/php/api/api-follow.php?idUser=${userId}`).then(response=>{
                   console.log(response);
                   let info = response.data["follow"];
