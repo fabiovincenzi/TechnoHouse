@@ -411,6 +411,16 @@ class Database{
         return count($statement->get_result()->fetch_all(MYSQLI_ASSOC)) <= 0;
     }
 
+    public function uploadUserIMG($iduser, $file){
+        $PARAM_UPDATE_USER = 'si';
+        $query = "UPDATE User
+                  SET userImage = ?
+                  WHERE idUser = ?";
+        $statement = $this->db->prepare($query);
+        $statement->bind_param($PARAM_UPDATE_USER, $file, $iduser);
+        return $statement->execute();
+    }
+
     public function userCheckPhone($iduser, $phone){
         $PARAM_CHECK_EMAIL = 'is';
         $query = "SELECT *

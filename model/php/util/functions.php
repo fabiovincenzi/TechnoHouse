@@ -25,7 +25,7 @@ function getDirUserPost($id_user, $id_post){
 }
 
 function getRelativeDirUser($id_user){
-    return "data/".strval($id_user).DIR_SEPARATOR;
+    return DATA_DIR.strval($id_user).DIR_SEPARATOR;
 }
 
 function getRelativeDirUserPost($id_user, $id_post){

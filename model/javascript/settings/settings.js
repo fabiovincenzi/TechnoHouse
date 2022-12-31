@@ -9,10 +9,10 @@ axios.get(`model/php/api/api-user-info.php?idUser=${userId}`).then(response=>{
             console.log(response.data['users-info']);
             populateValues(response.data['users-info']);
         }else{
-            //window.location.replace("./index.php");   
+            window.location.replace("./index.php");   
         }
     }else{
-        //window.location.replace("./index.php");   
+        window.location.replace("./controller_login.php");   
     }
 });
 addListener();
@@ -125,7 +125,7 @@ function submit(name, surname, phone_number, birthdate, email, old_password, new
             document.querySelector("p").innerText = response.data["errorMSG"];
           }
         } else {
-            //window.location.replace("./controller_login.php");               
+            window.location.replace("./controller_login.php");               
         }
     });
 }
