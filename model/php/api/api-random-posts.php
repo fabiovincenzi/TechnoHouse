@@ -7,7 +7,6 @@ if(isUserLoggedIn()){
     $id = $_SESSION[TAG_USER_ID];
     
     $tags = $dbh->getUserPreference($id);
-    var_dump($tags);
     $posts = array();
     if (count($tags) > 0) {
         foreach ($tags as $tag) {
