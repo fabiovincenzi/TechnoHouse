@@ -77,7 +77,7 @@ define("NEW_POST", "newPost");
 
 
 // MAIL
-define("MAIL_SOURCE", "our-projectphp@gmail.com");
+define("MAIL_SOURCE", "our.project.php22@gmail.com");
 define("FOLLOW_SUBJECT", "You have a new follower!");
 
 
