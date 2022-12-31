@@ -1,7 +1,7 @@
 <?php
 require_once $_SERVER['DOCUMENT_ROOT'].'/TechnoHouse/model/php/bootstrap.php';
-$messages = $dbh->getMessagesByChat($_SESSION["idChat"]);
+$notifications = $dbh->getNotifications($_SESSION[TAG_USER_ID]);
 
 header('Content-Type: application/json');
-echo json_encode($messages);
+echo json_encode($notifications);
 ?>

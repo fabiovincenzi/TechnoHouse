@@ -148,6 +148,22 @@ class Database{
         }
     }
 
+    public function getUserByPost($post_id)
+    {
+        $PARAM_GET_USER_BY_POST = 'i';                       // Valu used to get the User by his ID
+        $query = "SELECT *
+                  FROM User
+                  WHERE idUser IN(SELECT User_idUser
+                               FROM Post
+                               WHERE idPost = ?)";
+        $statement = $this->db->prepare($query);
+        $statement->bind_param($PARAM_GET_USER_BY_POST, $post_id);
+        $statement->execute();
+        $result = $statement->get_result();
+
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
     /**
      * Summary of getUserByID
      * @param mixed $user_id    : User's ID
@@ -287,6 +303,22 @@ class Database{
         $result = $statement->get_result();
         return $result->fetch_all(MYSQLI_ASSOC);
     }
+
+    public function getPostByQuestion($question_id){
+        $PARAM_GET_POST_BY_QUESTION = 'i';                       // Valu used to get the User by his ID
+        $query = "SELECT *
+                  FROM Post
+                  WHERE idPost IN(SELECT Post_idPost
+                               FROM Question
+                               WHERE idQuestion = ?)";
+        $statement = $this->db->prepare($query);
+        $statement->bind_param($PARAM_GET_POST_BY_QUESTION, $question_id);
+        $statement->execute();
+        $result = $statement->get_result();
+
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
      /**
      * Summary of getUsersPosts get all the post from a specific user
      * @param mixed $user_id
@@ -760,5 +792,66 @@ class Database{
         $result = $statement->get_result();
         return $result->fetch_all(MYSQLI_ASSOC);
     }
+    
+
+    public function createNewFollowerNotification($targerUser, $sourceUser, $time)
+    {
+        $PARAM_NEW_FOLLOWER = 'iis';
+        $query = "INSERT INTO Notification
+                  (type,targetUser,User_idUser,time)
+                  VALUES('NEW_FOLLOWER',?,?,?)";
+        $statement = $this->db->prepare($query);
+        $statement->bind_param($PARAM_NEW_FOLLOWER, $targerUser, $sourceUser, $time);
+        return $statement->execute();
+    }
+
+    public function createNewSaveNotification($targerUser, $sourceUser, $post, $time)
+    {
+        $PARAM_SAVE = 'iiis';
+        $query = "INSERT INTO Notification
+                  (type,targetUser,User_idUser,Post_idPost,time)
+                  VALUES('NEW_SAVE',?,?,?,?)";
+        $statement = $this->db->prepare($query);
+        $statement->bind_param($PARAM_SAVE, $targerUser, $sourceUser, $post, $time);
+        return $statement->execute();
+    }
+
+    public function createNewQuestionNotification($targerUser, $sourceUser, $post, $time)
+    {
+        $PARAM_QUESTION = 'iiis';
+        $query = "INSERT INTO Notification
+                  (type,targetUser,User_idUser,Post_idPost,time)
+                  VALUES('NEW_QUESTION',?,?,?,?)";
+        $statement = $this->db->prepare($query);
+        $statement->bind_param($PARAM_QUESTION, $targerUser, $sourceUser, $post, $time);
+        return $statement->execute();
+    }
+
+    public function createNewAnswerNotification($targerUser, $sourceUser, $post, $time)
+    {
+        $PARAM_ANSWER = 'iiis';
+        $query = "INSERT INTO Notification
+                  (type,targetUser,User_idUser,Post_idPost,time)
+                  VALUES('NEW_ANSWER',?,?,?,?)";
+        $statement = $this->db->prepare($query);
+        $statement->bind_param($PARAM_ANSWER, $targerUser, $sourceUser, $post, $time);
+        return $statement->execute();
+    }
+
+    public function getNotifications($user_id)
+    {
+        $PARAM_GET_NOTIFICATIONS = 'i';                       // Valu used to get the User by his ID
+        $query = "SELECT *
+                  FROM Notification
+                  WHERE targetUser = ?
+                  ORDER BY time desc";
+        $statement = $this->db->prepare($query);
+        $statement->bind_param($PARAM_GET_NOTIFICATIONS, $user_id);
+        $statement->execute();
+        $result = $statement->get_result();
+
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
 }
 ?>

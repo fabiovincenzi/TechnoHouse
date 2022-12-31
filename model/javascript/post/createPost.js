@@ -39,9 +39,7 @@ function generateForm(){
                                 <label for="address">Address</label>
                                 <input type="text" class="form-control" id="address" placeholder="Address">  
                                 <!--map-->
-                                <div id="map-container-google-2" class="z-depth-1-half map-container m-2" style="height: 200px">
-                                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d11452.093538879488!2d12.2433589!3d44.1447625!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x132ca58ba97cf34f%3A0x9a4e66c64fd8978c!2sCampus%20di%20Cesena%20-%20Universit%C3%A0%20di%20Bologna%20-%20Alma%20Mater%20Studiorum!5e0!3m2!1sit!2sit!4v1670314646821!5m2!1sit!2sit" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-                                </div>
+                                <div id="map"></div>
                                 <!--map-->
                             </div>
                             <div class="justify-content-center row mt-2">
@@ -55,7 +53,22 @@ function generateForm(){
     `;
     return form;
 }
+var map;
+function initMap() {    
+    map = new google.maps.Map(document.getElementById('map'), {
+        center: {lat: -34.397, lng: 150.644},
+        zoom: 9
+    });
+    
+    var marker = new google.maps.Marker({
+    position: {lat: -34.397, lng: 150.644},
+    map: map,
+    title: 'Hello World!',
+    animation: google.maps.Animation.BOUNCE,
+    draggable: true
+    });
 
+}
 function addTags(tags){
     const tagSelect = document.getElementById("tags");
     tags.forEach(el=>{
@@ -163,6 +176,7 @@ const main = document.querySelector("main");
 axios.get(`model/php/api/api-tags.php`).then(tags =>{
     let form = generateForm();
     main.innerHTML = form;
+    initMap();
     addTags(tags.data);
     showCreatePostForm();
     loadRegions();

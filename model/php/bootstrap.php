@@ -68,8 +68,15 @@ define("TAG_POST_TITLE", "title");
 define("TAG_GET_POST", "Post_idPost");
 define("TAG_POST_PATH", "path");
 
+//NOTIFICATIONS TYPES
+define("NEW_FOLLOWER", "newFollower");
+define("NEW_SAVE", "newSave");
+define("NEW_QUESTION", "newQuestion");
+define("NEW_ANSWER", "newAnswer");
+define("NEW_POST", "newPost");
 
-require_once($_SERVER["DOCUMENT_ROOT"]."/model/php/util/functions.php"); //functions directory
+
 require_once($_SERVER["DOCUMENT_ROOT"]."/database/database.php"); //database directory
 $dbh = new Database("localhost", "root", "", "technohouse", 3306);
+require_once($_SERVER["DOCUMENT_ROOT"]."/model/php/util/functions.php"); //functions directory
 ?>
