@@ -11,11 +11,14 @@ if(isUserLoggedIn()){
         $other_chat = $dbh->getChatByUsers($id_user, $id);
         if (count($chat) > 0) {
             $data[TAG_CHAT_ID] = $chat[0][TAG_CHAT_ID];
-        }else{
+        } else if (count($other_chat) > 0) {
+            $data[TAG_CHAT_ID] = $other_chat[0][TAG_CHAT_ID];
+        }else{ 
             $dbh->addChat($id, $id_user);
             $chat = $dbh->getChatByUsers($id, $id_user);
             $data[TAG_CHAT_ID] = $dbh->getChatByUsers($id, $id_user)[0][TAG_CHAT_ID];
         }
+           
     }
 }
 header('Content-Type: application/json');
