@@ -64,5 +64,6 @@ function submit(image){
     formData.append('images', image);
     axios.post("model/php/api/api-user-image.php", formData).then(response => {
         console.log(response);
+        window.location.replace("./controller_profile.php");   
     });
 }
