@@ -16,13 +16,12 @@ axios.get('model/php/api/api-allchat.php').then(response => {
 
 
 function addListener(){
-    let input = document.getElementById("delete-chat");
-    input.addEventListener("click", function(event){
-        let idChat =input.value; 
-        console.log(idChat);
+    let button = document.getElementById("delete-chat");
+    button.addEventListener("click", function(event){
+        let idChat = button.value;
         axios.get(`model/php/api/api-delete-chat.php?idChat=${idChat}`).then(response=>{
-            console.log(response);
-        });
+            location.reload()
+        });    
     });
 }
 
@@ -59,8 +58,7 @@ function getAllChat(chats){
                                 </div>
                             </div>
                         </a>
-                        <label for="delete-chat">Delete chat</label>
-                        <input id="delete-chat" type="submit" name="delete chat" value="${chat["idChat"]}" />
+                        <button id="delete-chat" type="button" value="${chat["idChat"]}">Delete Chat</button> 
                     </li>`;
         content += single_chat
     });
