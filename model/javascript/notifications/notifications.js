@@ -24,42 +24,42 @@ function generateBase(){
 }
 
 
+
 function getAllNotifications(notifications){
     const ul = document.getElementById("notifications");
     notifications.forEach(not => {
-        axios.get(`model/php/api/api-post.php?action=3&id=${not["Post_idPost"]}`).then(post => { 
+        axios.get(`model/php/api/api-post.php?action=3&idPost=${not["Post_idPost"]}`).then(post => { 
             console.log(post);
             post=post.data[0];
             axios.get(`model/php/api/api-user.php?id=${not["User_idUser"]}`).then(user => {    
                 user = user.data[0]; 
                 ul.innerHTML += `
-
                                                 <li class="p-2 border-bottom bg-white">
                                                     <a href="" class="d-flex justify-content-between">
-                                                        <div class="d-flex flex-row">`;
+                                                        <div id="notification${not["idNotification"]} class="d-flex flex-row">`;
                 switch (not["type"]) {
                     case 'NEW_FOLLOWER':
                         ul.innerHTML += `
                                         <div class="pt-1">
-                                            <p class="fw-bold mb-0">New Follower!</p><p>${user["name"]} ${user["surname"]} started following you!</p>   
+                                        <p class="fw-bold mb-0">New Follower!</p><a href="./controller_otheruser.php?idUser=${user["idUser"]}">${user["name"]} ${user["surname"]} </a><p>started following you!</p>   
                                         </div>`;
                         break;
                     case 'NEW_SAVE':
                         ul.innerHTML += `
                                         <div class="pt-1">
-                                            <p class="fw-bold mb-0">New Save!</p><p>${user["name"]} ${user["surname"]} saved your post: </p><a>${post["title"]}</a> 
+                                            <p class="fw-bold mb-0">New Save!</p><p>${user["name"]} ${user["surname"]} saved your post: </p><a href="./controller_single_post.php?idPost=${post["idPost"]}">${post["title"]}</a> 
                                         </div>`;
                         break;
                     case 'NEW_QUESTION':
                         ul.innerHTML += `
                                         <div class="pt-1">
-                                            <p class="fw-bold mb-0">New Question!</p><p>${user["name"]} ${user["surname"]} asked a question to your post: </p>   
+                                            <p class="fw-bold mb-0">New Question!</p><p>${user["name"]} ${user["surname"]} asked a question to your post: </p><a href="./controller_single_post.php?idPost=${post["idPost"]}">${post["title"]}</a>   
                                         </div>`;
                         break;
                     case 'NEW_ANSWER':
                         ul.innerHTML += `
                                         <div class="pt-1">
-                                            <p class="fw-bold mb-0">New Answer!</p><p>${user["name"]} ${user["surname"]} answered to a question in your post: </p>   
+                                            <p class="fw-bold mb-0">New Answer!</p><p>${user["name"]} ${user["surname"]} answered to a question in your post: </p><a href="./controller_single_post.php?idPost=${post["idPost"]}">${post["title"]}</a>   
                                         </div>`;
                         break;
                     case 'NEW_POST':
