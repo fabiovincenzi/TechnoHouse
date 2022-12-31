@@ -6,7 +6,7 @@ axios.get('model/php/api/api-random-posts.php').then(response => {
         addListener();
         addPosts(response.data["search-post"]);
     }else{
-       window.location.replace("./controller_login.php");
+       //window.location.replace("./controller_login.php");
     }
 });
 
@@ -45,18 +45,17 @@ function randomPosts(){
         if(response.data["logged"]){
             addPosts(response.data["search-post"]);
         }else{
-           window.location.replace("./controller_login.php");
+           //window.location.replace("./controller_login.php");
         }
     });
 }
 
 function addSearched(value){
     axios.get(`model/php/api/api-search.php?search=${value}`).then(response => {
-        console.log(response);
         if(response.data["logged"]){
             addUsers(response.data["search"]);
         }else{
-           window.location.replace("./controller_login.php");
+           //window.location.replace("./controller_login.php");
         }
     });
 }
@@ -84,44 +83,22 @@ function addUsers(users){
 function addPosts(elements){
     const ul = document.getElementById('content-search');
     ul.innerHTML = "";
-    let cont = 0;
-    let content = "";
     elements.forEach(element => {
-        let div_item = `
-            <div class="col-sm">
-                    <a href="./controller_single-post.php?idPost=${element["idPost"]}">
-                        <img src="${element["path"]}" alt="${element["title"]} post image" width="100"/>
-                    </a>
-            </div>`;
-
-        if(cont % 3 == 0){
-            let list_item = `
-                <li>
-                    <div class="container">
-                        <div class="row">
-                            ${content};
-                        </div>
-                    </div>
-                </li>`;
-            ul.innerHTML +=list_item;
-            content = "";
-            cont = 0;
-        }else{
-            content += div_item;
-            cont +=1;
-        }
-    });
-    if(content){
         let list_item = `
-        <li>
-            <div class="container">
-                <div class="row">
-                    ${content}
+            <li>
+                <div class="container">
+                    <div class="row">
+                    <div class="col-sm">
+                        <img src="${element["path"]}" alt="${element["title"]} profile picture" width="100">
+                        <a href ="./controller_single_post.php?idPost=${element["idPost"]}">
+                            <p>${element["title"]}</p>
+                            <p>${element["description"]}</p>
+                        </a>
+                    </div>
                 </div>
-            </div>
-        </li>`;
-        ul.innerHTML += list_item ;
-    }
+            </li>`;
+            ul.innerHTML +=list_item;
+    });
 }
 
 /*
