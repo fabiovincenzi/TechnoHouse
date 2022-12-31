@@ -17,8 +17,9 @@ if(isUserLoggedIn()){
         } else if ($_GET[TAG_ACTION] == GET_USER_FEED) {
             $posts = $dbh->getUsersFeed($id);
         } else if ($_GET[TAG_ACTION] == GET_POST_BY_ID){
-            if(isset($_GET[TAG_POST_ID]))
-            $posts = $dbh->getPostById($_GET[TAG_POST_ID]);
+            if(isset($_GET[TAG_POST_ID])){
+                $posts = $dbh->getPostById($_GET[TAG_POST_ID]);
+            }
         }
     }else if(isset($_GET[TAG_USER_ID])){
         $user_id = $_GET[TAG_USER_ID];
