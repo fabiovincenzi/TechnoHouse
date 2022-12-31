@@ -16,13 +16,41 @@ function generateForm(){
                                 <label for="tags">Tags</label>
                                 <select id="tags" class="form-select mt-2" multiple aria-label="Tags">
                                 </select>
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#tagModal">
+                                New Tag
+                                </button>
+                                <!-- New Tag Modal -->
+            <div class="modal fade" id="tagModal" tabindex="-1" role="dialog" aria-labelledby="tagModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="tagModalLabel">New tag</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form>
+                                <div class="form-group">
+                                    <label for="exampleFormControlTextarea1">Insert the new Tag here:</label>
+                                    <input class="form-control" id="newTag" rows="3"></input>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                <button type="button" class="btn btn-primary" onclick="addTag()" data-dismiss="modal">Save Tag</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
                                 <!--description-->
                                 <label for="description" id="lbl-description">Description</label>
                                 <textarea class="form-control" id="description" title="post description" rows="3"></textarea>
                                 <!--description-->
                                 <label for="price">Price</label>
                                 <input type="number" class="form-control" id="price" placeholder="Price">  
-                            </div>
+                            </div> 
                             <div class="col-md-6">
                                 <label for="region">Region</label>
                                 <select onchange="loadProvincies();" class="form-select" id="region" aria-label="Region">
@@ -53,6 +81,18 @@ function generateForm(){
     `;
     return form;
 }
+
+function addTag(){
+    const tag = document.getElementById(`newTag`);
+    const formTag = new FormData();
+    formTag.append('tagName', tag.value);
+    axios.post('model/php/api/api-create-tag.php', formTag).then(val =>{
+        console.log(val);
+        tag.value = "";
+        addTags();
+    });
+}
+/*
 var map;
 function initMap() {    
     map = new google.maps.Map(document.getElementById('map'), {
@@ -69,10 +109,15 @@ function initMap() {
     });
 
 }
-function addTags(tags){
-    const tagSelect = document.getElementById("tags");
-    tags.forEach(el=>{
-        tagSelect.innerHTML += `<option value="${el["idTag"]}">${el["tagName"]}</option>`;
+*/
+function addTags(){
+    axios.get(`model/php/api/api-tags.php`).then(tags =>{
+        tags = tags.data;
+        const tagSelect = document.getElementById("tags");
+        tagSelect.innerHTML ="";
+        tags.forEach(el=>{
+            tagSelect.innerHTML += `<option value="${el["idTag"]}">${el["tagName"]}</option>`;
+        });
     });
 }
 
@@ -173,11 +218,9 @@ function showCreatePostForm(){
 
 
 const main = document.querySelector("main");
-axios.get(`model/php/api/api-tags.php`).then(tags =>{
     let form = generateForm();
     main.innerHTML = form;
-    initMap();
-    addTags(tags.data);
+    //initMap();
+    addTags();
     showCreatePostForm();
     loadRegions();
-});

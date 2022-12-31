@@ -4,7 +4,9 @@ require_once './model/php/bootstrap.php';
     //Base Template
     $viewBag["title"] = "Create Post";
     $viewBag["script"] = array(
-        "https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js",
+        "https://code.jquery.com/jquery-3.3.1.slim.min.js",
+        "https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js",
+        "https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js",
         "https://unpkg.com/axios/dist/axios.min.js",
         "model/javascript/post/createPost.js",
         "https://maps.googleapis.com/maps/api/js?key=AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg"
