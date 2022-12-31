@@ -6,7 +6,10 @@ function generateProfile(user){
  
               <div class="p-4 bg-black row">
                     <div class="mr-3 col-5">
+                        <label id="change-user-image" for="change-image">
                         <img id="user-image" src="${user[0]["userImage"]}" alt="${user[0]["name"]} ${user[0]["surname"]} profile photo" width="130" class="rounded mb-2 img-thumbnail"/>
+                        </label>
+                        <input id="change-image" type="hidden" value="Change user photo">
                      </div>
                     <div class="text-white col-7">
                         <h4 id="name-surname">${user[0]["name"]} ${user[0]["surname"]}</h4>
@@ -179,7 +182,7 @@ function addListeners(user_info){
          }
       });
    });
-   document.getElementById("user-image").addEventListener("click", function(event){
+   document.getElementById("change-user-image").addEventListener("click", function(event){
       axios.get('model/php/api/api-profile.php').then(response => {
          console.log(response);
          if(response.data["logged"]){

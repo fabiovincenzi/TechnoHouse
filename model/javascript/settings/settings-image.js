@@ -33,9 +33,8 @@ function generateForm(){
                 <h3 class="mb-5">Change Photo</h3>
                 <p></p>
                 <div>
-                <div id ="user-image" class="mb-4">
-                    
-                 </div>
+                <div id="user-image" class="mr-3 col-5">
+                </div>
                 <div class="mb-4">
                     <label for="image" class="form-label">Load Image</label>
                     <input class="form-control" type="file" id="image">

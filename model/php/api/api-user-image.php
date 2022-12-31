@@ -13,7 +13,7 @@ if (isUserLoggedIn()) {
         $data["errorMSG"] = 'File size exceeds limit: ' . $file_name . ' ' . $file_type;
     }
     if (empty($data["errorMSG"])) {
-        $dir = getRelativeDirUser($id);
+        $dir = getUserDir($id);
         var_dump($dir);
         move_uploaded_file($file_tmp, $dir.$file_name);
         if($dbh->uploadUserIMG($id, $file_name)){
