@@ -15,14 +15,14 @@ if(isUserLoggedIn()){
             } else if (isset($_GET[TAG_ACTION])) {
                 if ($_GET[TAG_ACTION] == ACTION_FOLLOW){
                     $dbh->addFollowing($id, $user_id);
+                    newFollowerNotification($dbh, $user_id, $id);
                 }else if($_GET[TAG_ACTION] == ACTION_UNFOLLOW){
                     $dbh->removeFollowing($id, $user_id);
                 }   
             }
         } else {
             $data[TAG_ME] = true;
-        }
-        
+        }        
     }
 }
 header('Content-Type: application/json');

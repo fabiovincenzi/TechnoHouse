@@ -296,6 +296,7 @@ function newAnswer(questionId){
     formAnswer.append('questionId', questionId);
     formAnswer.append('answer', answer.value);
     axios.post('model/php/api/api-create-answer.php', formAnswer).then(val =>{
+        console.log(val);
         answer.value = "";
         updateAnswer(questionId);
     });

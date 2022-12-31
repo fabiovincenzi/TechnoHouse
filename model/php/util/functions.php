@@ -73,4 +73,35 @@ function registerLoggedUser($user){
 function selectChat($chat){
     $_SESSION["idSelectedChat"] = $chat["idChat"];
 }
+
+function newFollowerNotification($dbh, $targerUser, $sourceUser){
+    echo TAG_USER_ID;
+    date_default_timezone_set('Europe/Rome');
+    $time = date('Y-m-d H:i:s', time());
+    $dbh->createNewFollowerNotification($targerUser, $sourceUser, $time);
+}
+function newSaveNotification($dbh, $targerUser, $sourceUser, $post){
+    date_default_timezone_set('Europe/Rome');
+    $time = date('Y-m-d H:i:s', time());
+    $dbh->createNewSaveNotification($targerUser, $sourceUser, $post, $time);
+}
+function newQuestionNotification($dbh, $targerUser, $sourceUser, $post){
+    date_default_timezone_set('Europe/Rome');
+    $time = date('Y-m-d H:i:s', time());
+    $dbh->createNewQuestionNotification($targerUser, $sourceUser, $post, $time);
+}
+function newAnswerNotification($dbh, $targerUser, $sourceUser, $post){
+    date_default_timezone_set('Europe/Rome');
+    $time = date('Y-m-d H:i:s', time());
+    $dbh->createNewAnswerNotification($targerUser, $sourceUser, $post, $time);
+}
+function newPostNotification($dbh, $sourceUser, $post){
+    date_default_timezone_set('Europe/Rome');
+    $time = date('Y-m-d H:i:s', time());
+    $followers = dbh->getFollowers($sourceUser);
+    foreach ($followers as $follower) {
+        $dbh->createNewPostNotification($follower[TAG_USER_ID], $sourceUser, $time);
+    }
+}
+
 ?>

@@ -37,7 +37,7 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="./controller_notification.php">
+            <a class="nav-link" href="./controller_chats.php">
                 <img class="px-2" src="./icons/bell.svg" alt="notification page"/>
             </a>
         </li>
