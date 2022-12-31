@@ -1,4 +1,4 @@
-INSERT INTO `region` (`idRegion`, `regionName`)
+INSERT INTO `Region` (`idRegion`, `regionName`)
 VALUES
 (1, 'Piemonte'),
 (2, 'Valle D\'Aosta'),
@@ -139,7 +139,7 @@ VALUES
 ('ZA', 'Zara', 7);
 
 
-INSERT INTO `city` (`postCode`, `cityName`, `Province_initials`)
+INSERT INTO `City` (`postCode`, `cityName`, `Province_initials`)
 VALUES
 ('35031', 'Abano Terme', 'PD'),
 ('26834', 'Abbadia Cerreto', 'LO'),
