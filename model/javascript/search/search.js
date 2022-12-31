@@ -91,12 +91,12 @@ function addElements(elements){
             cont +=1;
         }
     });
-    if(cont > 0){
+    if(content){
         let list_item = `
         <li>
             <div class="container">
                 <div class="row">
-                    ${content};
+                    ${content}
                 </div>
             </div>
         </li>`;
