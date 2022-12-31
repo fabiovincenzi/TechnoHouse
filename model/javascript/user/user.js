@@ -183,7 +183,7 @@ function addListeners(info){
             input.value = "Unfollow";
             info = true;
          }
-         //location.reload()
+         location.reload()
       });
 
    });
