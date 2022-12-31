@@ -37,7 +37,7 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="./controller_chats.php">
+            <a class="nav-link" href="./controller_notifications.php">
                 <img class="px-2" src="./icons/bell.svg" alt="notification page"/>
             </a>
         </li>
@@ -49,6 +49,11 @@
         <li class="nav-item">
             <a class="nav-link" href="./controller_create_post.php">
                 <img class="px-2" src="./icons/add.svg" alt="add a new post"/>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="./controller_chats.php">
+                <img class="px-2" src="./icons/chat.svg" alt="chats page"/>
             </a>
         </li>
     </ul>
