@@ -45,7 +45,7 @@ if(isset($_POST["name"]) && isset($_POST["surname"]) && isset($_POST["phone-numb
                                         $new_psw = $_POST[TAG_NEW_PSW];
                                         $conf_psw = $_POST[TAG_CONFIRM_PSW];
                                         if(validatePassword($new_psw)){
-                                            $result["errorMSG"] = "Error : Password should be at least 12 characters in lenght and should include at least one upper case letter, one number and one special character";
+                                            $result["errorMSG"] = "Error : Password should be at least 12 characters in lenght and at most 20 characters in lenght and should include at least one upper case letter, one number and one special character";
                                         }else{
                                             if(!checkPasswords($new_psw, $conf_psw)){
                                                 $result["errorMSG"] = "Error : The passwords are not equal. Please insert again the passwords";

@@ -4,12 +4,13 @@ $_SERVER["DOCUMENT_ROOT"] = $_SERVER["DOCUMENT_ROOT"]. "/TechnoHouse";
 
 define("USER_TABLE", "User");
 define("MESSAGE_TABLE", "Message");
-
+define("ERROR", "errorMSG");
 
 define("UPLOAD_DIR", $_SERVER["DOCUMENT_ROOT"]."/upload/"); //upload directory
 define("DATA_DIR", $_SERVER["DOCUMENT_ROOT"]."/data/"); //upload directory
 define("DATA_RELATIVE_DIR", "/data/"); //upload relative directory
 define("DIR_SEPARATOR", "/");
+define("DIR_DATA_DEFAULT", "data/");
 
 define("TAG_LOGGED", "logged");
 define("TAG_USER_ID", "idUser");
@@ -28,10 +29,13 @@ define("TAG_USER_INFO", "users-info"); //upload directory
 define("TAG_USER_POST", "users-posts"); //upload directory
 define("TAG_USER_EMAIL", "email");
 define("TAG_USER_BIRTHDATE", "birthDate");
+define("TAG_BIRTHDATE", "birthdate");
 define("TAG_USER_PHONE", "phoneNumber");
+define("TAG_PHONE_NUMBER", "phone-number");
 define("TAG_OLD_PSW", "old-password");
 define("TAG_NEW_PSW", "new-password");
 define("TAG_USER_PASSWORD", "password");
+define("DEFAULT_IMAGE", "default.png");
 define("TAG_CONFIRM_PSW", "confirm-password");
 
 

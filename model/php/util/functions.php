@@ -60,7 +60,7 @@ function validatePassword($password){
     $lowercase=preg_match('@[a-z]@',$password);
     $number=preg_match('@[0-9]@',$password);
     $specialChars=preg_match('@[^\w]@',$password);
-    return !$uppercase||!$lowercase||!$number||!$specialChars||strlen($password)< 12;
+    return !$uppercase||!$lowercase||!$number||!$specialChars||strlen($password)< 12||strlen($password) > 20;
 }
 
 function hashPassword($password){

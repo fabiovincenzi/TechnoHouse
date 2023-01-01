@@ -84,20 +84,20 @@ class Database{
      * @param mixed $password       : User's password
      * @return bool                 : State of the Add
      */
-    public function addUser($name, $surname, $birthdate, $phone_number, $email, $password)
+    public function addUser($name, $surname, $birthdate, $phone_number, $email, $password, $image)
     {
         if(count($this->checkEmail($email))>0 || count($this->checkPhoneNumber($phone_number)) > 0){
             return false;
         }
 
-        $PARAM_ADD_USER = 'sssiss';                       // Values for the add of a new User
+        $PARAM_ADD_USER = 'sssisss';                       // Values for the add of a new User
         $query = "INSERT INTO User
-                  (name,surname,email,phoneNumber,birthdate,password)
-                   VALUES (?, ?, ?, ?, ?, ?)";
+                  (name,surname,email,phoneNumber,birthdate,password, userImage)
+                   VALUES (?, ?, ?, ?, ?, ?, ?)";
         $statement = $this->db->prepare($query);
         //password_hash($password, PASSWORD_DEFAULT);
         $hashed_password = password_hash($password, PASSWORD_BCRYPT);
-        $statement->bind_param($PARAM_ADD_USER, $name, $surname, $email,$phone_number, $birthdate, $hashed_password);
+        $statement->bind_param($PARAM_ADD_USER, $name, $surname, $email,$phone_number, $birthdate, $hashed_password, $image);
         return $statement->execute();
     }
 

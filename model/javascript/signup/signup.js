@@ -21,6 +21,7 @@ function generateForm(){
                 <div class="form-outline mb-4">
                   <label for="phone-number">Phone number</label>
                   <input type="text" id="phone-number" placeholder="Phone number" class="form-control form-control-lg" />
+                  <li>Password should be 10 characters in length</li>
                 </div>
 
                 <div class="form-outline mb-4">
@@ -37,17 +38,27 @@ function generateForm(){
                   <label for="password">Password</label>
                   <input type="password" id="password" placeholder="Password" class="form-control form-control-lg" />
                 </div>
+                <div class="form-outline mb-4">
+                  <ul class="text-left">
+                  <li>Password should be at least 12 characters and at most 20 characters in length</li>
+                  <li>Password should have one lower case</li>
+                  <li>Password should have one upper case</li>
+                  <li>Password should have one numeric digit</li>
+                  <li>Passwprd should have one special character</li>
+                  </ul> 
+                </div>
+
+                <div class="form-check d-flex justify-content-start mb-4">
+                <input type="checkbox" id="showPassword" />
+                <label for="showPassword"> Show password </label>
+                </div>
 
                 <div class="form-outline mb-4">
                   <label for="confirm-password">Confirm Password</label>
                   <input type="password" id="confirm-password" placeholder="Confirm Password" class="form-control form-control-lg" />
                 </div>
     
-                <!-- Checkbox -->
-                <div class="form-check d-flex justify-content-start mb-4">
-                  <input class="form-check-input" type="checkbox" value="" id="form1Example3" />
-                  <label class="form-check-label" for="form1Example3"> Remember password </label>
-                </div>
+
                   <input class="btn btn-primary btn-lg btn-block w-100" name="submit" value="sign up" type="submit"/>
                   <span>Or </span><a href="./controller_login.php">Login</a>
               </div>
@@ -86,17 +97,30 @@ function visualizeSignupForm(){
     main.innerHTML = form;
     document.querySelector("form").addEventListener("submit", function (event) {
         event.preventDefault();
-        const name = document.querySelector("#name").value;
-        const surname = document.querySelector("#surname").value;
-        const phone_number = document.querySelector("#phone-number").value;
-        const birthdate = document.querySelector("#birthdate").value;
-        const email = document.querySelector("#email").value;
+
         const password = document.querySelector("#password").value;
-        const conf_password = document.querySelector("#confirm-password").value;
-        //console.log(name + " " + surname + " " + residence + " " + birthdate + " " + email + " " + password + " " + conf_password);
-        signup(name, surname, phone_number, birthdate, email, password, conf_password);
+        if(checkPassword(password)){
+          const name = document.querySelector("#name").value;
+          const surname = document.querySelector("#surname").value;
+          const phone_number = document.querySelector("#phone-number").value;
+          const birthdate = document.querySelector("#birthdate").value;
+          const email = document.querySelector("#email").value;
+          const conf_password = document.querySelector("#confirm-password").value;
+          //console.log(name + " " + surname + " " + residence + " " + birthdate + " " + email + " " + password + " " + conf_password);
+          signup(name, surname, phone_number, birthdate, email, password, conf_password);
+        }else{
+          document.querySelector("p").innerText = "Password should be at least 12 characters in lenght and at most 20 characters and should include at least one upper case letter, one number and one special character";        
+        } 
     });
-    
+}
+
+function checkPassword(password){
+  var regex =  /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,20}$/;
+  if(password.match(regex)){
+    return true;
+  }else{
+    return false;
+  }
 }
 
 const main = document.querySelector("main");
@@ -107,5 +131,16 @@ axios.get('model/php/api/api-signup.php').then(response => {
       window.location.replace("./index.php");   
     } else {
         visualizeSignupForm();
+        addListener();
     }
 });
+
+function addListener(){
+  document.getElementById('showPassword').onclick = function() {
+      if ( this.checked ) {
+         document.getElementById('password').type = "text";
+      } else {
+         document.getElementById('password').type = "password";
+      }
+  };    
+}

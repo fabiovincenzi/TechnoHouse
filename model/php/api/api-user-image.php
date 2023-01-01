@@ -14,7 +14,6 @@ if (isUserLoggedIn()) {
     }
     if (empty($data["errorMSG"])) {
         $dir = getUserDir($id);
-        var_dump($dir);
         move_uploaded_file($file_tmp, $dir.$file_name);
         if($dbh->uploadUserIMG($id, $file_name)){
             $data["diocane"] = true;

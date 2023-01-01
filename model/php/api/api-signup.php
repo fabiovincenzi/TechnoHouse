@@ -2,43 +2,47 @@
 require_once $_SERVER['DOCUMENT_ROOT'].'/TechnoHouse/model/php/bootstrap.php';
 
 
-$result["logged"] = false;
+$result[TAG_LOGGED] = false;
 if(isset($_POST["name"]) && isset($_POST["surname"]) && isset($_POST["phone-number"]) && isset($_POST["birthdate"]) && isset($_POST["email"]) && isset($_POST["password"]) && isset($_POST["confirm-password"])){
     if (!isUserLoggedIn()) {
-        $name = $_POST["name"];
+        $name = $_POST[TAG_USER_NAME];
         if (containsNumber($name)) {
-            $result["errorMSG"] = "Error : The parameter NAME contains one or more numbers";
+            $result[ERROR] = "Error : The parameter NAME contains one or more numbers";
         } else {
-            $surname = $_POST["surname"];
+            $surname = $_POST[TAG_USER_SURNAME];
             if (containsNumber($surname)) {
-                $result["errorMSG"] = "Error : The parameter SURNAME contains one or more numbers";
+                $result[ERROR] = "Error : The parameter SURNAME contains one or more numbers";
             } else {
-                $phone_number = $_POST["phone-number"];
+                $phone_number = $_POST[TAG_PHONE_NUMBER];
                 if (!validatePhoneNumber($phone_number)) {
-                    $result["errorMSG"] = "Error : The parameter PHONE-NUMBER must contains only numbers and It must be 10 values";
+                    $result[ERROR] = "Error : The parameter PHONE-NUMBER must contains only numbers and It must be 10 values";
                 } else {
-                    $date = $_POST["birthdate"];
+                    $date = $_POST[TAG_BIRTHDATE];
                     if (!checkBirthdate($date)) {
-                        $result["errorMSG"] = "Error : In order to use this site you must be at least eighteen";
+                        $result[ERROR] = "Error : In order to use this site you must be at least eighteen";
                     } else {
-                        $email = $_POST["email"];
+                        $email = $_POST[TAG_USER_EMAIL];
                         if (!checkEmail($email)) {
-                            $result["errorMSG"] = "Error : The Email's format is wrong. Did you forgot the @ ?";
+                            $result[ERROR] = "Error : The Email's format is wrong. Did you forgot the @ ?";
                         } else {
-                            if (validatePassword($_POST["password"])) {
-                                $result["errorMSG"] = "Error : Password should be at least 12 characters in lenght and should include at least one upper case letter, one number and one special character";
+                            if (validatePassword($_POST[TAG_USER_PASSWORD])) {
+                                $result[ERROR] = "Error : Password should be at least 12 characters in lenght and at most 20 characters in lenght and should include at least one upper case letter, one number and one special character";
                             } else {
-                                $password = $_POST["password"];
-                                $conf_password = $_POST["confirm-password"];
+                                $password = $_POST[TAG_USER_PASSWORD];
+                                $conf_password = $_POST[TAG_CONFIRM_PSW];
                                 if (!checkPasswords($password, $conf_password)) {
                                     $result["errorMSG"] = "Error : The passwords are not equal. Please insert again the passwords";
                                 }else{
-                                    $login_result = $dbh->addUser($name, $surname, $date, $phone_number, $email, $password);
+                                    $login_result = $dbh->addUser($name, $surname, $date, $phone_number, $email, $password, DEFAULT_IMAGE);
                                     if($login_result){
-                                        registerLoggedUser(array(TAG_USER_ID=>$dbh->getUserInfo(TAG_USER_ID, $email),TAG_USER_EMAIL => $email));
-                                        $result["logged"] = true;
+                                        $id = $dbh->getUserInfo(TAG_USER_ID, $email);
+                                        createDirUser($id);
+                                        $dir = getUserDir($id);
+                                        move_uploaded_file(DIR_DATA_DEFAULT . DEFAULT_IMAGE, $dir . $id);
+                                        registerLoggedUser(array(TAG_USER_ID=>$id,TAG_USER_EMAIL => $email));
+                                        $result[TAG_LOGGED] = true;
                                     }else{
-                                        $result["errorMSG"] = "Error : The ".$dbh->getErrorString()." already exist";
+                                        $result[ERROR] = "Error : The ".$dbh->getErrorString()." already exist";
                                     }
                                 }
                             }
@@ -48,27 +52,27 @@ if(isset($_POST["name"]) && isset($_POST["surname"]) && isset($_POST["phone-numb
             }
         }
     }else{
-        $result["logged"] = true;
+        $result[TAG_LOGGED] = true;
     }
 }else{
-    if(!isset($_POST["name"])){
-        $result["errorMSG"] = "Error : You must put the NAME";
-    }else if(!isset($_POST["surname"])){
-        $result["errorMSG"] = "Error : You must put the SURNAME";
-    }else if(!isset($_POST["phone-number"])){
-        $result["errorMSG"] = "Error : You must put the PHONE-NUMBER";
-    }else if(!isset($_POST["birthdate"])){
-        $result["errorMSG"] = "Error : You must put the BIRTHDATE";
-    }else if(!isset($_POST["emai"])){
-        $result["errorMSG"] = "Error : You must put the EMAIL";
-    }else if(!isset($_POST["password"])){
-        $result["errorMSG"] = "Error : You must put the PASSWORD";
-    }else if(!isset($_POST["confirm-password"])){
-        $result["errorMSG"] = "Error : You must confirm the PASSWORD";
+    if(!isset($_POST[TAG_USER_NAME])){
+        $result[ERROR] = "Error : You must put the NAME";
+    }else if(!isset($_POST[TAG_USER_SURNAME])){
+        $result[ERROR] = "Error : You must put the SURNAME";
+    }else if(!isset($_POST[TAG_PHONE_NUMBER])){
+        $result[ERROR] = "Error : You must put the PHONE-NUMBER";
+    }else if(!isset($_POST[TAG_BIRTHDATE])){
+        $result[ERROR] = "Error : You must put the BIRTHDATE";
+    }else if(!isset($_POST[TAG_USER_EMAIL])){
+        $result[ERROR] = "Error : You must put the EMAIL";
+    }else if(!isset($_POST[TAG_USER_PASSWORD])){
+        $result[ERROR] = "Error : You must put the PASSWORD";
+    }else if(!isset($_POST[TAG_CONFIRM_PSW])){
+        $result[ERROR] = "Error : You must confirm the PASSWORD";
     }
 }
 if(isUserLoggedIn()){
-    $result["logged"] = true;
+    $result[TAG_LOGGED] = true;
 }
 header('Content-Type: application/json');
 echo json_encode($result);
