@@ -19,10 +19,9 @@ function generateLoginForm(){
                         <input name="password" name="email" type="password" id="password" placeholder="Password" class="form-control form-control-lg" />
                 </div>
         
-                <!-- Checkbox -->
                 <div class="form-check d-flex justify-content-start mb-4">
-                        <input class="form-check-input" type="checkbox" value="" id="form1Example3" />
-                        <label class="form-check-label" for="form1Example3"> Remember password </label>
+                        <input type="checkbox" id="showPassword" />
+                        <label for="showPassword"> Show password</label>
                 </div>
                         <input id="submit-form" class="btn btn-primary btn-lg btn-block w-100" name="submit" type="submit" value="Invia"/>
                         <span>Or </span><a href="./controller_signup.php">Sign up</a>
@@ -63,11 +62,26 @@ function visualizeLoginForm(){
 }
 const main = document.querySelector("main");
 const input = document.getElementById("submit-form");
+
+
+
 axios.get('model/php/api/api-login.php').then(response => {
     console.log(response);
      if (response.data["logged"]) {
         window.location.replace("./index.php");   
      } else {
         visualizeLoginForm();
+        addListener();
      }
 });
+
+
+function addListener(){
+    document.getElementById('showPassword').onclick = function() {
+        if ( this.checked ) {
+           document.getElementById('password').type = "text";
+        } else {
+           document.getElementById('password').type = "password";
+        }
+    };    
+}

@@ -8,7 +8,6 @@ if(userId !== null){
         if(response.data["logged"]){
             if(!response.data["me"]){
                let users_info = response.data["users-info"];
-               console.log(users_info);
                axios.get(`model/php/api/api-follow.php?idUser=${userId}`).then(response=>{
                   console.log(response);
                   let info = response.data["follow"];
@@ -28,7 +27,6 @@ if(userId !== null){
 function addPosts(){
    const div_posts = document.getElementById("users-posts");
    axios.get(`model/php/api/api-post.php?idUser=${userId}`).then(response => {
-      console.log(response);
       let posts = response.data["users-posts"];
       generatePosts(div_posts, posts);
    });
@@ -51,28 +49,33 @@ function generateProfile(user, info){
               <div class="border-bottom p-4 justify-content-end text-center">
                  <ul class="list-inline mb-0">
                     <li class="list-inline-item">
-                       <h5 class="font-weight-bold mb-0 d-block" id="n-photo">${user["n-photo"]}</h5>
-                       <small class="text-muted"> <em class="fas fa-image mr-1"></em>Photos</small> 
+                           <h5 class="font-weight-bold mb-0 d-block" id="n-photo">${user["n-photo"]}</h5>
+                           <small class="text-muted">Photos</small> 
                     </li>
                     <li class="list-inline-item">
-                       <a class="font-weight-bold mb-0 d-block" id="followers" data-bs-toggle="modal" data-bs-target="#modal-info">
-                        ${user["followers"]}
+                     <a class="text-dark text-decoration-none cursor font-weight-bold" id="followers" data-bs-toggle="modal" data-bs-target="#modal-info">
+                       <h5 class="font-weight-bold mb-0 d-block">${user["followers"]}</h5> 
+                        <small class="text-muted">Followers</small> 
                        </a>
-                       <small class="text-muted"> <em class="fas fa-user mr-1"></em>Followers</small> 
                     </li>
                     <li class="list-inline-item">
-                       <a class="font-weight-bold mb-0 d-block" id="following" data-bs-toggle="modal" data-bs-target="#modal-info">${user["following"]}</a>
-                       <small class="text-muted"> <em class="fas fa-user mr-1"></em>Following</small> 
+                        <a class="text-dark text-decoration-none cursor font-weight-bold" id="following" data-bs-toggle="modal" data-bs-target="#modal-info">
+                           <h5 class="font-weight-bold mb-0 d-block">${user["following"]}</h5> 
+                           <small class="text-muted">Following</small> 
+                       </a>
                     </li>
                  </ul>
-                 <input id="action" class="btn btn-primary btn-lg btn-block w-100" name="${value}" type="submit" value="${value}"/>
-                 <input id="send-message" class="btn btn-primary btn-lg btn-block w-100" name="Send a Message" type="submit" value="Send a message"/>
+                 
+                 <div class="row">
+                  <div class="col-md-6">
+                     <button id="action" class="btn btn-secondary m-2 btn-lg btn-block w-100" name="${value}" type="submit">${value}</button>
+                  </div>
+                  <div class="col-md-6">
+                     <button id="send-message" class="m-2 btn btn-secondary btn-lg btn-block w-100" name="Send a Message" type="submit" >Send a message</button>
+                  </div>
+                 </div>
                  </div>
               <div class="py-4 px-4">
-                 <div class="d-flex align-items-center justify-content-between mb-3">
-                    <h5 class="mb-0">Recent photos</h5>
-                    <a href="#" class="btn btn-link text-muted">Show all</a> 
-                 </div>
                  <div class="row" id="users-posts">
                  </div>
               </div>
@@ -103,7 +106,6 @@ function generateProfile(user, info){
 
 function addFollowers(list){
    axios.get(`model/php/api/api-followers.php?idUser=${userId}`).then(response=>{
-      console.log(response);
       let followers = response.data["followers"];
       populateList(followers, list);
    });
@@ -119,12 +121,12 @@ function addFollowing(list){
 function populateList(users, list){
    users.forEach(user => {
       let list_item = `
-      <li class="p-2 border-bottom bg-white">
+      <li class="p-2 border m-2 rounded bg-white">
          <a id="profile" href="./controller_otheruser.php?idUser=${user["idUser"]}" class="d-flex justify-content-between chatListLine">
             <div class="d-flex flex-row">
                <!--chat image-->
                <img src="${user["userImage"]}" alt="${user["name"]} ${user["surname"]} profile image"
-               class="rounded-circle d-flex align-self-center me-3 shadow-1-strong chatListLine" width="60">
+               class="rounded-circle d-flex align-self-center me-3 shadow-1-strong chatListLine" width="50"/>
                <!--chat image-->
                <div class="pt-1">
                      <!--Name-->
@@ -143,13 +145,16 @@ function generatePosts(div_posts, posts){
    let content = "";
    posts.forEach(post => {
       axios.get(`model/php/api/api-post-images.php?id=${post["idPost"]}`).then(images =>{
-         console.log(images.data);
-         console.log(post["idPost"]);
-         let single_post = `
-         <a class="col-md-4 col-6 " id="${post["idPost"]}" href="./controller_single_post.php?idPost=${post["idPost"]}">
-         <img src="${images.data[0]["path"]}" alt="${post["name"]} photo" class="img-fluid rounded shadow-sm">
-         </a>`;
-         div_posts.innerHTML += single_post;
+         console.log(images);
+         if(images.data.length > 0){
+            let single_post = `
+            <div class="col-md-4 col-6 p-2">
+               <a id="${post["idPost"]}" href="./controller_single_post.php?idPost=${post["idPost"]}">
+               <img src="${images.data[0]["path"]}" alt="${post["name"]} photo" class="img-fluid rounded shadow-sm">
+               </a>
+            </div>`;
+            div_posts.innerHTML += single_post;
+         }
       });
    });
 }
@@ -173,7 +178,6 @@ function addListeners(info){
    });
    let input = document.getElementById('action');
    input.addEventListener("click", function(event){
-      console.log(info);
       axios.get(`model/php/api/api-follow.php?idUser=${userId}&action=${info===true?1:2}`).then(response => {
          console.log(response);
          if(info === true){

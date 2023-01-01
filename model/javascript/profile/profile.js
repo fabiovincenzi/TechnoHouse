@@ -6,8 +6,11 @@ function generateProfile(user){
  
               <div class="p-4 bg-black row">
                     <div class="mr-3 col-5">
-                        <img src="${user[0]["userImage"]}" alt="${user[0]["name"]} ${user[0]["surname"]} profile photo" width="130" class="rounded mb-2 img-thumbnail">
-                    </div>
+                        <label id="change-user-image" for="change-image">
+                        <img id="user-image" src="${user[0]["userImage"]}" alt="${user[0]["name"]} ${user[0]["surname"]} profile photo" width="130" class="cursor rounded mb-2 img-thumbnail"/>
+                        </label>
+                        <input id="change-image" type="hidden" value="Change user photo">
+                     </div>
                     <div class="text-white col-7">
                         <h4 id="name-surname">${user[0]["name"]} ${user[0]["surname"]}</h4>
                     </div>
@@ -19,27 +22,28 @@ function generateProfile(user){
                        <small class="text-muted"> <em class="fas fa-image mr-1"></em>Photos</small> 
                     </li>
                     <li class="list-inline-item">
-                       <a class="font-weight-bold mb-0 d-block" id="followers" data-bs-toggle="modal" data-bs-target="#modal-info">
-                        ${user["followers"]}
-                       </a>
-                       <small class="text-muted"> <em class="fas fa-user mr-1"></em>Followers</small> 
+                     <a class="text-dark text-decoration-none cursor font-weight-bold" id="followers" data-bs-toggle="modal" data-bs-target="#modal-info">
+                        <h5 class="font-weight-bold mb-0 d-block">${user["followers"]}</h5> 
+                        <small class="text-muted">Followers</small> 
+                     </a>
                     </li>
                     <li class="list-inline-item">
-                       <a class="font-weight-bold mb-0 d-block" id="following" data-bs-toggle="modal" data-bs-target="#modal-info">${user["following"]}</a>
-                       <small class="text-muted"> <em class="fas fa-user mr-1"></em>Following</small> 
+                        <a class="text-dark text-decoration-none cursor font-weight-bold" id="following" data-bs-toggle="modal" data-bs-target="#modal-info">
+                           <h5 class="font-weight-bold mb-0 d-block">${user["following"]}</h5> 
+                           <small class="text-muted">Following</small> 
+                        </a>
                     </li>
                     <li class="list-inline-item">
-                        <a class="font-weight-bold mb-0 d-block" id="saved" data-bs-toggle="modal" data-bs-target="#modal-info">${user["saved"]}</a>
-                        <small class="text-muted"> <em class="fas fa-user mr-1"></em>Saved</small> 
+                        <a class="text-dark text-decoration-none cursor font-weight-bold" id="saved" data-bs-toggle="modal" data-bs-target="#modal-info">
+                           <h5 class="font-weight-bold mb-0 d-block">${user["saved"]}</h5> 
+                           <small class="text-muted">Saved</small> 
+                        </a>
                      </li>
                  </ul>
               </div>
               <div class="py-4 px-4">
-                 <div class="d-flex align-items-center justify-content-between mb-3">
-                    <h5 class="mb-0">Recent photos</h5>
-                    <a href="#" class="btn btn-link text-muted">Show all</a> 
-                 </div>
                  <div class="row" id="users-posts">
+                     <button id="button-settings" class="btn btn-secondary btn-bg" >Settings</button>
                  </div>
               </div>
            </div>
@@ -171,6 +175,26 @@ function addListeners(user_info){
       clearList(list);
       title.innerText = "Saved posts";
       addSavedPosts(list);
+   });
+   document.getElementById("button-settings").addEventListener("click", function(event){
+      axios.get('model/php/api/api-profile.php').then(response => {
+         console.log(response);
+         if(response.data["logged"]){
+            window.location.replace(`./controller_settings.php?idUser=${response.data["idUser"]}`);   
+         }else{
+            window.location.replace("./controller_login.php");   
+         }
+      });
+   });
+   document.getElementById("change-user-image").addEventListener("click", function(event){
+      axios.get('model/php/api/api-profile.php').then(response => {
+         console.log(response);
+         if(response.data["logged"]){
+            window.location.replace(`./controller_profile-image.php?idUser=${response.data["idUser"]}`);   
+         }else{
+            window.location.replace("./controller_login.php");   
+         }
+      });
    });
 }
 

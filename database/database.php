@@ -84,20 +84,20 @@ class Database{
      * @param mixed $password       : User's password
      * @return bool                 : State of the Add
      */
-    public function addUser($name, $surname, $birthdate, $phone_number, $email, $password)
+    public function addUser($name, $surname, $birthdate, $phone_number, $email, $password, $image)
     {
         if(count($this->checkEmail($email))>0 || count($this->checkPhoneNumber($phone_number)) > 0){
             return false;
         }
 
-        $PARAM_ADD_USER = 'sssiss';                       // Values for the add of a new User
+        $PARAM_ADD_USER = 'sssisss';                       // Values for the add of a new User
         $query = "INSERT INTO User
-                  (name,surname,email,phoneNumber,birthdate,password)
-                   VALUES (?, ?, ?, ?, ?, ?)";
+                  (name,surname,email,phoneNumber,birthdate,password, userImage)
+                   VALUES (?, ?, ?, ?, ?, ?, ?)";
         $statement = $this->db->prepare($query);
         //password_hash($password, PASSWORD_DEFAULT);
         $hashed_password = password_hash($password, PASSWORD_BCRYPT);
-        $statement->bind_param($PARAM_ADD_USER, $name, $surname, $email,$phone_number, $birthdate, $hashed_password);
+        $statement->bind_param($PARAM_ADD_USER, $name, $surname, $email,$phone_number, $birthdate, $hashed_password, $image);
         return $statement->execute();
     }
 
@@ -377,6 +377,59 @@ class Database{
         $statement->execute();
         $result = $statement->get_result();
         return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    public function updateUser($idUser, $name, $surname, $phone, $birth, $email){
+        $PARAM_UPDATE_USER = 'sssssi';
+        $query = "UPDATE User
+                  SET name = ?, surname = ?, phoneNumber = ?, birthDate = ?, email = ?
+                  WHERE idUser = ?";
+        $statement = $this->db->prepare($query);
+        
+        $statement->bind_param($PARAM_UPDATE_USER, $name, $surname, $phone, $birth, $email, $idUser);
+        return $statement->execute();
+    }
+    public function updateTotalUser($idUser, $name, $surname, $phone, $birth, $email, $password){
+        $PARAM_UPDATE_USER = 'ssssssi';
+        $query = "UPDATE User
+                  SET name = ?, surname = ?, phoneNumber = ?, birthDate = ?, email = ?, password = ?
+                  WHERE idUser = ?";
+        $hashed_password = password_hash($password, PASSWORD_BCRYPT);
+        $statement = $this->db->prepare($query);
+        $statement->bind_param($PARAM_UPDATE_USER, $name, $surname, $phone, $birth, $email,$hashed_password, $idUser);
+        return $statement->execute();
+    }
+
+    public function userCheckEmail($iduser, $email){
+        $PARAM_CHECK_EMAIL = 'is';
+        $query = "SELECT *
+                  FROM User
+                  WHERE idUser <> ? AND email like ?";
+        $statement = $this->db->prepare($query);
+        $statement->bind_param($PARAM_CHECK_EMAIL, $iduser, $email);
+        $statement->execute();
+        return count($statement->get_result()->fetch_all(MYSQLI_ASSOC)) <= 0;
+    }
+
+    public function uploadUserIMG($iduser, $file){
+        $PARAM_UPDATE_USER = 'si';
+        $query = "UPDATE User
+                  SET userImage = ?
+                  WHERE idUser = ?";
+        $statement = $this->db->prepare($query);
+        $statement->bind_param($PARAM_UPDATE_USER, $file, $iduser);
+        return $statement->execute();
+    }
+
+    public function userCheckPhone($iduser, $phone){
+        $PARAM_CHECK_EMAIL = 'is';
+        $query = "SELECT *
+                  FROM User
+                  WHERE idUser <> ? AND phoneNumber like ?";
+        $statement = $this->db->prepare($query);
+        $statement->bind_param($PARAM_CHECK_EMAIL, $iduser, $phone);
+        $statement->execute();
+        return count($statement->get_result()->fetch_all(MYSQLI_ASSOC)) <= 0;
     }
 
     /**

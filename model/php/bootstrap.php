@@ -4,12 +4,13 @@ $_SERVER["DOCUMENT_ROOT"] = $_SERVER["DOCUMENT_ROOT"]. "/TechnoHouse";
 
 define("USER_TABLE", "User");
 define("MESSAGE_TABLE", "Message");
-
+define("ERROR", "errorMSG");
 
 define("UPLOAD_DIR", $_SERVER["DOCUMENT_ROOT"]."/upload/"); //upload directory
 define("DATA_DIR", $_SERVER["DOCUMENT_ROOT"]."/data/"); //upload directory
 define("DATA_RELATIVE_DIR", "/data/"); //upload relative directory
 define("DIR_SEPARATOR", "/");
+define("DIR_DATA_DEFAULT", "data/");
 
 define("TAG_LOGGED", "logged");
 define("TAG_USER_ID", "idUser");
@@ -27,6 +28,17 @@ define("TAG_TARGET_FOLLOWING", "target");
 define("TAG_USER_INFO", "users-info"); //upload directory
 define("TAG_USER_POST", "users-posts"); //upload directory
 define("TAG_USER_EMAIL", "email");
+define("TAG_USER_BIRTHDATE", "birthDate");
+define("TAG_BIRTHDATE", "birthdate");
+define("TAG_USER_PHONE", "phoneNumber");
+define("TAG_PHONE_NUMBER", "phone-number");
+define("TAG_OLD_PSW", "old-password");
+define("TAG_NEW_PSW", "new-password");
+define("TAG_USER_PASSWORD", "password");
+define("DEFAULT_IMAGE", "default.png");
+define("TAG_CONFIRM_PSW", "confirm-password");
+
+
 define("TAG_USER_TO_FOLLOW", "User_idUser1"); //used in api-following
 define("TAG_USER_THAT_FOLLOWS", "User_idUser"); //userd in api-followers
 
@@ -74,6 +86,13 @@ define("NEW_SAVE", "newSave");
 define("NEW_QUESTION", "newQuestion");
 define("NEW_ANSWER", "newAnswer");
 define("NEW_POST", "newPost");
+
+
+// MAIL
+define("MAIL_SOURCE", "our.project.php22@gmail.com");
+define("FOLLOW_SUBJECT", "You have a new follower!");
+define("MESSAGE_SUBJECT", "You have a new message!");
+
 
 
 require_once($_SERVER["DOCUMENT_ROOT"]."/database/database.php"); //database directory

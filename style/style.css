@@ -60,3 +60,7 @@
   }
 
   #map { height: 300px; }
+
+  .cursor:not(:disabled):not(.disabled) {
+    cursor: pointer;
+}

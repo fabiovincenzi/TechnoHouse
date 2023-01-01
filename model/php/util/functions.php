@@ -24,6 +24,10 @@ function getDirUserPost($id_user, $id_post){
     return DATA_DIR.DIR_SEPARATOR.strval($id_user).DIR_SEPARATOR.strval($id_post).DIR_SEPARATOR;
 }
 
+function getUserDir($id){
+    return DATA_DIR.strval($id).DIR_SEPARATOR;
+}
+
 function getRelativeDirUser($id_user){
     return "data/".strval($id_user).DIR_SEPARATOR;
 }
@@ -56,7 +60,7 @@ function validatePassword($password){
     $lowercase=preg_match('@[a-z]@',$password);
     $number=preg_match('@[0-9]@',$password);
     $specialChars=preg_match('@[^\w]@',$password);
-    return !$uppercase||!$lowercase||!$number||!$specialChars||strlen($password)< 12;
+    return !$uppercase||!$lowercase||!$number||!$specialChars||strlen($password)< 12||strlen($password) > 20;
 }
 
 function hashPassword($password){
@@ -102,6 +106,12 @@ function newPostNotification($dbh, $sourceUser, $post){
     foreach ($followers as $follower) {
         $dbh->createNewPostNotification($follower[TAG_USER_ID], $sourceUser, $time);
     }
+}
+
+function sendEmail($from, $to, $subject,$message){
+    $headers = 'From:'.'<'.$from.'>'. "\r\n" .
+    'Reply-To:'.'<'.$to.'>';    
+    return mail("<".$to.">", $subject, $message, $headers);
 }
 
 ?>

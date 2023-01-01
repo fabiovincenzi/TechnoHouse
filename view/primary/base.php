@@ -20,7 +20,7 @@
     </title>
 </head>
 <body class="body-padding-bottom">
-    <main>
+    <main class="overflow-hidden">
     <div class="container">
     <?php
         if(isset($viewBag["page"])){
@@ -29,8 +29,7 @@
     ?>
     </div>
     </main>
-    <!-- NAVBAR DA POPOLARE DINAMICAMENTE -->
-    <nav class="navbar fixed-bottom navbar-expand bg-light justify-content-center">
+    <nav class="navbar fixed-bottom navbar-expand bg-light justify-content-center overflow-hidden">
     <ul class="navbar-nav">
         <li class="nav-item">
             <a class="nav-link" href="./index.php">
