@@ -71,9 +71,7 @@ function createPost(post){
                             <!--price-->
 
                             <!--map-->
-                            <div id="map-container-google-2" class="z-depth-1-half map-container m-2" style="height: 200px">
-                                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d11452.093538879488!2d12.2433589!3d44.1447625!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x132ca58ba97cf34f%3A0x9a4e66c64fd8978c!2sCampus%20di%20Cesena%20-%20Universit%C3%A0%20di%20Bologna%20-%20Alma%20Mater%20Studiorum!5e0!3m2!1sit!2sit!4v1670314646821!5m2!1sit!2sit" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-                            </div>
+                            <div id="map${post["idPost"]}" class="map"></div>
                             <!--map--> 
                             <!--questions-->
                             <div class="d-flex flex-row">
@@ -229,11 +227,22 @@ function loadSavedToPost(saved, postId){
     savedContainer.innerHTML = `<span class="col-5 font-weight-bold"> ${saved} saved</span>`;
 }
 
+function loadMap(post){
+    let map = L.map(`map${post["idPost"]}`).setView([post["latitude"], post["LONGITUDE"]], 13);
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    }).addTo(map);
+    let marker = new L.marker([post["latitude"], post["LONGITUDE"]],{
+    }).addTo(map);
+}
+
 axios.get(`model/php/api/api-post.php?action=2`).then(posts => {
     posts.data.forEach(post => {                
         const main = document.querySelector("main");
         let postHtml = createPost(post);
         main.innerHTML += postHtml;
+        loadMap(post);
         axios.get(`model/php/api/api-post-images.php?id=${post["idPost"]}`).then(images =>{
             loadImagesToPost(images.data, post);
         });

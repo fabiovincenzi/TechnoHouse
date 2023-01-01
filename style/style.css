@@ -59,7 +59,7 @@
     object-fit: scale-down;
   }
 
-  #map { height: 300px; }
+  .map { height: 200px; }
 
   .cursor:not(:disabled):not(.disabled) {
     cursor: pointer;

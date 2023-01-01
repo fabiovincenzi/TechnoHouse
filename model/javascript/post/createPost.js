@@ -67,7 +67,7 @@ function generateForm(){
                                 <label for="address">Address</label>
                                 <input type="text" class="form-control" id="address" placeholder="Address">  
                                 <!--map-->
-                                <div id="map"></div>
+                                <div id="map" class="map"></div>
                                 <!--map-->
                             </div>
                             <div class="justify-content-center row mt-2">
@@ -210,12 +210,12 @@ const main = document.querySelector("main");
     addTags();
     showCreatePostForm();
     loadRegions();
-    let map = L.map('map').setView([51.505, -0.09], 13);
+    let map = L.map('map').setView([44, 12], 13);
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 }).addTo(map);
-let marker = new L.marker([51.505, -0.09],{
+let marker = new L.marker([44, 12],{
     draggable: true
 }).addTo(map);
 
