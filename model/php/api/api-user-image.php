@@ -16,7 +16,8 @@ if (isUserLoggedIn()) {
         $dir = getUserDir($id);
         move_uploaded_file($file_tmp, $dir.$file_name);
         if($dbh->uploadUserIMG($id, $file_name)){
-            $data["diocane"] = true;
+            $email = $dbh->getUserByID($id)[0][TAG_USER_EMAIL];
+            sendEmail(MAIL_SOURCE, $email, SETTINGS_SUBJECT, IMAGE_MESSGAGE);
         }
     }
 }
