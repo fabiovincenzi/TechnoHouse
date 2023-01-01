@@ -49,16 +49,22 @@ function getAllChat(chats){
     chats.forEach(chat => {
         console.log(chat);
         let single_chat = `
-                    <li class="p-2 border-bottom bg-white">
-                        <a value=${chat["idChat"]} href="./controller_chat.php?idChat=${chat["idChat"]}" class="d-flex justify-content-between chatListLine">
+                    <li class="p-2 mt-2 border bg-light rounded border-bottom bg-white">
                             <div class="d-flex flex-row">
-                                <img src="${chat["userImage"]}" alt="${chat["name"]} ${chat["surname"]} profile image" class="rounded-circle d-flex align-self-center me-3 shadow-1-strong chatListLine" width="60">
-                                <div class="pt-1">
-                                    <p class="fw-bold mb-0">${chat["name"]} ${chat["surname"]}</p>
+                                <div class="col-md-10 text-left ">
+                                <a value=${chat["idChat"]} href="./controller_chat.php?idChat=${chat["idChat"]}" class="d-flex justify-content-between chatListLine">
+                                    <div class="col-md-1">
+                                        <img src="${chat["userImage"]}" alt="${chat["name"]} ${chat["surname"]} profile image" class="rounded-circle d-flex align-self-center me-3 shadow-1-strong chatListLine" width="60">
+                                    </div>
+                                    <div class="col-md-9">
+                                        <p class="fw-bold">${chat["name"]} ${chat["surname"]}</p>
+                                    </div>
+                                </a>
+                                </div>
+                                <div class="col-md-2">
+                                    <button id="delete-chat" class="mx-2 btn btn-danger" type="button" value="${chat["idChat"]}">Delete Chat</button> 
                                 </div>
                             </div>
-                        </a>
-                        <button id="delete-chat" type="button" value="${chat["idChat"]}">Delete Chat</button> 
                     </li>`;
         content += single_chat
     });
