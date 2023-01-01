@@ -30,8 +30,9 @@ function getAllNotifications(notifications){
     notifications.forEach(not => {
         ul.innerHTML += `
                         <li class="p-2 border-bottom bg-white">
-                                <div id="notification${not["idNotification"]}" class="d-flex flex-row">
+                        <div id="notification${not["idNotification"]}" class="d-flex flex-row">
                                 </div>
+                        <span class="text-black-50 time">${not["time"]}</span>
                         </li>`;            
         axios.get(`model/php/api/api-user.php?id=${not["User_idUser"]}`).then(user => {    
             user = user.data[0]; 

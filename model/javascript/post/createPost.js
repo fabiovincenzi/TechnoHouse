@@ -7,11 +7,11 @@ function generateForm(){
 
                             <div class="col-md-6">
                                 <label for="title">Title</label>
-                                <input type="text" class="form-control mb-2" id="title" placeholder="Title">
+                                <input type="text" class="form-control mb-2" id="title" placeholder="Title" required>
                                 
                                 <div class="mb-3">
                                     <label for="images" class="form-label">Load Images</label>
-                                    <input class="form-control" type="file" id="images" multiple>
+                                    <input class="form-control" type="file" id="images" multiple required>
                                 </div>
                                 <label for="tags">Tags</label>
                                 <select id="tags" class="form-select mt-2" multiple aria-label="Tags">
@@ -49,23 +49,23 @@ function generateForm(){
                                 <textarea class="form-control" id="description" title="post description" rows="3"></textarea>
                                 <!--description-->
                                 <label for="price">Price</label>
-                                <input type="number" step="any" class="form-control" id="price" placeholder="Price">  
+                                <input type="number" step="any" class="form-control" id="price" placeholder="Price" required>  
                             </div> 
                             <div class="col-md-6">
                                 <label for="region">Region</label>
-                                <select onchange="loadProvincies();" class="form-select" id="region" aria-label="Region">
+                                <select onchange="loadProvincies();" class="form-select" id="region" aria-label="Region"required>
                                 <option selected>Select a region</option>
                                 </select>      
                                 <label for="province">Province</label>
-                                <select onchange="loadCities();" class="form-select" id="province" aria-label="Province">
+                                <select onchange="loadCities();" class="form-select" id="province" aria-label="Province"required>
                                     <option selected>Select a region first</option>
                                 </select>         
                                 <label for="city">City</label>
-                                <select class="form-select" id="city" aria-label="City">
+                                <select class="form-select" id="city" aria-label="City"required>
                                     <option selected>Select a province first</option>
                                 </select>        
                                 <label for="address">Address</label>
-                                <input type="text" class="form-control" id="address" placeholder="Address">  
+                                <input type="text" class="form-control" id="address" placeholder="Address" required>  
                                 <!--map-->
                                 <div id="map" class="map"></div>
                                 <!--map-->
@@ -120,10 +120,9 @@ function createPost(title, description, price, latitude, longitude, city_id, add
             formImages.append('lastPostId', lastPost.data[0]['idPost']);
             formTags.append('lastPostId', lastPost.data[0]['idPost']);
             axios.post('model/php/api/api-upload-post-images.php', formImages).then(res =>{
-                console.log(res);
-            });
-            axios.post('model/php/api/api-upload-post-tags.php', formTags).then(response =>{
-                //console.log(response);
+                axios.post('model/php/api/api-upload-post-tags.php', formTags).then(response =>{
+                    window.location.replace("./index.php");  
+                });
             });
         });
     });
