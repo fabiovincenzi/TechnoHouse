@@ -9,7 +9,6 @@ if(userId !== null){
             if(!response.data["me"]){
                let users_info = response.data["users-info"];
                axios.get(`model/php/api/api-follow.php?idUser=${userId}`).then(response=>{
-                  console.log(response);
                   let info = response.data["follow"];
                   main.innerHTML = generateProfile(users_info, info);
                   addListeners(info);
