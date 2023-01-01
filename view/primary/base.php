@@ -13,8 +13,8 @@
         ?>
     </title>
 </head>
-<body class="body-padding-bottom overflow-hidden">
-    <main>
+<body class="body-padding-bottom">
+    <main class="overflow-hidden">
     <div class="container">
     <?php
         if(isset($viewBag["page"])){
