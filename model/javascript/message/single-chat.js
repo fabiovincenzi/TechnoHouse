@@ -11,7 +11,7 @@ axios.get(`model/php/api/api-chat.php?idChat=${chatId}`).then(response=>{
         addRefreshing();
         addListener();
       } else {
-        //window.location.replace("./controller_login.php");   
+        window.location.replace("./controller_login.php");   
       }
     }
 );
@@ -119,7 +119,7 @@ function generateChat(other_user, messages){
 
         <div class="card">
           <div class="card-header d-flex justify-content-between align-items-center p-3">
-            <a href="./controller_otheruser.php?idUser=${other_user["idUser"]}" >
+            <a class="text-dark text-decoration-none" href="./controller_otheruser.php?idUser=${other_user["idUser"]}" >
             <h5 id="other-user" class="mb-0">${other_user["name"]} ${other_user["surname"]}</h5>
             </a>
           </div>
