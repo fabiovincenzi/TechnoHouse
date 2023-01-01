@@ -46,9 +46,15 @@ if(isUserLoggedIn()){
     }else if(isset($_POST[TAG_CHAT_BODY]) && isset($_POST[TAG_CHAT_ID])){
         date_default_timezone_set('Europe/Rome');
         $publish_time = date('Y-m-d H:i:s', time());
+        $user = $dbh->getUserByID($id)[0];
         $message = $_POST[TAG_CHAT_BODY];
         $chat_id = $_POST[TAG_CHAT_ID];
         if ($message != "") {
+            $chat = $dbh->getChatById($chat_id)[0];
+            $destination= $chat[TAG_USER_CHAT_SOURCE] == $id ? $dbh->getUserByID($chat[TAG_USER_CHAT_DESTINATION])[0] : $dbh->getUserByID($chat[TAG_USER_CHAT_SOURCE])[0];
+            $destination_email = $destination[TAG_USER_EMAIL];
+            $message_mail = $user["name"] . " " . $user["surname"] . " sent a new message : ".$message;
+            sendEmail(MAIL_SOURCE, $destination_email, MESSAGE_SUBJECT, $message_mail);
             $dbh->addMessage($message, $publish_time, $id, $chat_id);
         }
     }
