@@ -108,7 +108,6 @@ function reloadChat(){
 
 
 function generateChat(other_user, messages){
-  console.log(other_user);  
   let chat = `
     <div class="container">
     <div class="row justify-content-center">

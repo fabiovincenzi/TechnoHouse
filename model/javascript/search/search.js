@@ -1,6 +1,5 @@
 const main = document.querySelector('main');
 axios.get('model/php/api/api-random-posts.php').then(response => {
-    console.log(response.data);
     if(response.data["logged"]){
         main.innerHTML = generateBase();
         addListener();

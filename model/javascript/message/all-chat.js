@@ -4,7 +4,6 @@ axios.get('model/php/api/api-allchat.php').then(response => {
     //console.log(response.data['all-chat']);
     if (response.data["logged"]) {
         main.innerHTML = generateBase();
-        console.log(response.data);
         if(response.data['all-chat'].length > 0){
             getAllChat(response.data['all-chat']);
             addListener();
@@ -47,7 +46,6 @@ function getAllChat(chats){
     const ul = document.getElementById("all-chat");
     let content = "";
     chats.forEach(chat => {
-        console.log(chat);
         let single_chat = `
                     <li class="p-2 mt-2 border bg-light rounded border-bottom bg-white">
                             <div class="d-flex flex-row">
