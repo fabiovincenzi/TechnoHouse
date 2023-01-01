@@ -39,10 +39,14 @@ function generateProfile(user){
                         </a>
                      </li>
                  </ul>
+                 
               </div>
+              <div class="border-bottom p-4 justify-content-end text-center">
+              <button id="btn-settings" class="btn btn-secondary btn-bg" >Settings</button>
+               </div>
               <div class="py-4 px-4">
                  <div class="row" id="users-posts">
-                     <button id="button-settings" class="btn btn-secondary btn-bg" >Settings</button>
+                 </div>
                  </div>
               </div>
            </div>
@@ -172,7 +176,8 @@ function addListeners(user_info){
       title.innerText = "Saved posts";
       addSavedPosts(list);
    });
-   document.getElementById("button-settings").addEventListener("click", function(event){
+   document.getElementById("btn-settings").addEventListener("click", function(event){
+      console.log("ciao");
       axios.get('model/php/api/api-profile.php').then(response => {
          if(response.data["logged"]){
             window.location.replace(`./controller_settings.php?idUser=${response.data["idUser"]}`);   
