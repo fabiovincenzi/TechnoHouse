@@ -66,11 +66,29 @@ function generateForm(){
                     <label for="confirm-password">Old Password</label>
                     <input type="password" id="old-password" placeholder="Old Password" class="form-control form-control-lg" />
                 </div>
+                <div class="form-check d-flex justify-content-start mb-4">
+                <input type="checkbox" id="showPassword" />
+                <label for="showPassword"> Show password </label>
+                </div>
+                
     
                 <div class="form-outline mb-4">
                   <label for="password">Password</label>
                   <input type="password" id="new-password" placeholder="New Password" class="form-control form-control-lg" />
                 </div>
+                <div class="form-outline mb-4">
+                <ul class="text-left">
+                <li>Password should be at least 12 characters and at most 20 characters in length</li>
+                <li>Password should have one lower case</li>
+                <li>Password should have one upper case</li>
+                <li>Password should have one numeric digit</li>
+                <li>Passwprd should have one special character</li>
+                </ul> 
+              </div>
+              <div class="form-check d-flex justify-content-start mb-4">
+              <input type="checkbox" id="showNewPassword" />
+              <label for="showPassword"> Show password </label>
+              </div>
 
                 <div class="form-outline mb-4">
                   <label for="confirm-password">Confirm New Password</label>
@@ -104,6 +122,20 @@ function addListener(){
         //console.log(name + " " + surname + " " + residence + " " + birthdate + " " + email + " " + password + " " + conf_password);
         submit(name, surname, phone_number, birthdate, email, old_password, new_password, conf_password);
     });
+    document.getElementById('showPassword').onclick = function() {
+      if ( this.checked ) {
+         document.getElementById('old-password').type = "text";
+      } else {
+         document.getElementById('old-password').type = "password";
+      }
+  };
+  document.getElementById('showNewPassword').onclick = function() {
+    if ( this.checked ) {
+       document.getElementById('new-password').type = "text";
+    } else {
+       document.getElementById('new-password').type = "password";
+    }
+};  
 }
 
 function submit(name, surname, phone_number, birthdate, email, old_password, new_password, conf_password){
