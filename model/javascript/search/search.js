@@ -65,14 +65,17 @@ function addUsers(users){
     ul.innerHTML = "";
     users.forEach(element => {
             let list_item = `
-            <li>
+            <li class="mt-2 border bg-light rounded">
                 <div class="container">
-                    <div class="row">
-                    <div class="col-sm">
-                        <img src="${element["userImage"]}" alt="${element["name"]} ${element["surname"]} profile picture" width="100">
-                        <a href ="./controller_otheruser.php?idUser=${element["idUser"]}">
-                            <p>${element["name"]} ${element["surname"]} </p>
-                        </a>
+                    <div class="row ">
+                        <div class="col-sm col-md-2">
+                            <img src="${element["userImage"]}" alt="${element["name"]} ${element["surname"]} profile picture" width="100">
+                        </div>
+                        <div class="col-md-10">
+                            <a class="text-decoration-none font-weight-normal" href ="./controller_otheruser.php?idUser=${element["idUser"]}">
+                                <p>${element["name"]} ${element["surname"]} </p>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </li>`;
@@ -85,15 +88,18 @@ function addPosts(elements){
     ul.innerHTML = "";
     elements.forEach(element => {
         let list_item = `
-            <li>
+            <li class="p-2 mt-2 border bg-light rounded">
                 <div class="container">
                     <div class="row">
-                    <div class="col-sm">
-                        <img src="${element["path"]}" alt="${element["title"]} profile picture" width="100">
-                        <a href ="./controller_single_post.php?idPost=${element["idPost"]}">
-                            <p>${element["title"]}</p>
-                            <p>${element["description"]}</p>
-                        </a>
+                        <div class="col-sm col-md-2">
+                            <img src="${element["path"]}" alt="${element["title"]} profile picture" width="100">
+                        </div>
+                        <div class="col-md-10">
+                            <a class="text-decoration-none" href ="./controller_single_post.php?idPost=${element["idPost"]}">
+                                <p>Title : ${element["title"]}</p>
+                                <p>Description : ${element["description"]}</p>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </li>`;
