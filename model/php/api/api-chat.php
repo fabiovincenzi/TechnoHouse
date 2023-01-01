@@ -56,6 +56,7 @@ if(isUserLoggedIn()){
             $message_mail = $user["name"] . " " . $user["surname"] . " sent a new message : ".$message;
             sendEmail(MAIL_SOURCE, $destination_email, MESSAGE_SUBJECT, $message_mail);
             $dbh->addMessage($message, $publish_time, $id, $chat_id);
+            newMessageNotification($dbh, $chat);
         }
     }
 }

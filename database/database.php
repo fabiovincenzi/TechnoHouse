@@ -903,47 +903,69 @@ class Database{
     }
     
 
-    public function createNewFollowerNotification($targerUser, $sourceUser, $time)
+    public function createNewFollowerNotification($targetUser, $sourceUser, $time)
     {
         $PARAM_NEW_FOLLOWER = 'iis';
         $query = "INSERT INTO Notification
                   (type,targetUser,User_idUser,time)
                   VALUES('NEW_FOLLOWER',?,?,?)";
         $statement = $this->db->prepare($query);
-        $statement->bind_param($PARAM_NEW_FOLLOWER, $targerUser, $sourceUser, $time);
+        $statement->bind_param($PARAM_NEW_FOLLOWER, $targetUser, $sourceUser, $time);
         return $statement->execute();
     }
 
-    public function createNewSaveNotification($targerUser, $sourceUser, $post, $time)
+    public function createNewSaveNotification($targetUser, $sourceUser, $post, $time)
     {
         $PARAM_SAVE = 'iiis';
         $query = "INSERT INTO Notification
                   (type,targetUser,User_idUser,Post_idPost,time)
                   VALUES('NEW_SAVE',?,?,?,?)";
         $statement = $this->db->prepare($query);
-        $statement->bind_param($PARAM_SAVE, $targerUser, $sourceUser, $post, $time);
+        $statement->bind_param($PARAM_SAVE, $targetUser, $sourceUser, $post, $time);
         return $statement->execute();
     }
 
-    public function createNewQuestionNotification($targerUser, $sourceUser, $post, $time)
+    public function createNewQuestionNotification($targetUser, $sourceUser, $post, $time)
     {
         $PARAM_QUESTION = 'iiis';
         $query = "INSERT INTO Notification
                   (type,targetUser,User_idUser,Post_idPost,time)
                   VALUES('NEW_QUESTION',?,?,?,?)";
         $statement = $this->db->prepare($query);
-        $statement->bind_param($PARAM_QUESTION, $targerUser, $sourceUser, $post, $time);
+        $statement->bind_param($PARAM_QUESTION, $targetUser, $sourceUser, $post, $time);
         return $statement->execute();
     }
 
-    public function createNewAnswerNotification($targerUser, $sourceUser, $post, $time)
+    public function createNewAnswerNotification($targetUser, $sourceUser, $post, $time)
     {
         $PARAM_ANSWER = 'iiis';
         $query = "INSERT INTO Notification
                   (type,targetUser,User_idUser,Post_idPost,time)
                   VALUES('NEW_ANSWER',?,?,?,?)";
         $statement = $this->db->prepare($query);
-        $statement->bind_param($PARAM_ANSWER, $targerUser, $sourceUser, $post, $time);
+        $statement->bind_param($PARAM_ANSWER, $targetUser, $sourceUser, $post, $time);
+        return $statement->execute();
+    }
+    public function createNewPostNotification($targetUser, $sourceUser, $post, $time)
+    {
+        var_dump($targetUser, $sourceUser, $post, $time);
+        $PARAM_ANSWER = 'iiis';
+        $query = "INSERT INTO Notification
+                  (type,targetUser,User_idUser,Post_idPost,time)
+                  VALUES('NEW_POST',?,?,?,?)";
+        $statement = $this->db->prepare($query);
+        $statement->bind_param($PARAM_ANSWER, $targetUser, $sourceUser, $post, $time);
+        return $statement->execute();
+    }
+    
+    public function createNewMessageNotification($targetUser, $sourceUser, $chat, $time){
+        var_dump($targetUser, $sourceUser, $chat, $time);
+        $PARAM_MESSAGE = 'iisi';
+        $query = "INSERT INTO Notification
+                  (type,targetUser,User_idUser,time,Chat_idChat)
+                  VALUES('NEW_MESSAGE',?,?,?,?)";
+        $statement = $this->db->prepare($query);
+        $statement->bind_param($PARAM_MESSAGE, $targetUser, $sourceUser, $time, $chat);
         return $statement->execute();
     }
 

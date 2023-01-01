@@ -14,6 +14,7 @@ if(isset($_POST["title"]) && isset($_POST["description"]) && isset($_POST["price
     $city_id = $_POST["city_id"];
     echo json_encode($publish_time);
     $res = $dbh->addPost($title, $description, $price, $user_id, $publish_time, $latitude, $longitude, $address, $city_id);    
+    newPostNotification($dbh, $user_id, $dbh->getLastUsersPosts($user_id)[0][TAG_POST_ID]);
 }else{
     echo json_encode("error");
 }

@@ -28,49 +28,55 @@ function generateBase(){
 function getAllNotifications(notifications){
     const ul = document.getElementById("notifications");
     notifications.forEach(not => {
-        axios.get(`model/php/api/api-post.php?action=3&idPost=${not["Post_idPost"]}`).then(post => { 
-            console.log(post);
-            post=post.data[0];
-            axios.get(`model/php/api/api-user.php?id=${not["User_idUser"]}`).then(user => {    
-                user = user.data[0]; 
-                ul.innerHTML += `
-                                                <li class="p-2 border-bottom bg-white">
-                                                    <a href="" class="d-flex justify-content-between">
-                                                        <div id="notification${not["idNotification"]} class="d-flex flex-row">`;
+        ul.innerHTML += `
+                        <li class="p-2 border-bottom bg-white">
+                                <div id="notification${not["idNotification"]}" class="d-flex flex-row">
+                                </div>
+                        </li>`;            
+        axios.get(`model/php/api/api-user.php?id=${not["User_idUser"]}`).then(user => {    
+            user = user.data[0]; 
+            axios.get(`model/php/api/api-post.php?action=3&idPost=${not["Post_idPost"]}`).then(post => {
+                const el = document.getElementById(`notification${not["idNotification"]}`);
+                console.log(not["type"]);
+                post=post.data[0];
                 switch (not["type"]) {
                     case 'NEW_FOLLOWER':
-                        ul.innerHTML += `
+                        el.innerHTML = `
                                         <div class="pt-1">
                                         <p class="fw-bold mb-0">New Follower!</p><a href="./controller_otheruser.php?idUser=${user["idUser"]}">${user["name"]} ${user["surname"]} </a><p>started following you!</p>   
                                         </div>`;
                         break;
                     case 'NEW_SAVE':
-                        ul.innerHTML += `
+                        el.innerHTML = `
                                         <div class="pt-1">
-                                            <p class="fw-bold mb-0">New Save!</p><p>${user["name"]} ${user["surname"]} saved your post: </p><a href="./controller_single_post.php?idPost=${post["idPost"]}">${post["title"]}</a> 
+                                            <p class="fw-bold mb-0">New Save!</p><p>${user["name"]} ${user["surname"]} saved your post: </p><a href="./controller_single_post.php?idPost=${ ["idPost"]}">${post["title"]}</a> 
                                         </div>`;
                         break;
                     case 'NEW_QUESTION':
-                        ul.innerHTML += `
+                        el.innerHTML = `
                                         <div class="pt-1">
                                             <p class="fw-bold mb-0">New Question!</p><p>${user["name"]} ${user["surname"]} asked a question to your post: </p><a href="./controller_single_post.php?idPost=${post["idPost"]}">${post["title"]}</a>   
                                         </div>`;
                         break;
                     case 'NEW_ANSWER':
-                        ul.innerHTML += `
+                        el.innerHTML = `
                                         <div class="pt-1">
                                             <p class="fw-bold mb-0">New Answer!</p><p>${user["name"]} ${user["surname"]} answered to a question in your post: </p><a href="./controller_single_post.php?idPost=${post["idPost"]}">${post["title"]}</a>   
                                         </div>`;
                         break;
                     case 'NEW_POST':
+                        el.innerHTML = `
+                                        <div class="pt-1">
+                                            <p class="fw-bold mb-0">New Post!</p><p>${user["name"]} ${user["surname"]} that you follow added a new post:</p><a href="./controller_single_post.php?idPost=${post["idPost"]}">${post["title"]}</a>   
+                                        </div>`;
+                        break;
+                    case 'NEW_MESSAGE':
+                        el.innerHTML = `
+                                        <div class="pt-1">
+                                            <p class="fw-bold mb-0">New message!</p><p>${user["name"]} ${user["surname"]} sent you a</p><a href="./controller_chat.php?idChat=${not["Chat_idChat"]}">message</a>   
+                                        </div>`;
                         break;
                 }
-                ul.innerHTML += `
-                                                        </div>
-                                                    </a>
-                                                </li>`;
-                
-                
             });
         });
     });

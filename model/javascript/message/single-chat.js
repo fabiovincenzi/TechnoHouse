@@ -81,6 +81,7 @@ function sendMessage(message){
     formData.append('body', message);
     formData.append('idChat', chatId);
     axios.post('model/php/api/api-chat.php', formData).then(response => {
+      console.log(response);
         reloadChat();
     });
 }

@@ -147,9 +147,7 @@ function addFollowing(list){
 
 function addSavedPosts(list){
    axios.get('model/php/api/api-savedposts.php').then(response=>{
-      console.log(response);
       let savedPosts = response.data["saved"];
-      console.log(savedPosts);
       populateSaved(savedPosts, list);
    });
 }

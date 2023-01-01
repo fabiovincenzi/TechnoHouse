@@ -47,7 +47,7 @@ function createPost(post){
                     
                             <!--save-->
                             <div class="row mt-2">
-                                <button class="btn btn-primary col-6 m-2" onclick="save(${post["idPost"]})">Save</button>
+                                <button id="saveBtn${post["idPost"]}" class="btn btn-primary col-6 m-2" onclick="save(${post["idPost"]})">Save</button>
                                 <div id="saved${post["idPost"]}"></div>
                             </div>
                             <!--save-->
@@ -205,7 +205,6 @@ function loadTagsToPost(tags, post){
 }
 
 function loadImagesToPost(images, post){
-    console.log(images);
     const imgContainer = document.getElementById(`images${post["idPost"]}`);
     let i = 0;
     images.forEach(el=>{
@@ -255,7 +254,6 @@ axios.get(`model/php/api/api-post.php?action=2`).then(posts => {
             loadUserToPost(user.data[0], post);
         });
         axios.get(`model/php/api/api-location-info.php?id=${post["idPost"]}`).then(locationInfo=>{
-            console.log(locationInfo.data)
             loadLocationInfoToPost(locationInfo.data[0], post);
         });
         updateSave(post["idPost"]);        
@@ -275,14 +273,40 @@ function updateAnswer(questionId){
 }
 
 function updateSave(postId){
+    axios.get(`model/php/api/api-savedposts.php`).then(response=>{
+        let savedPosts = response.data["saved"];
+        let saved = false;
+        savedPosts.forEach(post =>{
+            if(post["idPost"] === postId){
+                saved = true;
+            }
+        });
+        const btn = document.getElementById(`saveBtn${postId}`);
+        btn.textContent = saved?"Unsave":"Save";
+    });
     axios.get(`model/php/api/api-post-save.php?id=${postId}`).then(saved=>{
         loadSavedToPost(saved.data[0]["saved"], postId);
     });  
 }
 
 function save(postId){
-    axios.get(`model/php/api/api-save-post.php?postId=${postId}`).then(val =>{
-        updateSave(postId);
+    axios.get(`model/php/api/api-savedposts.php`).then(response=>{
+        let savedPosts = response.data["saved"];
+        let saved = false;
+        savedPosts.forEach(post =>{
+            if(post["idPost"] === postId){
+                saved = true;
+            }
+        });
+        if(saved){
+            axios.get(`model/php/api/api-save-post.php?action=2&postId=${postId}`).then(val =>{
+                updateSave(postId);
+            });
+        }else{
+            axios.get(`model/php/api/api-save-post.php?action=1&postId=${postId}`).then(val =>{
+                updateSave(postId);
+            });
+        }
     });
 }
 
