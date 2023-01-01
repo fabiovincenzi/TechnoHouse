@@ -49,20 +49,23 @@ function generateProfile(user, info){
               <div class="border-bottom p-4 justify-content-end text-center">
                  <ul class="list-inline mb-0">
                     <li class="list-inline-item">
-                       <h5 class="font-weight-bold mb-0 d-block" id="n-photo">${user["n-photo"]}</h5>
-                       <small class="text-muted"> <em class="fas fa-image mr-1"></em>Photos</small> 
+                           <h5 class="font-weight-bold mb-0 d-block" id="n-photo">${user["n-photo"]}</h5>
+                           <small class="text-muted">Photos</small> 
                     </li>
                     <li class="list-inline-item">
-                       <a class="font-weight-bold mb-0 d-block" id="followers" data-bs-toggle="modal" data-bs-target="#modal-info">
-                        ${user["followers"]}
+                     <a class="text-dark text-decoration-none cursor font-weight-bold" id="followers" data-bs-toggle="modal" data-bs-target="#modal-info">
+                       <h5 class="font-weight-bold mb-0 d-block">${user["followers"]}</h5> 
+                        <small class="text-muted">Followers</small> 
                        </a>
-                       <small class="text-muted"> <em class="fas fa-user mr-1"></em>Followers</small> 
                     </li>
                     <li class="list-inline-item">
-                       <a class="font-weight-bold mb-0 d-block" id="following" data-bs-toggle="modal" data-bs-target="#modal-info">${user["following"]}</a>
-                       <small class="text-muted"> <em class="fas fa-user mr-1"></em>Following</small> 
+                        <a class="text-dark text-decoration-none cursor font-weight-bold" id="following" data-bs-toggle="modal" data-bs-target="#modal-info">
+                           <h5 class="font-weight-bold mb-0 d-block">${user["following"]}</h5> 
+                           <small class="text-muted">Following</small> 
+                       </a>
                     </li>
                  </ul>
+                 
                  <div class="row">
                   <div class="col-md-6">
                      <button id="action" class="btn btn-secondary m-2 btn-lg btn-block w-100" name="${value}" type="submit">${value}</button>
@@ -118,12 +121,12 @@ function addFollowing(list){
 function populateList(users, list){
    users.forEach(user => {
       let list_item = `
-      <li class="p-2 border-bottom bg-white">
+      <li class="p-2 border m-2 rounded bg-white">
          <a id="profile" href="./controller_otheruser.php?idUser=${user["idUser"]}" class="d-flex justify-content-between chatListLine">
             <div class="d-flex flex-row">
                <!--chat image-->
                <img src="${user["userImage"]}" alt="${user["name"]} ${user["surname"]} profile image"
-               class="rounded-circle d-flex align-self-center me-3 shadow-1-strong chatListLine" width="60">
+               class="rounded-circle d-flex align-self-center me-3 shadow-1-strong chatListLine" width="50"/>
                <!--chat image-->
                <div class="pt-1">
                      <!--Name-->

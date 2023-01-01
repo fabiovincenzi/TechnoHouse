@@ -58,3 +58,7 @@
     max-width: 50%;
     object-fit: scale-down;
   }
+
+  .cursor:not(:disabled):not(.disabled) {
+    cursor: pointer;
+}
