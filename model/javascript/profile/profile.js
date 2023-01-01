@@ -1,5 +1,4 @@
 function generateProfile(user){
-   console.log(user);
     let page = `
         <div class="justify-content-center row">
             <div class="col-10 col-md-10 bg-white shadow rounded overflow-hidden">
@@ -85,7 +84,6 @@ function generatePosts(posts){
 }
 
 function populateList(users, list){
-   console.log(users);
    users.forEach(user => {
       let list_item = `
       <li class="p-2 border-bottom bg-white">
@@ -109,7 +107,6 @@ function populateList(users, list){
 }
 
 function populateSaved(posts, list){
-   console.log(posts.data);
    posts.forEach(post => {
       axios.get(`model/php/api/api-post-images.php?id=${post["idPost"]}`).then(images =>{
       let list_item = `
@@ -147,7 +144,6 @@ function addFollowing(list){
 
 function addSavedPosts(list){
    axios.get('model/php/api/api-savedposts.php').then(response=>{
-      console.log(response);
       let savedPosts = response.data["saved"];
       console.log(savedPosts);
       populateSaved(savedPosts, list);
@@ -178,7 +174,6 @@ function addListeners(user_info){
    });
    document.getElementById("button-settings").addEventListener("click", function(event){
       axios.get('model/php/api/api-profile.php').then(response => {
-         console.log(response);
          if(response.data["logged"]){
             window.location.replace(`./controller_settings.php?idUser=${response.data["idUser"]}`);   
          }else{
@@ -188,7 +183,6 @@ function addListeners(user_info){
    });
    document.getElementById("change-user-image").addEventListener("click", function(event){
       axios.get('model/php/api/api-profile.php').then(response => {
-         console.log(response);
          if(response.data["logged"]){
             window.location.replace(`./controller_profile-image.php?idUser=${response.data["idUser"]}`);   
          }else{
