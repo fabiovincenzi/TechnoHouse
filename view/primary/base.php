@@ -13,7 +13,7 @@
         ?>
     </title>
 </head>
-<body class="body-padding-bottom">
+<body class="body-padding-bottom overflow-hidden">
     <main>
     <div class="container">
     <?php
@@ -23,8 +23,7 @@
     ?>
     </div>
     </main>
-    <!-- NAVBAR DA POPOLARE DINAMICAMENTE -->
-    <nav class="navbar fixed-bottom navbar-expand bg-light justify-content-center">
+    <nav class="navbar fixed-bottom navbar-expand bg-light justify-content-center overflow-hidden">
     <ul class="navbar-nav">
         <li class="nav-item">
             <a class="nav-link" href="./index.php">
