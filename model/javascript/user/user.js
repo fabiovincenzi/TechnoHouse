@@ -9,7 +9,6 @@ if(userId !== null){
             if(!response.data["me"]){
                let users_info = response.data["users-info"];
                axios.get(`model/php/api/api-follow.php?idUser=${userId}`).then(response=>{
-                  console.log(response);
                   let info = response.data["follow"];
                   main.innerHTML = generateProfile(users_info, info);
                   addListeners(info);
@@ -145,7 +144,6 @@ function generatePosts(div_posts, posts){
    let content = "";
    posts.forEach(post => {
       axios.get(`model/php/api/api-post-images.php?id=${post["idPost"]}`).then(images =>{
-         console.log(images);
          if(images.data.length > 0){
             let single_post = `
             <div class="col-md-4 col-6 p-2">
@@ -179,7 +177,6 @@ function addListeners(info){
    let input = document.getElementById('action');
    input.addEventListener("click", function(event){
       axios.get(`model/php/api/api-follow.php?idUser=${userId}&action=${info===true?1:2}`).then(response => {
-         console.log(response);
          if(info === true){
             input.value = "Follow";
             info = false;

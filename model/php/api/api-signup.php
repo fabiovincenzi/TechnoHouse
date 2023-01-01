@@ -41,6 +41,7 @@ if(isset($_POST["name"]) && isset($_POST["surname"]) && isset($_POST["phone-numb
                                         move_uploaded_file(DIR_DATA_DEFAULT . DEFAULT_IMAGE, $dir . $id);
                                         registerLoggedUser(array(TAG_USER_ID=>$id,TAG_USER_EMAIL => $email));
                                         $result[TAG_LOGGED] = true;
+                                        sendEmail(MAIL_SOURCE, $email, WELCOME_SUBJECT, WELCOME_MESSAGE);
                                     }else{
                                         $result[ERROR] = "Error : The ".$dbh->getErrorString()." already exist";
                                     }

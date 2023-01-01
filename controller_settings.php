@@ -8,7 +8,7 @@ if (isUserLoggedIn()) {
         "https://unpkg.com/axios/dist/axios.min.js",
         "./model/javascript/settings/settings.js"
     );
-    require './view/primary/base.php';
+    require './view/primary/base_login.php';
 }else{
     header("location: controller_login.php");
 }

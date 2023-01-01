@@ -1,5 +1,4 @@
 function generateProfile(user){
-   console.log(user);
     let page = `
         <div class="justify-content-center row">
             <div class="col-10 col-md-10 bg-white shadow rounded overflow-hidden">
@@ -40,10 +39,14 @@ function generateProfile(user){
                         </a>
                      </li>
                  </ul>
+                 
               </div>
+              <div class="border-bottom p-4 justify-content-end text-center">
+              <button id="btn-settings" class="btn btn-secondary btn-bg" >Settings</button>
+               </div>
               <div class="py-4 px-4">
                  <div class="row" id="users-posts">
-                     <button id="button-settings" class="btn btn-secondary btn-bg" >Settings</button>
+                 </div>
                  </div>
               </div>
            </div>
@@ -76,7 +79,7 @@ function generatePosts(posts){
    posts.forEach(post => {
       axios.get(`model/php/api/api-post-images.php?id=${post["idPost"]}`).then(images =>{
          let single_post = `
-         <a class="col-md-4 col-6 " id="${post["idPost"]}" href="./controller_single_post.php?idPost=${post["idPost"]}">
+         <a class="col-md-4 col-6 p-2" id="${post["idPost"]}" href="./controller_single_post.php?idPost=${post["idPost"]}">
          <img src="${images.data[0]["path"]}" alt="${post["name"]} photo" class="img-fluid rounded shadow-sm">
          </a>`;
          div_posts.innerHTML+=single_post;
@@ -85,7 +88,6 @@ function generatePosts(posts){
 }
 
 function populateList(users, list){
-   console.log(users);
    users.forEach(user => {
       let list_item = `
       <li class="p-2 border-bottom bg-white">
@@ -109,7 +111,6 @@ function populateList(users, list){
 }
 
 function populateSaved(posts, list){
-   console.log(posts.data);
    posts.forEach(post => {
       axios.get(`model/php/api/api-post-images.php?id=${post["idPost"]}`).then(images =>{
       let list_item = `
@@ -174,9 +175,9 @@ function addListeners(user_info){
       title.innerText = "Saved posts";
       addSavedPosts(list);
    });
-   document.getElementById("button-settings").addEventListener("click", function(event){
+   document.getElementById("btn-settings").addEventListener("click", function(event){
+      console.log("ciao");
       axios.get('model/php/api/api-profile.php').then(response => {
-         console.log(response);
          if(response.data["logged"]){
             window.location.replace(`./controller_settings.php?idUser=${response.data["idUser"]}`);   
          }else{
@@ -186,7 +187,6 @@ function addListeners(user_info){
    });
    document.getElementById("change-user-image").addEventListener("click", function(event){
       axios.get('model/php/api/api-profile.php').then(response => {
-         console.log(response);
          if(response.data["logged"]){
             window.location.replace(`./controller_profile-image.php?idUser=${response.data["idUser"]}`);   
          }else{
