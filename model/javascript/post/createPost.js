@@ -49,7 +49,7 @@ function generateForm(){
                                 <textarea class="form-control" id="description" title="post description" rows="3"></textarea>
                                 <!--description-->
                                 <label for="price">Price</label>
-                                <input type="number" class="form-control" id="price" placeholder="Price">  
+                                <input type="number" step="any" class="form-control" id="price" placeholder="Price">  
                             </div> 
                             <div class="col-md-6">
                                 <label for="region">Region</label>
@@ -67,7 +67,7 @@ function generateForm(){
                                 <label for="address">Address</label>
                                 <input type="text" class="form-control" id="address" placeholder="Address">  
                                 <!--map-->
-                                <div id="map"></div>
+                                <div id="map" class="map"></div>
                                 <!--map-->
                             </div>
                             <div class="justify-content-center row mt-2">
@@ -92,24 +92,7 @@ function addTag(){
         addTags();
     });
 }
-/*
-var map;
-function initMap() {    
-    map = new google.maps.Map(document.getElementById('map'), {
-        center: {lat: -34.397, lng: 150.644},
-        zoom: 9
-    });
-    
-    var marker = new google.maps.Marker({
-    position: {lat: -34.397, lng: 150.644},
-    map: map,
-    title: 'Hello World!',
-    animation: google.maps.Animation.BOUNCE,
-    draggable: true
-    });
 
-}
-*/
 function addTags(){
     axios.get(`model/php/api/api-tags.php`).then(tags =>{
         tags = tags.data;
@@ -130,7 +113,9 @@ function createPost(title, description, price, latitude, longitude, city_id, add
     formPost.append('longitude', longitude);
     formPost.append('city_id', city_id);
     formPost.append('address', address);
+    console.log(latitude);
     axios.post('model/php/api/api-create-post.php', formPost).then(response=>{
+        console.log(response);
         axios.get(`model/php/api/api-last-user-post.php`).then(lastPost=>{
             formImages.append('lastPostId', lastPost.data[0]['idPost']);
             formTags.append('lastPostId', lastPost.data[0]['idPost']);
@@ -191,8 +176,9 @@ function showCreatePostForm(){
             const title = document.querySelector("#title").value;
             const description = document.querySelector("#description").value;
             const price = document.querySelector("#price").value;
-            const latitude = 10;
-            const longitude = 20;
+            const position = marker.getLatLng();
+            const latitude = position.lat;
+            const longitude = position.lng;
             const city_id = document.querySelector("#city").value;
             const address = document.querySelector("#address").value;
             const options = document.querySelector("#tags").selectedOptions;
@@ -224,3 +210,17 @@ const main = document.querySelector("main");
     addTags();
     showCreatePostForm();
     loadRegions();
+    let map = L.map('map').setView([44, 12], 13);
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+}).addTo(map);
+let marker = new L.marker([44, 12],{
+    draggable: true
+}).addTo(map);
+
+marker.on("drag", function(e) {
+    let marker = e.target;
+    let position = marker.getLatLng();
+    map.panTo(new L.LatLng(position.lat, position.lng));
+});

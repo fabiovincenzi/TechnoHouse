@@ -280,14 +280,14 @@ class Database{
      */
     public function  addPost($title, $description, $price, $user_id, $publish_time, $latitude, $longitude, $adress, $city_id)
     {
-        $PARAM_ADD_POST = 'ssdissiii';
+        var_dump($title, $description, $price, $user_id, $publish_time, $latitude, $longitude, $adress, $city_id);
+        $PARAM_ADD_POST = 'ssdissidd';
         $query = "INSERT INTO Post
          (title,description,price,User_idUser,PublishTime,Address,City_idCity,latitude,LONGITUDE)
           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         $statement = $this->db->prepare($query);
-        $statement->bind_param($PARAM_ADD_POST, $title, $description, $price, $user_id, $publish_time, $latitude, $longitude, $adress, $city_id);
-
         
+        $statement->bind_param($PARAM_ADD_POST, $title, $description, $price, $user_id, $publish_time,$adress, $city_id, $latitude, $longitude);
         $statement->execute();
         return $statement;
     }

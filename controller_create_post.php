@@ -8,8 +8,8 @@ require_once './model/php/bootstrap.php';
         "https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js",
         "https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js",
         "https://unpkg.com/axios/dist/axios.min.js",
-        "model/javascript/post/createPost.js",
-        "https://maps.googleapis.com/maps/api/js?key=AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg"
+        "http://www.openlayers.org/api/OpenLayers.js",
+        "model/javascript/post/createPost.js"
     );
     require './view/primary/base.php';
     /*
