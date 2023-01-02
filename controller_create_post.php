@@ -1,6 +1,6 @@
 <?php
 require_once './model/php/bootstrap.php';
-//if(isUserLoggedIn()){
+if(isUserLoggedIn()){
     //Base Template
     $viewBag["title"] = "Create Post";
     $viewBag["script"] = array(
@@ -12,10 +12,9 @@ require_once './model/php/bootstrap.php';
         "model/javascript/post/createPost.js"
     );
     require './view/primary/base.php';
-    /*
+    
 }
 else{
     header("location: controller_login.php");
 }
-*/
 ?>  
