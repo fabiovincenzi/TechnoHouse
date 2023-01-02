@@ -68,3 +68,8 @@
   max-height: 100px;
   min-width: auto;
 }
+
+
+.image-style{
+  max-width: 50em;
+}
