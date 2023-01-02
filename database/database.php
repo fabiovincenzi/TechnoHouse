@@ -302,17 +302,17 @@ class Database{
         $statement->bind_param($PARAM_DELETE_POST, $post_id);
         $statement->execute();
         //delete all the tags association
-        $query = "DELETE FROM post_has_tag WHERE Post_idPost = ?";
+        $query = "DELETE FROM Post_has_Tag WHERE Post_idPost = ?";
         $statement = $this->db->prepare($query);
         $statement->bind_param($PARAM_DELETE_POST, $post_id);
         $statement->execute();
         //delete all the saved that refers to this post
-        $query = "DELETE FROM savedposts WHERE Post_idPost = ?";
+        $query = "DELETE FROM SavedPosts WHERE Post_idPost = ?";
         $statement = $this->db->prepare($query);
         $statement->bind_param($PARAM_DELETE_POST, $post_id);
         $statement->execute();
         //delete all the notifications that refers to this post
-        $query = "DELETE FROM notification WHERE Post_idPost = ?";
+        $query = "DELETE FROM Notification WHERE Post_idPost = ?";
         $statement = $this->db->prepare($query);
         $statement->bind_param($PARAM_DELETE_POST, $post_id);
         $statement->execute();
