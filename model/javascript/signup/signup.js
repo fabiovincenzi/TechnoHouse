@@ -21,7 +21,9 @@ function generateForm(){
                 <div class="form-outline mb-4">
                   <label for="phone-number">Phone number</label>
                   <input type="text" id="phone-number" placeholder="Phone number" class="form-control form-control-lg" />
-                  <li>Phone number should be 10 characters in length</li>
+                  <ul>
+                  <li>Password should be 10 characters in length</li>
+                  </ul>
                 </div>
 
                 <div class="form-outline mb-4">
@@ -38,8 +40,8 @@ function generateForm(){
                   <label for="password">Password</label>
                   <input type="password" id="password" placeholder="Password" class="form-control form-control-lg" />
                 </div>
-                <div class="form-outline mb-4">
-                  <ul class="text-left">
+                <div class="form-outline mb-4 d-flex">
+                  <ul class="list-inline mx-auto justify-content-center">
                   <li>Password should be at least 12 characters and at most 20 characters in length</li>
                   <li>Password should have one lower case</li>
                   <li>Password should have one upper case</li>
