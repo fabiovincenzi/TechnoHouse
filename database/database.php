@@ -510,9 +510,9 @@ class Database{
     {
         $PARAM_GET_TAGS_BY_POST = 'i';
         $query = "SELECT *
-                  FROM tag
+                  FROM Tag
                   WHERE idTag IN(SELECT Tag_idTag
-                  FROM post_has_tag
+                  FROM Post_has_Tag
                   WHERE Post_idPost = ?)";
         $statement = $this->db->prepare($query);
         $statement->bind_param($PARAM_GET_TAGS_BY_POST, $post_id);

@@ -8,7 +8,7 @@ function createPost(post){
                     <div id="imgUser${post["idPost"]}"></div>
                     <div class="d-flex flex-column flex-wrap ml-2">
                     <div id="user${post["idPost"]}"></div>
-                        <span class="text-black-50 time">published on ${post["PublishTime"].split(' ')[0]} at ${post["PublishTime"].split(' ')[1]}</span>
+                        <span class="text-black-50 time">pubblicato il ${post["PublishTime"].split(' ')[0]} alle ${post["PublishTime"].split(' ')[1]}</span>
                     </div>
                 </div>
                 <!--profile name-->
@@ -17,11 +17,10 @@ function createPost(post){
                 <div class="p-2">
                     <div class="row">
                         
-                        <div class="col-md-6">
+                        <div class="col-md-10">
                             <!--Title-->
                             <div class="row">
                                 <h1 class="col-9 tag-title">${post["title"]}</h1>
-                                <span class="font-weight-bold col-3">Stato</span>
                             </div>
                              <!--Title-->
 
@@ -32,7 +31,7 @@ function createPost(post){
                                     <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
                                     <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
                                 </ol>
-                                <div id="images${post["idPost"]}" class="carousel-inner">
+                                <div id="images${post["idPost"]}" class="carousel-inner image-style">
                                 </div>
                                 <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
                                     prev
@@ -59,12 +58,14 @@ function createPost(post){
                             <span id="locationInfo${post["idPost"]}" class="font-weight-bold"></span>
                             <!--Location info-->
                         </div>
-
-                        <div class="col-md-6">
+                        <div class="row">
                             <!--description-->
-                            <h2 class="font-14 mb-1 mt-2 tag-description">Description</h2>
+                            <h2 class="font-14 mb-1 mt-2 tag-description">Descrizione</h2>
                             <p class="mb-2">${post["description"]}</p>
                             <!--description-->
+                        </div>
+                        <div class="row">
+                            <div class="col-md-10">
 
                             <!--price-->
                             <span class="font-weight-bold">Price: ${post["price"]}€</span>
@@ -112,6 +113,7 @@ function createPost(post){
                             
                         
                         </div>
+                        </div>
                     </div>
                 </div>
                 <!--post-->
@@ -123,7 +125,7 @@ function createPost(post){
 
 function loadUserToPost(user, post){
     const userContainer = document.getElementById(`user${post["idPost"]}`);
-    userContainer.innerHTML +=`<a class="text-dark text-decoration-none p-2" href="./controller_otheruser.php?idUser=${user["idUser"]}"><span class="font-weight-bold">${user["name"]} ${user["surname"]}</span></a>`;
+    userContainer.innerHTML +=`<a href="./controller_otheruser.php?idUser=${user["idUser"]}"><span class="font-weight-bold">${user["name"]} ${user["surname"]}</span></a>`;
     const userImgContainer = document.getElementById(`imgUser${post["idPost"]}`);
     userImgContainer.innerHTML +=`<img class="rounded-circle" src="${user["userImage"]}" alt="image profile of :"width="45">`;
     
@@ -195,6 +197,7 @@ function loadQuestionsToPost(questions, postId){
 
 function loadTagsToPost(tags, post){
     const tagsContainer = document.getElementById(`tags${post["idPost"]}`);
+    console.log(tags);
     tags.forEach(el=>{
         tagsContainer.innerHTML += `<a href="#">#${el["tagName"]}</a>`;
     });
@@ -226,6 +229,7 @@ function loadSavedToPost(saved, postId){
 
 
 axios.get(`model/php/api/api-post.php?action=2`).then(posts => {
+
     posts.data.forEach(post => {                
         const main = document.querySelector("main");
         let postHtml = createPost(post);

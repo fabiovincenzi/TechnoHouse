@@ -64,3 +64,8 @@
   .cursor:not(:disabled):not(.disabled) {
     cursor: pointer;
 }
+
+
+.image-style{
+  max-width: 50em;
+}
