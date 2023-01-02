@@ -21,13 +21,9 @@ function generateForm(){
                 <div class="form-outline mb-4">
                   <label for="phone-number">Phone number</label>
                   <input type="text" id="phone-number" placeholder="Phone number" class="form-control form-control-lg" />
-<<<<<<< HEAD
                   <ul>
                   <li>Password should be 10 characters in length</li>
                   </ul>
-=======
-                  <li>Phone number should be 10 characters in length</li>
->>>>>>> c599debce946ff6a47a5f3d1a26296a7129e833b
                 </div>
 
                 <div class="form-outline mb-4">

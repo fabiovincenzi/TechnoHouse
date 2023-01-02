@@ -71,7 +71,7 @@ function addUsers(users){
                             <img src="${element["userImage"]}" alt="${element["name"]} ${element["surname"]} profile picture" width="100">
                         </div>
                         <div class="col-md-10">
-                            <a class="text-decoration-none font-weight-normal" href ="./controller_otheruser.php?idUser=${element["idUser"]}">
+                            <a class="text-dark text-decoration-none font-weight-normal" href ="./controller_otheruser.php?idUser=${element["idUser"]}">
                                 <p>${element["name"]} ${element["surname"]} </p>
                             </a>
                         </div>
