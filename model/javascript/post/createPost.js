@@ -11,7 +11,7 @@ function generateForm(){
                                 
                                 <div class="mb-3">
                                     <label for="images" class="form-label">Load Images</label>
-                                    <input class="form-control" type="file" id="images" multiple required>
+                                    <input class="form-control" type="file" id="images" multiple required accept=".jpg,.jpeg,.png">
                                 </div>
                                 <label for="tags">Tags</label>
                                 <select id="tags" class="form-select mt-2" multiple aria-label="Tags">
