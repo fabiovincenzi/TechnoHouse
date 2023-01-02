@@ -132,7 +132,7 @@ var bs_modal = $('#modal');
             height: 160,
         });
         canvas.toBlob(function(blob) {
-            let file = new File([blob], "fileName.jpg", { type: "image/jpeg" })
+            let file = new File([blob], "user.jpg", { type: "image/jpeg" })
             submit(file);
         });
     });
