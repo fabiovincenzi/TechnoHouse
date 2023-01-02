@@ -397,11 +397,11 @@ class Database{
     {
         $PARAM_GET_USER_POSTS = 'i';
         $query = "SELECT *
-                  FROM post
-                  WHERE post.User_idUser IN(
+                  FROM Post
+                  WHERE `Post`.User_idUser IN(
                     SELECT User_idUser1
-                    FROM following, post
-                    WHERE following.User_idUser = ?
+                    FROM Following, Post
+                    WHERE `Following`.User_idUser = ?
                   )
                   ORDER BY PublishTime DESC";
         $statement = $this->db->prepare($query);
