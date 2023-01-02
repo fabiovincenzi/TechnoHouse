@@ -121,7 +121,7 @@ function createPost(title, description, price, latitude, longitude, city_id, add
             formTags.append('lastPostId', lastPost.data[0]['idPost']);
             axios.post('model/php/api/api-upload-post-images.php', formImages).then(res =>{
                 axios.post('model/php/api/api-upload-post-tags.php', formTags).then(response =>{
-                    window.location.replace("./index.php");  
+                    window.location.replace("./controller_profile.php");  
                 });
             });
         });

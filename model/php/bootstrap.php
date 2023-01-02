@@ -22,6 +22,7 @@ define("TAG_USER_IMAGE", "userImage");
 define("TAG_USER_FOLLOWERS", "followers");
 define("TAG_USER_FOLLOWING", "following");
 
+define("TAG_USER", "user");
 define("TAG_USER_NPHOTOS", "n-photo");
 define("TAG_USER_SAVED", "saved");
 define("TAG_TARGET_FOLLOWING", "target");
@@ -68,6 +69,7 @@ define("GET_FOLLOWERS", "1");
 define("TAG_ME", "me");
 define("TAG_FOLLOW", "follow");
 define("GET_POST_BY_ID", "3");
+define("DELETE_POST", "4");
 
 // SEARCH
 define("N_RANDOM_POSTS", 10);
