@@ -101,7 +101,7 @@ function createPost(post){
                             <!--price-->
 
                             <!--map-->
-                            <div id="map${post["idPost"]}" class="map"></div>
+                            <div id="map${post["idPost"]}" class="map-style"></div>
                             <!--map--> 
                             <!--questions-->
                             <div class="d-flex flex-row">
