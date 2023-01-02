@@ -54,15 +54,12 @@ function generateForm(){
                             <div class="col-md-6">
                                 <label for="region">Region</label>
                                 <select onchange="loadProvincies();" class="form-select" id="region" aria-label="Region"required>
-                                <option selected>Select a region</option>
                                 </select>      
                                 <label for="province">Province</label>
                                 <select onchange="loadCities();" class="form-select" id="province" aria-label="Province"required>
-                                    <option selected>Select a region first</option>
                                 </select>         
                                 <label for="city">City</label>
-                                <select class="form-select" id="city" aria-label="City"required>
-                                    <option selected>Select a province first</option>
+                                <select class="form-select" id="city" aria-label="City" required>
                                 </select>        
                                 <label for="address">Address</label>
                                 <input type="text" class="form-control" id="address" placeholder="Address" required>  
@@ -70,6 +67,7 @@ function generateForm(){
                                 <div id="map" class="map-style"></div>
                                 <!--map-->
                             </div>
+                            <p id="errorMsg"></p>
                             <div class="justify-content-center row mt-2">
                                 <input type="submit" value="Create" class="btn btn-primary col-6 col-md-2">
                             </div>
@@ -120,14 +118,15 @@ function createPost(title, description, price, latitude, longitude, city_id, add
             formImages.append('lastPostId', lastPost.data[0]['idPost']);
             formTags.append('lastPostId', lastPost.data[0]['idPost']);
             axios.post('model/php/api/api-upload-post-images.php', formImages).then(res =>{
-                console.log(res);
-                if(res["errorMSG"]){
-                    axios.get(`model/php/api/api-post.php?action=4&idPost=${lastPost.data[0]["idPost"]}`).then(res => {
-                        //window.location.replace("./controller_profile.php");   
+                console.log(res.data);
+                if(res.data["errorMSG"] !== ""){
+                    axios.get(`model/php/api/api-post.php?action=4&idPost=${lastPost.data[0]["idPost"]}`).then(result => {
+                        const err = document.getElementById("errorMsg");
+                        err.innerHTML = res.data["errorMSG"];
                     });
                 }else{
                     axios.post('model/php/api/api-upload-post-tags.php', formTags).then(response =>{
-                        //window.location.replace("./controller_profile.php");  
+                        window.location.replace("./controller_profile.php");  
                     });
                 }
             });
@@ -216,6 +215,8 @@ const main = document.querySelector("main");
     addTags();
     showCreatePostForm();
     loadRegions();
+    loadProvincies();
+    loadCities();
     let map = L.map('map').setView([44, 12], 13);
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,

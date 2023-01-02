@@ -14,7 +14,6 @@ function createDirUser($id_user){
 
 function createDirUserPost($id_user, $id_post){
     $path = getDirUserPost($id_user, $id_post);
-    var_dump($path);
     if (!is_dir($path)) {
         mkdir($path, 0777, true);
     }
