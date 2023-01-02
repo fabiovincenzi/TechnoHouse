@@ -24,6 +24,7 @@ if(isUserLoggedIn()){
             
             if(isset($_GET[TAG_POST_ID])){
                 $dbh->deletePost($_GET[TAG_POST_ID]);
+                deleteAll(getDirUserPost($_SESSION[TAG_USER_ID], $_GET[TAG_POST_ID]));
             }
         }
     }else if(isset($_GET[TAG_USER_ID])){

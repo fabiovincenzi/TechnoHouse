@@ -1,11 +1,12 @@
 const main = document.querySelector('main');
 axios.get('model/php/api/api-random-posts.php').then(response => {
+    console.log(response);
     if(response.data["logged"]){
         main.innerHTML = generateBase();
         addListener();
         addPosts(response.data["search-post"]);
     }else{
-       window.location.replace("./controller_login.php");
+       //window.location.replace("./controller_login.php");
     }
 });
 
@@ -44,17 +45,18 @@ function randomPosts(){
         if(response.data["logged"]){
             addPosts(response.data["search-post"]);
         }else{
-           window.location.replace("./controller_login.php");
+           //window.location.replace("./controller_login.php");
         }
     });
 }
 
 function addSearched(value){
     axios.get(`model/php/api/api-search.php?search=${value}`).then(response => {
+        console.log(response);
         if(response.data["logged"]){
             addUsers(response.data["search"]);
         }else{
-           window.location.replace("./controller_login.php");
+           //window.location.replace("./controller_login.php");
         }
     });
 }

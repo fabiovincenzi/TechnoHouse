@@ -120,5 +120,14 @@ function sendEmail($from, $to, $subject,$message){
     'Reply-To:'.'<'.$to.'>';    
     return mail("<".$to.">", $subject, $message, $headers);
 }
+function deleteAll($dir) {
+    foreach(glob($dir . '/*') as $file) {
+    if(is_dir($file))
+    deleteAll($file);
+    else
+    unlink($file);
+    }
+    rmdir($dir);
+}
 
 ?>
