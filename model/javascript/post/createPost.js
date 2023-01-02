@@ -67,7 +67,7 @@ function generateForm(){
                                 <label for="address">Address</label>
                                 <input type="text" class="form-control" id="address" placeholder="Address" required>  
                                 <!--map-->
-                                <div id="map" class="map"></div>
+                                <div id="map" class="map-style"></div>
                                 <!--map-->
                             </div>
                             <div class="justify-content-center row mt-2">
@@ -120,9 +120,16 @@ function createPost(title, description, price, latitude, longitude, city_id, add
             formImages.append('lastPostId', lastPost.data[0]['idPost']);
             formTags.append('lastPostId', lastPost.data[0]['idPost']);
             axios.post('model/php/api/api-upload-post-images.php', formImages).then(res =>{
-                axios.post('model/php/api/api-upload-post-tags.php', formTags).then(response =>{
-                    window.location.replace("./controller_profile.php");  
-                });
+                console.log(res);
+                if(res["errorMSG"]){
+                    axios.get(`model/php/api/api-post.php?action=4&idPost=${lastPost.data[0]["idPost"]}`).then(res => {
+                        //window.location.replace("./controller_profile.php");   
+                    });
+                }else{
+                    axios.post('model/php/api/api-upload-post-tags.php', formTags).then(response =>{
+                        //window.location.replace("./controller_profile.php");  
+                    });
+                }
             });
         });
     });

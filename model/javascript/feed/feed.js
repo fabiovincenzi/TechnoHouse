@@ -8,7 +8,7 @@ function createPost(post){
                     <div id="imgUser${post["idPost"]}"></div>
                     <div class="d-flex flex-column flex-wrap ml-2">
                     <div id="user${post["idPost"]}"></div>
-                        <span class="text-black-50 time">pubblicato il ${post["PublishTime"].split(' ')[0]} alle ${post["PublishTime"].split(' ')[1]}</span>
+                        <span class="text-black-50 time">published on ${post["PublishTime"].split(' ')[0]} at ${post["PublishTime"].split(' ')[1]}</span>
                     </div>
                 </div>
                 <!--profile name-->
@@ -62,7 +62,7 @@ function createPost(post){
 
                         <div class="col-md-6">
                             <!--description-->
-                            <h2 class="font-14 mb-1 mt-2 tag-description">Descrizione</h2>
+                            <h2 class="font-14 mb-1 mt-2 tag-description">Description</h2>
                             <p class="mb-2">${post["description"]}</p>
                             <!--description-->
 
@@ -123,7 +123,7 @@ function createPost(post){
 
 function loadUserToPost(user, post){
     const userContainer = document.getElementById(`user${post["idPost"]}`);
-    userContainer.innerHTML +=`<a href="./controller_otheruser.php?idUser=${user["idUser"]}"><span class="font-weight-bold">${user["name"]} ${user["surname"]}</span></a>`;
+    userContainer.innerHTML +=`<a class="text-dark text-decoration-none p-2" href="./controller_otheruser.php?idUser=${user["idUser"]}"><span class="font-weight-bold">${user["name"]} ${user["surname"]}</span></a>`;
     const userImgContainer = document.getElementById(`imgUser${post["idPost"]}`);
     userImgContainer.innerHTML +=`<img class="rounded-circle" src="${user["userImage"]}" alt="image profile of :"width="45">`;
     
