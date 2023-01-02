@@ -1,6 +1,6 @@
 <?php
 require_once $_SERVER['DOCUMENT_ROOT'].'/TechnoHouse/model/php/bootstrap.php';
-$result["logged"] = false;
+$result[TAG_LOGGED] = false;
 
 if(isset($_POST[TAG_USER_EMAIL]) && isset($_POST[TAG_USER_PASSWORD])){
     $email = $_POST[TAG_USER_EMAIL];
@@ -16,7 +16,7 @@ if(isset($_POST[TAG_USER_EMAIL]) && isset($_POST[TAG_USER_PASSWORD])){
     
 }
 if(isUserLoggedIn()){
-    $result["logged"] = true;
+    $result[TAG_LOGGED] = true;
 }
 header('Content-Type: application/json');
 echo json_encode($result);

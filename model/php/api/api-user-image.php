@@ -10,7 +10,7 @@ if (isUserLoggedIn()) {
     $file_type = $_FILES['images']['type'];
     $file_size = $_FILES['images']['size'];
     if ($file_size > 2097152) {
-        $data["errorMSG"] = 'File size exceeds limit: ' . $file_name . ' ' . $file_type;
+        $data[ERROR] = 'File size exceeds limit: ' . $file_name . ' ' . $file_type;
     }
     if (empty($data["errorMSG"])) {
         $dir = getUserDir($id);
