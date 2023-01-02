@@ -1,6 +1,6 @@
 function generateForm(){
     let form = `
-    <section class="vh-100" style="background-color: #508bfc;">
+    <section style="background-color: #508bfc;">
     <div class="container py-5 h-100">
       <div class="row d-flex justify-content-center align-items-center h-100">
         <div class="col-12 col-md-8 col-lg-6 col-xl-5">
@@ -21,9 +21,13 @@ function generateForm(){
                 <div class="form-outline mb-4">
                   <label for="phone-number">Phone number</label>
                   <input type="text" id="phone-number" placeholder="Phone number" class="form-control form-control-lg" />
+<<<<<<< HEAD
                   <ul>
                   <li>Password should be 10 characters in length</li>
                   </ul>
+=======
+                  <li>Phone number should be 10 characters in length</li>
+>>>>>>> c599debce946ff6a47a5f3d1a26296a7129e833b
                 </div>
 
                 <div class="form-outline mb-4">
@@ -46,7 +50,7 @@ function generateForm(){
                   <li>Password should have one lower case</li>
                   <li>Password should have one upper case</li>
                   <li>Password should have one numeric digit</li>
-                  <li>Passwprd should have one special character</li>
+                  <li>Password should have one special character</li>
                   </ul> 
                 </div>
 
