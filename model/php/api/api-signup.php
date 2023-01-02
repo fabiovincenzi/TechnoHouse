@@ -38,7 +38,7 @@ if(isset($_POST[TAG_USER_NAME]) && isset($_POST[TAG_USER_SURNAME]) && isset($_PO
                                         $id = $dbh->getUserInfo(TAG_USER_ID, $email);
                                         createDirUser($id);
                                         $dir = getUserDir($id);
-                                        move_uploaded_file(DIR_DATA_DEFAULT . DEFAULT_IMAGE, $dir . $id);
+                                        copy(DATA_DIR . DEFAULT_IMAGE, $dir . DEFAULT_IMAGE);
                                         registerLoggedUser(array(TAG_USER_ID=>$id,TAG_USER_EMAIL => $email));
                                         $result[TAG_LOGGED] = true;
                                         sendEmail(MAIL_SOURCE, $email, WELCOME_SUBJECT, WELCOME_MESSAGE);

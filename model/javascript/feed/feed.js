@@ -69,10 +69,6 @@ function createPost(post){
                             <!--price-->
                             <span class="font-weight-bold">Price: ${post["price"]}€</span>
                             <!--price-->
-
-                            <!--map-->
-                            <div id="map${post["idPost"]}" class="map"></div>
-                            <!--map--> 
                             <!--questions-->
                             <div class="d-flex flex-row">
                                 <div class="d-flex flex-column flex-wrap ml-2">
@@ -226,22 +222,14 @@ function loadSavedToPost(saved, postId){
     savedContainer.innerHTML = `<span class="col-5 font-weight-bold"> ${saved} saved</span>`;
 }
 
-function loadMap(post){
-    let map = L.map(`map${post["idPost"]}`).setView([post["latitude"], post["LONGITUDE"]], 13);
-    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    maxZoom: 19,
-    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-    }).addTo(map);
-    let marker = new L.marker([post["latitude"], post["LONGITUDE"]],{
-    }).addTo(map);
-}
+
+
 
 axios.get(`model/php/api/api-post.php?action=2`).then(posts => {
     posts.data.forEach(post => {                
         const main = document.querySelector("main");
         let postHtml = createPost(post);
         main.innerHTML += postHtml;
-        loadMap(post);
         axios.get(`model/php/api/api-post-images.php?id=${post["idPost"]}`).then(images =>{
             loadImagesToPost(images.data, post);
         });
