@@ -19,10 +19,10 @@ axios.get(`model/php/api/api-post.php?action=3&idPost=${postId}`).then(post => {
         loadUserToPost(user.data[0], post);
     });
     axios.get(`model/php/api/api-location-info.php?id=${post["idPost"]}`).then(locationInfo=>{
-        console.log(locationInfo.data)
         loadLocationInfoToPost(locationInfo.data[0], post);
     });
     updateSave(post["idPost"]);  
+    deleteButton(post);
 });     
 
 function createPost(post){
@@ -36,6 +36,8 @@ function createPost(post){
                     <div class="d-flex flex-column flex-wrap ml-2">
                     <div id="user${post["idPost"]}"></div>
                         <span class="text-black-50 time">pubblicato il ${post["PublishTime"].split(' ')[0]} alle ${post["PublishTime"].split(' ')[1]}</span>
+                    </div>
+                    <div id="delete${post["idPost"]}">
                     </div>
                 </div>
                 <!--profile name-->
@@ -150,6 +152,23 @@ function createPost(post){
         </div>
                 `;
                 return postHtml;
+}
+
+function deleteButton(post){
+    axios.get(`model/php/api/api-actual-user.php`).then(user => {
+        console.log(user);
+        user= user.data["user"][0];
+        if(user["idUser"]===post["User_idUser"]){
+            const btnContainer = document.getElementById(`delete${post["idPost"]}`);
+            btnContainer.innerHTML = `<button type="button" class="btn btn-danger" onclick="deletePost(${post["idPost"]})">Delete</button>`;
+        }
+    }); 
+}
+
+function deletePost(post){
+    axios.get(`model/php/api/api-post.php?action=4&idPost=${post}`).then(res => {
+        window.location.replace("./controller_profile.php");   
+    });
 }
 
 function loadUserToPost(user, post){
