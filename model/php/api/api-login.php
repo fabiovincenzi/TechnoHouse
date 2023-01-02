@@ -2,16 +2,16 @@
 require_once $_SERVER['DOCUMENT_ROOT'].'/TechnoHouse/model/php/bootstrap.php';
 $result["logged"] = false;
 
-if(isset($_POST["email"]) && isset($_POST["password"])){
-    $email = $_POST["email"];
-    $password = $_POST["password"];
+if(isset($_POST[TAG_USER_EMAIL]) && isset($_POST[TAG_USER_PASSWORD])){
+    $email = $_POST[TAG_USER_EMAIL];
+    $password = $_POST[TAG_USER_PASSWORD];
     $login_result = $dbh->checkLogin($email, $password);
     //var_dump($_SESSION);
     //var_dump($login_result);
     if (count($login_result) > 0) {
-        registerLoggedUser(array("idUser"=>$login_result[0]["idUser"], "email"=>$email));
+        registerLoggedUser(array(TAG_USER_ID=>$login_result[0][TAG_USER_ID], TAG_USER_EMAIL=>$email));
     } else {
-        $result["errorMSG"] = "Error : The ".$dbh->getErrorString()." is not correct";
+        $result[ERROR] = "Error : The ".$dbh->getErrorString()." is not correct";
     }
     
 }

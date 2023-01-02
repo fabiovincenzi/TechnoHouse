@@ -61,6 +61,11 @@
                 <img class="px-2" src="./icons/chat.svg" alt="chats page"/>
             </a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link" href="./controller_logout.php">
+                <img class="px-2" src="./icons/chat.svg" alt="chats page"/>
+            </a>
+        </li>
     </ul>
 </nav>
 <?php if(isset($viewBag["script"])):

@@ -98,9 +98,12 @@ define("WELCOME_MESSAGE", "You have successfully created your account!");
 define("MESSAGE_SUBJECT", "You have a new message!");
 define("SETTINGS_SUBJECT", "Settings informations !");
 define("IMAGE_MESSGAGE", "You have successfully changed you profile image!");
-define("USER_MESSGAGE", "You have successfully changed you profile settings! It's not you ? Please contact our email our check out this video : https://www.youtube.com/watch?v=oHg5SJYRHA0");
-define("PASSWORD_MESSGAGE", "You have successfully changed you password! It's not you ? Please contact our email our check out this video : https://www.youtube.com/watch?v=oHg5SJYRHA0 ");
+define("USER_MESSGAGE", "You have successfully changed you profile settings! It's not you ? Please contact our email or check our website : https://www.youtube.com/watch?v=oHg5SJYRHA0");
+define("PASSWORD_MESSGAGE", "You have successfully changed you password! It's not you ? Please contact our email or check our website : https://www.youtube.com/watch?v=oHg5SJYRHA0 ");
 
+
+
+define("TAG_RESULT", "result");
 
 
 require_once($_SERVER["DOCUMENT_ROOT"]."/database/database.php"); //database directory
