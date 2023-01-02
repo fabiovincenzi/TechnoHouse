@@ -9,9 +9,10 @@ if(isUserLoggedIn()){
     $tags = $dbh->getUserPreference($id);
     $posts = array();
     if (count($tags) > 0) {
+        $ids=array();
         foreach ($tags as $tag) {
             //["path"] = getRelativeDirUserPost($post[0]["User_idUser"], $idPost).$images[$i]["path"];
-            $post_tags = $dbh->getRandomPostsOf($tag, N_RANDOM_POSTS, $id);
+            $post_tags = $dbh->getRandomPostsOf($tag["Tag_idTag"], N_RANDOM_POSTS, $id);
             foreach ($post_tags as $post) {
                 if (!in_array($post[TAG_POST_ID], $ids)) {
                     $image = $dbh->getPostImages($post[TAG_POST_ID]);
