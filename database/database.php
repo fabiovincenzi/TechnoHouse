@@ -292,6 +292,38 @@ class Database{
         return $statement;
     }
 
+    public function deletePost($post_id)
+    {
+        var_dump($post_id);
+        $PARAM_DELETE_POST = 'i';                       // Value used to delete the post by his Id
+        // Delete all the images from the specific user
+        $query = "DELETE FROM Image WHERE Post_idPost = ?";
+        $statement = $this->db->prepare($query);
+        $statement->bind_param($PARAM_DELETE_POST, $post_id);
+        $statement->execute();
+        //delete all the tags association
+        $query = "DELETE FROM post_has_tag WHERE Post_idPost = ?";
+        $statement = $this->db->prepare($query);
+        $statement->bind_param($PARAM_DELETE_POST, $post_id);
+        $statement->execute();
+        //delete all the saved that refers to this post
+        $query = "DELETE FROM savedposts WHERE Post_idPost = ?";
+        $statement = $this->db->prepare($query);
+        $statement->bind_param($PARAM_DELETE_POST, $post_id);
+        $statement->execute();
+        //delete all the notifications that refers to this post
+        $query = "DELETE FROM notification WHERE Post_idPost = ?";
+        $statement = $this->db->prepare($query);
+        $statement->bind_param($PARAM_DELETE_POST, $post_id);
+        $statement->execute();
+
+        // Remove all the User that saved that post
+        $query = "DELETE FROM Post WHERE idPost = ?";
+        $statement = $this->db->prepare($query);
+        $statement->bind_param($PARAM_DELETE_POST, $post_id);
+        return $statement->execute();
+    }
+
     public function getPostById($post_id){
         $PARAM_GET_POST = 'i';
         $query = "SELECT *

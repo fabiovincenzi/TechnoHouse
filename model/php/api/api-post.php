@@ -20,6 +20,11 @@ if(isUserLoggedIn()){
             if(isset($_GET[TAG_POST_ID])){
                 $posts = $dbh->getPostById($_GET[TAG_POST_ID]);
             }
+        } else if ($_GET[TAG_ACTION] == DELETE_POST){
+            
+            if(isset($_GET[TAG_POST_ID])){
+                $dbh->deletePost($_GET[TAG_POST_ID]);
+            }
         }
     }else if(isset($_GET[TAG_USER_ID])){
         $user_id = $_GET[TAG_USER_ID];
