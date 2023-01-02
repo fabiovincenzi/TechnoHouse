@@ -3,7 +3,7 @@ require_once $_SERVER['DOCUMENT_ROOT'].'/TechnoHouse/model/php/bootstrap.php';
 
 
 $result[TAG_LOGGED] = false;
-if(isset($_POST["name"]) && isset($_POST["surname"]) && isset($_POST["phone-number"]) && isset($_POST["birthdate"]) && isset($_POST["email"]) && isset($_POST["password"]) && isset($_POST["confirm-password"])){
+if(isset($_POST[TAG_USER_NAME]) && isset($_POST[TAG_USER_SURNAME]) && isset($_POST[TAG_PHONE_NUMBER]) && isset($_POST[TAG_BIRTHDATE]) && isset($_POST[TAG_USER_EMAIL]) && isset($_POST[TAG_USER_PASSWORD]) && isset($_POST[TAG_CONFIRM_PSW])){
     if (!isUserLoggedIn()) {
         $name = $_POST[TAG_USER_NAME];
         if (containsNumber($name)) {

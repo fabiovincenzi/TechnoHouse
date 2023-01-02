@@ -53,7 +53,7 @@ if(isUserLoggedIn()){
             $chat = $dbh->getChatById($chat_id)[0];
             $destination= $chat[TAG_USER_CHAT_SOURCE] == $id ? $dbh->getUserByID($chat[TAG_USER_CHAT_DESTINATION])[0] : $dbh->getUserByID($chat[TAG_USER_CHAT_SOURCE])[0];
             $destination_email = $destination[TAG_USER_EMAIL];
-            $message_mail = $user["name"] . " " . $user["surname"] . " sent a new message : ".$message;
+            $message_mail = $user[TAG_USER_NAME] . " " . $user[TAG_USER_SURNAME] . " sent a new message : ".$message;
             sendEmail(MAIL_SOURCE, $destination_email, MESSAGE_SUBJECT, $message_mail);
             $dbh->addMessage($message, $publish_time, $id, $chat_id);
             newMessageNotification($dbh, $chat);

@@ -18,7 +18,7 @@ if(isUserLoggedIn()){
                     newFollowerNotification($dbh, $user_id, $id);
                     $user = $dbh->getUserByID($id)[0];
                     $destination_email = $dbh->getUserByID($user_id)[0][TAG_USER_EMAIL];
-                    $message = $user["name"] . " " . $user["surname"] . " started following you.";
+                    $message = $user[TAG_USER_NAME] . " " . $user[TAG_USER_SURNAME] . " started following you.";
                     sendEmail(MAIL_SOURCE, $destination_email, FOLLOW_SUBJECT, $message);
                 }else if($_GET[TAG_ACTION] == ACTION_UNFOLLOW){
                     $dbh->removeFollowing($id, $user_id);
