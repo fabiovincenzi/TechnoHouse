@@ -50,11 +50,9 @@ function createPost(post){
                 <div class="p-2">
                     <div class="row">
                         
-                        <div class="col-md-6">
                             <!--Title-->
                             <div class="row">
                                 <h1 class="col-9 tag-title">${post["title"]}</h1>
-                                <span class="font-weight-bold col-3">Stato</span>
                             </div>
                              <!--Title-->
 
@@ -91,9 +89,7 @@ function createPost(post){
                             <!--Location info-->
                             <span id="locationInfo${post["idPost"]}" class="font-weight-bold"></span>
                             <!--Location info-->
-                        </div>
 
-                        <div class="col-md-6">
 
 
                             <!--price-->
@@ -145,7 +141,6 @@ function createPost(post){
                             </div>
                             
                         
-                        </div>
                         <div class="row">
                         <!--description-->
                         <h2 class="font-14 mb-1 mt-2 tag-description">Descrizione</h2>

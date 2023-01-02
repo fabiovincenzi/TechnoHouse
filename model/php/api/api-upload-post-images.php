@@ -18,7 +18,7 @@ if(isset($_FILES["images"]) && isset( $_POST["lastPostId"])){
             $result[ERROR] = 'File size exceeds limit: ' . $file_name . ' ' . $file_type;
         }
         if(!in_array($file_type, $extensions)){
-            $result[ERROR] = "Accettate solo le seguenti estensioni: ".implode(",", $extensions);
+            $result[ERROR] = "Only the following extensions are accepted: ".implode(",", $extensions);
         }
         if (empty($errors)) {
             createDirUserPost($post[0]["User_idUser"],$post[0]["idPost"]);

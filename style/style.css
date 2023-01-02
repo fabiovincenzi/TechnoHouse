@@ -69,7 +69,14 @@
   min-width: auto;
 }
 
-
-.image-style{
-  max-width: 50em;
+img {
+  display: block;
+  max-width: 100%;
+}
+.preview {
+  overflow: hidden;
+  width: 160px; 
+  height: 160px;
+  margin: 10px;
+  border: 1px solid red;
 }

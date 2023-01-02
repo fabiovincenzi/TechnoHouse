@@ -317,6 +317,22 @@ class Database{
         $statement->bind_param($PARAM_DELETE_POST, $post_id);
         $statement->execute();
 
+        //delete all the answers that refers to this post
+        $query = "DELETE FROM Answer WHERE Question_idQuestion IN (
+            SELECT idQuestion
+            FROM Question
+            WHERE Post_idPost = ?
+        )";
+        $statement = $this->db->prepare($query);
+        $statement->bind_param($PARAM_DELETE_POST, $post_id);
+        $statement->execute();
+
+        //delete all the notifications that refers to this post
+        $query = "DELETE FROM Question WHERE Post_idPost = ?";
+        $statement = $this->db->prepare($query);
+        $statement->bind_param($PARAM_DELETE_POST, $post_id);
+        $statement->execute();
+
         // Remove all the User that saved that post
         $query = "DELETE FROM Post WHERE idPost = ?";
         $statement = $this->db->prepare($query);
