@@ -63,7 +63,7 @@
         </li>
         <li class="nav-item">
             <a class="nav-link" href="./controller_logout.php">
-                <img class="px-2" src="./icons/chat.svg" alt="chats page"/>
+                <img class="px-2" src="./icons/logout.svg" alt="chats page"/>
             </a>
         </li>
     </ul>
