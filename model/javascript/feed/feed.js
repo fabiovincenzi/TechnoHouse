@@ -125,7 +125,7 @@ function createPost(post){
 
 function loadUserToPost(user, post){
     const userContainer = document.getElementById(`user${post["idPost"]}`);
-    userContainer.innerHTML +=`<a href="./controller_otheruser.php?idUser=${user["idUser"]}"><span class="font-weight-bold">${user["name"]} ${user["surname"]}</span></a>`;
+    userContainer.innerHTML +=`<a class="text-dark text-decoration-none" href="./controller_otheruser.php?idUser=${user["idUser"]}"><span class="font-weight-bold">${user["name"]} ${user["surname"]}</span></a>`;
     const userImgContainer = document.getElementById(`imgUser${post["idPost"]}`);
     userImgContainer.innerHTML +=`<img class="rounded-circle" src="${user["userImage"]}" alt="image profile of :"width="45">`;
     
