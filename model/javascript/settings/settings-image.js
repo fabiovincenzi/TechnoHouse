@@ -87,14 +87,14 @@ function submit(image){
     });
 }
 
-var bs_modal = $('#modal');
-    var image = document.getElementById('image');
-    var cropper,reader,file;
+let bs_modal = $('#modal');
+    let image = document.getElementById('image');
+    let cropper,reader,file;
    
 
     $("body").on("change", ".image", function(e) {
-        var files = e.target.files;
-        var done = function(url) {
+        let files = e.target.files;
+        let done = function(url) {
             image.src = url;
             bs_modal.modal('show');
         };
