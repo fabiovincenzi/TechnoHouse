@@ -116,7 +116,7 @@ function createPost(post){
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="questionModalLabel">New question</h5>
+                                            <h2 class="modal-title" id="questionModalLabel">New question</h2>
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                             </button>
@@ -124,7 +124,7 @@ function createPost(post){
                                         <div class="modal-body">
                                             <form>
                                                 <div class="form-group">
-                                                    <label for="exampleFormControlTextarea1">Insert the question here:</label>
+                                                    <label for="newQuestion${post["idPost"]}">Insert the question here:</label>
                                                     <textarea class="form-control" id="newQuestion${post["idPost"]}" rows="3"></textarea>
                                                 </div>
                                             </form>
@@ -143,7 +143,7 @@ function createPost(post){
                         
                         <div class="row">
                         <!--description-->
-                        <h2 class="font-14 mb-1 mt-2 tag-description">Descrizione</h2>
+                        <h1 class="font-14 mb-1 mt-2 tag-description">Descrizione</h1>
                         <p class="mb-2">${post["description"]}</p>
                         <!--description-->
                         </div>
@@ -177,7 +177,7 @@ function loadUserToPost(user, post){
     const userContainer = document.getElementById(`user${post["idPost"]}`);
     userContainer.innerHTML +=`<a class="text-dark text-decoration-none p-2" href="./controller_otheruser.php?idUser=${user["idUser"]}"><span class="font-weight-bold">${user["name"]} ${user["surname"]}</span></a>`;
     const userImgContainer = document.getElementById(`imgUser${post["idPost"]}`);
-    userImgContainer.innerHTML +=`<img class="p-1 rounded-circle" src="${user["userImage"]}" alt="image profile of :"width="45">`;
+    userImgContainer.innerHTML +=`<img class="p-1 rounded-circle" src="${user["userImage"]}" alt="image profile of :"width="45"/>`;
     
                     
 }
@@ -195,7 +195,7 @@ function loadAnswersToQuestion(answers, questionId){
         answersContainer.innerHTML +=`
                     <li>
                         <div>
-                            <h5 class="font-8 mb-1 tag-question">${el["name"]} ${el["surname"]}</h3>
+                            <h2 class="font-8 mb-1 tag-question">${el["name"]} ${el["surname"]}</h2>
                             <p class="mb-2">${el["text"]}</p>
                         </div>
                     </li>`;
@@ -210,7 +210,7 @@ function loadQuestionsToPost(questions, postId){
         questionsContainer.innerHTML +=`
                     <li>
                         <div>
-                            <h5 class="font-8 mb-1 tag-question">${el["name"]} ${el["surname"]}</h3>
+                            <h2 class="font-8 mb-1 tag-question">${el["name"]} ${el["surname"]}</h2>
                             <p class="mb-2">${el["text"]} <a href="#answerModal${el["idQuestion"]}" data-toggle="modal" data-target="#answerModal${el["idQuestion"]}">Answer</a></p>
                         </div>
                         <ul id="answers${el["idQuestion"]}">
@@ -221,7 +221,7 @@ function loadQuestionsToPost(questions, postId){
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id=answerModalLabel">New answer</h5>
+                        <h2 class="modal-title" id=answerModalLabel">New answer</h2>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                         </button>
@@ -259,11 +259,11 @@ function loadImagesToPost(images, post){
     images.forEach(el=>{
         if(i == 0){
             imgContainer.innerHTML += `<div class="carousel-item active">
-            <img class="d-block w-100" src="${el["path"]}" alt="First slide">
+            <img class="d-block w-100" src="${el["path"]}" alt="First slide"/>
         </div>`;
         }else{
             imgContainer.innerHTML += `<div class="carousel-item">
-            <img class="d-block w-100" src="${el["path"]}" alt="First slide">
+            <img class="d-block w-100" src="${el["path"]}" alt="First slide"/>
         </div>`;
         }
         i++;
