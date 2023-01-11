@@ -259,11 +259,11 @@ function loadImagesToPost(images, post){
     images.forEach(el=>{
         if(i == 0){
             imgContainer.innerHTML += `<div class="carousel-item active">
-            <img class="d-block w-100" src="${el["path"]}" alt="First slide"/>
+            <img class="d-block w-100" src="${el["path"]}" alt="Post image"/>
         </div>`;
         }else{
             imgContainer.innerHTML += `<div class="carousel-item">
-            <img class="d-block w-100" src="${el["path"]}" alt="First slide"/>
+            <img class="d-block w-100" src="${el["path"]}" alt="Post image"/>
         </div>`;
         }
         i++;

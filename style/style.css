@@ -80,3 +80,6 @@ img {
   margin: 10px;
   border: 1px solid red;
 }
+.cropper-container{
+  width: 100%!important;
+}

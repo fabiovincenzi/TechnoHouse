@@ -25,7 +25,7 @@ function generateForm(){
           <div class="card shadow-2-strong" style="border-radius: 1rem;">
             <div class="card-body p-5 text-center">
               <form action="#" method="POST">
-                <h3 class="mb-5">Change Photo</h3>
+                <h1 class="mb-5">Change Photo</h1>
                 <p></p>
                 <div>
                 <div id="user-image" class="mr-3 col-5">
@@ -46,8 +46,8 @@ function generateForm(){
   <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
           <div class="modal-header">
-              <h5 class="modal-title" id="modalLabel">Crop image</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <h2 class="modal-title" id="modalLabel">Crop image</h2>
+              <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">×</span>
               </button>
           </div>
@@ -56,7 +56,7 @@ function generateForm(){
                   <div class="row">
                       <div class="col-md-8">  
                           <!--  default image where we will set the src via jquery-->
-                          <img id="image">
+                          <img id="image" alt="image to crop"/>
                       </div>
                       <div class="col-md-4">
                           <div class="preview"></div>
@@ -65,7 +65,7 @@ function generateForm(){
               </div>
           </div>
           <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
               <button type="button" class="btn btn-primary" id="crop">Set new Image</button>
           </div>
       </div>

@@ -63,7 +63,7 @@ function generateForm(){
                 </div>
 
                 <div class="form-outline mb-4">
-                    <label for="confirm-password">Old Password</label>
+                    <label for="old-password">Old Password</label>
                     <input type="password" id="old-password" placeholder="Old Password" class="form-control form-control-lg" />
                 </div>
                 <div class="form-check d-flex justify-content-start mb-4">
@@ -73,7 +73,7 @@ function generateForm(){
                 
     
                 <div class="form-outline mb-4">
-                  <label for="password">Password</label>
+                  <label for="new-password">Password</label>
                   <input type="password" id="new-password" placeholder="New Password" class="form-control form-control-lg" />
                 </div>
                 <div class="form-outline mb-4">
@@ -87,11 +87,11 @@ function generateForm(){
               </div>
               <div class="form-check d-flex justify-content-start mb-4">
               <input type="checkbox" id="showNewPassword" />
-              <label for="showPassword"> Show password </label>
+              <label for="showNewPassword"> Show password </label>
               </div>
 
                 <div class="form-outline mb-4">
-                  <label for="confirm-password">Confirm New Password</label>
+                  <label for="confirm-new-password">Confirm New Password</label>
                   <input type="password" id="confirm-new-password" placeholder="Confirm New Password" class="form-control form-control-lg" />
                 </div>
                   <input id ="change" class="btn btn-primary btn-lg btn-block w-100" name="submit" value="Change" type="submit"/>
