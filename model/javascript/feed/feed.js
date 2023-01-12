@@ -25,19 +25,19 @@ function createPost(post){
                              <!--Title-->
 
                             <!--images-->
-                            <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                            <div id="carouselExampleIndicators${post["idPost"]}" class="carousel slide" data-ride="carousel">
                                 <ol class="carousel-indicators">
-                                    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-                                    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                                    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                                    <li data-target="#carouselExampleIndicators${post["idPost"]}" data-slide-to="0" class="active"></li>
+                                    <li data-target="#carouselExampleIndicators${post["idPost"]}" data-slide-to="1"></li>
+                                    <li data-target="#carouselExampleIndicators${post["idPost"]}" data-slide-to="2"></li>
                                 </ol>
                                 <div id="images${post["idPost"]}" class="carousel-inner image-style">
                                 </div>
-                                <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                                <a class="carousel-control-prev" href="#carouselExampleIndicators${post["idPost"]}" role="button" data-slide="prev">
                                     prev
                                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                                 </a>
-                                <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                                <a class="carousel-control-next" href="#carouselExampleIndicators${post["idPost"]}" role="button" data-slide="next">
                                     next
                                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
                                 </a>
@@ -83,11 +83,11 @@ function createPost(post){
                             </button>
                             
                             <!-- New Question Modal -->
-                            <div class="modal fade" id="questionModal${post["idPost"]}" tabindex="-1" role="dialog" aria-labelledby="questionModalLabel" aria-hidden="true">
+                            <div class="modal fade" id="questionModal${post["idPost"]}" tabindex="-1" role="dialog" aria-labelledby="questionModalLabel${post["idPost"]}" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h2 class="modal-title" id="questionModalLabel">New question</h2>
+                                            <h2 class="modal-title" id="questionModalLabel${post["idPost"]}">New question</h2>
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                             </button>
@@ -167,7 +167,7 @@ function loadQuestionsToPost(questions, postId){
                         <ul>
                     </li>`;
         modalContainer.innerHTML += `<!-- New Answer Modal -->
-        <div class="modal fade" id="answerModal${el["idQuestion"]}" tabindex="-1" role="dialog" aria-labelledby="questionModalLabel" aria-hidden="true">
+        <div class="modal fade" id="answerModal${el["idQuestion"]}" tabindex="-1" role="dialog" aria-labelledby="questionModalLabel${post["idPost"]}" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">

@@ -33,7 +33,7 @@ function generateForm(){
                             <form>
                                 <div class="form-group">
                                     <label for="newTag">Insert the new Tag here:</label>
-                                    <input class="form-control" id="newTag" rows="3"></input>
+                                    <input class="form-control" id="newTag"></input>
                                 </div>
                             </form>
                         </div>
@@ -53,10 +53,12 @@ function generateForm(){
                             </div> 
                             <div class="col-md-6">
                                 <label for="region">Region</label>
-                                <select onchange="loadProvincies();" class="form-select" id="region" aria-label="Region"required>
+                                <select onchange="loadProvincies();" class="form-select" id="region" aria-label="Region" required>
+                                <option value="" disabled selected>Select your option</option>
                                 </select>      
                                 <label for="province">Province</label>
-                                <select onchange="loadCities();" class="form-select" id="province" aria-label="Province"required>
+                                <select onchange="loadCities();" class="form-select" id="province" aria-label="Province" required>
+                                <option value="" disabled selected>Select your option</option>
                                 </select>         
                                 <label for="city">City</label>
                                 <select class="form-select" id="city" aria-label="City" required>
@@ -157,7 +159,7 @@ function loadProvincies(){
     const provinceSelect = document.getElementById("province");
     const region_id = regionSelect.value;
     axios.get(`model/php/api/api-province.php?region_id=${region_id}`).then(provincies =>{
-        provinceSelect.innerHTML = '';
+        provinceSelect.innerHTML = '<option value="" disabled selected>Select your option</option>';
         provincies.data.forEach(province =>{
             const opt = document.createElement("option");
             opt.value = province["initials"];
@@ -171,6 +173,7 @@ function loadCities(){
     const provinceSelect = document.getElementById("province");
     const citySelect = document.getElementById("city");
     const province_id = provinceSelect.value;
+    citySelect.innerHTML = '<option value="" disabled selected>Select your option</option>';
     axios.get(`model/php/api/api-city.php?province_id=${province_id}`).then(cities =>{
         cities.data.forEach(city =>{
             const opt = document.createElement("option");

@@ -7,8 +7,13 @@ function generateProfile(user){
                     <div class="mr-3 col-5">
                         <label id="change-user-image" for="change-image">
                         <img id="user-image" src="${user[0]["userImage"]}" alt="${user[0]["name"]} ${user[0]["surname"]} profile photo" width="130" class="cursor rounded mb-2 img-thumbnail"/>
+<<<<<<< HEAD
                         </label>
                         <input id="change-image" class="d-none" value="Change user photo">
+=======
+                        <input id="change-image" type="hidden" value="Change user photo">
+                        </label>
+>>>>>>> 56a1a06ff347e71eb4ad4b696c4549f3650e42c5
                      </div>
                     <div class="text-white col-7">
                         <h4 id="name-surname">${user[0]["name"]} ${user[0]["surname"]}</h4>
