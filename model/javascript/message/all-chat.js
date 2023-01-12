@@ -19,7 +19,6 @@ function addListener(){
     buttons.forEach(button => {
         button.addEventListener("click", function(event){
             let idChat = button.value;
-            console.log(idChat)
             axios.get(`model/php/api/api-delete-chat.php?idChat=${idChat}`).then(response=>{
                 location.reload()
             });    
