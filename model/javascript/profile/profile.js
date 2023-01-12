@@ -8,7 +8,7 @@ function generateProfile(user){
                         <label id="change-user-image" for="change-image">
                         <img id="user-image" src="${user[0]["userImage"]}" alt="${user[0]["name"]} ${user[0]["surname"]} profile photo" width="130" class="cursor rounded mb-2 img-thumbnail"/>
                         </label>
-                        <input id="change-image" type="hidden" value="Change user photo">
+                        <input id="change-image" class="d-none" value="Change user photo">
                      </div>
                     <div class="text-white col-7">
                         <h4 id="name-surname">${user[0]["name"]} ${user[0]["surname"]}</h4>
@@ -57,7 +57,7 @@ function generateProfile(user){
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="modal-title"></h5>
+                <h5 class="modal-title" id="modal-title">Model infos</h5>
                 <button id="button-close-up" type="button" class="button-close btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">

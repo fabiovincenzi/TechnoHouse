@@ -1032,5 +1032,20 @@ class Database{
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
+    public function deleteNotificationChat($idchat){
+        $PARAM_DELETE_NOTIFICATION = 'i';
+        $query = "DELETE FROM Notification WHERE Chat_idChat = ?";
+        $statement = $this->db->prepare($query);
+        $statement->bind_param($PARAM_DELETE_NOTIFICATION, $idchat);
+        return $statement->execute();
+    }
+
+    public function deleteNotificationPost($idpost){
+        $PARAM_DELETE_NOTIFICATION = 'i';
+        $query = "DELETE FROM Notification WHERE Post_idPost = ?";
+        $statement = $this->db->prepare($query);
+        $statement->bind_param($PARAM_DELETE_NOTIFICATION, $idpost);
+        return $statement->execute();
+    }
 }
 ?>

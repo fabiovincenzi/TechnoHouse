@@ -23,6 +23,7 @@ if(isUserLoggedIn()){
         } else if ($_GET[TAG_ACTION] == DELETE_POST){
             
             if(isset($_GET[TAG_POST_ID])){
+                $dbh->deleteNotificationPost($_GET[TAG_POST_ID]);
                 $dbh->deletePost($_GET[TAG_POST_ID]);
                 deleteAll(getDirUserPost($_SESSION[TAG_USER_ID], $_GET[TAG_POST_ID]));
             }

@@ -7,9 +7,9 @@ if(isUserLoggedIn()){
     $id = $_SESSION[TAG_USER_ID];
     if(isset($_GET[TAG_CHAT_ID])){
         $idchat = $_GET[TAG_CHAT_ID];
-        if($dbh->deleteMessages($idchat)){
-            $dbh->deleteChat($idchat);
-        }
+        $dbh->deleteNotificationChat($idchat);
+        $dbh->deleteMessages(intval($idchat));
+        $dbh->deleteChat(intval($idchat));
     }
 }
 header('Content-Type: application/json');

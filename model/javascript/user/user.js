@@ -86,7 +86,7 @@ function generateProfile(user, info){
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="modal-title"></h5>
+                <h5 class="modal-title" id="modal-title">Model infos</h5>
                 <button id="button-close-up" type="button" class="button-close btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">

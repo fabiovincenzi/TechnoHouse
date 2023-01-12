@@ -15,12 +15,15 @@ axios.get('model/php/api/api-allchat.php').then(response => {
 
 
 function addListener(){
-    let button = document.getElementById("delete-chat");
-    button.addEventListener("click", function(event){
-        let idChat = button.value;
-        axios.get(`model/php/api/api-delete-chat.php?idChat=${idChat}`).then(response=>{
-            location.reload()
-        });    
+    let buttons = document.querySelectorAll('[id^=delete-chat]');
+    buttons.forEach(button => {
+        button.addEventListener("click", function(event){
+            let idChat = button.value;
+            console.log(idChat)
+            axios.get(`model/php/api/api-delete-chat.php?idChat=${idChat}`).then(response=>{
+                location.reload()
+            });    
+        });
     });
 }
 
@@ -50,7 +53,7 @@ function getAllChat(chats){
                     <li class="p-2 mt-2 border bg-light rounded border-bottom bg-white">
                             <div class="d-flex flex-row">
                                 <div class="col-md-10 text-left ">
-                                <a value=${chat["idChat"]} href="./controller_chat.php?idChat=${chat["idChat"]}" class="d-flex justify-content-between chatListLine">
+                                <a href="./controller_chat.php?idChat=${chat["idChat"]}" class="d-flex justify-content-between chatListLine">
                                     <div class="col-md-1">
                                         <img src="${chat["userImage"]}" alt="${chat["name"]} ${chat["surname"]} profile image" class="rounded-circle d-flex align-self-center me-3 shadow-1-strong chatListLine" width="60">
                                     </div>
@@ -60,7 +63,7 @@ function getAllChat(chats){
                                 </a>
                                 </div>
                                 <div class="col-md-2">
-                                    <button id="delete-chat" class="mx-2 btn btn-danger" type="button" value="${chat["idChat"]}">Delete Chat</button> 
+                                    <button id="delete-chat-${chat["idChat"]}" class="mx-2 btn btn-danger" type="button" value="${chat["idChat"]}">Delete Chat</button> 
                                 </div>
                             </div>
                     </li>`;

@@ -16,7 +16,7 @@ function generateBase(){
         <div class="justify-content-center row">
             <div class="col-10 col-md-10 bg-white shadow rounded overflow-hidden">
             <nav class="navbar fixed-top navbar-light bg-blur p-3">
-                <label for="search-bar" type="">Search</label>
+                <label for="search-bar">Search</label>
                 <input type="search" id="search-bar" class="form-control" placeholder="Search" aria-label="Search" />
             </nav>
         <div>
